@@ -19,6 +19,8 @@
   "homepage": "https://github.com/WIVSW/git-bash-api#readme",
   "devDependencies": {
     "assert": "^2.0.0",
+    "eslint": "^6.3.0",
+    "eslint-config-google": "^0.14.0",
     "mocha": "^6.2.0",
     "supertest": "^4.0.2"
   },
