@@ -15,5 +15,7 @@ module.exports = {
     'ecmaVersion': 2018,
   },
   'rules': {
+    'no-tabs': 'off',
+    'indent': [ 'error', 'tab' ]
   },
 };
