@@ -15,4 +15,8 @@ describe('Basic CRUD test', () => {
 			)
 			.end(done);
 	});
+
+	it('GET /api/repos return json of repos');
+	it('POST /api/repos/:repositoryId create repo');
+	it('DELETE /api/repos/:repositoryId delete repo');
 });
