@@ -6,6 +6,10 @@ const fse = require('fs-extra');
 const createEmptyRepos = require('../helpers/create-empty-repos');
 const PATH_TO_REPOS = path.resolve(__dirname, './test-repos');
 const REPOS_IDS = ['test-repos-1', 'test-repos-2'];
+const REPO_TO_ADD = {
+	id: 'api',
+	url: 'https://github.com/WIVSW/git-bash-api.git',
+};
 
 process.env.PATH_TO_REPOS = PATH_TO_REPOS;
 
@@ -32,6 +36,35 @@ describe('Basic CRUD test', () => {
 			.end(done);
 	});
 
-	it('POST /api/repos/:repositoryId create repo');
+	it('POST /api/repos/:repositoryId create repo', (done) => {
+		const {id, url} = REPO_TO_ADD;
+		const postRepo = () => new Promise((resolve, reject) => {
+			agent
+				.post(`/api/repos/${id}`)
+				.send({url})
+				.expect(200)
+				.expect((response) => {
+					const repos = getBodyFromResponse(response);
+					assert.strictEqual(repos.length, 1);
+					assert.strictEqual(repos[0].id, id);
+				})
+				.end((error) => error ? reject(error) : resolve());
+		});
+
+		postRepo()
+			.then(() => {
+				agent
+					.get('/api/repos')
+					.expect(200)
+					.expect((response) => {
+						const repos = getBodyFromResponse(response);
+						assert.strictEqual(Array.isArray(repos), true);
+						assert.strictEqual(repos.length, REPOS_IDS.length + 1);
+						assert.strictEqual(repos.some((r) => r.id === id), true);
+					})
+					.end(done);
+			})
+			.catch(done);
+	});
 	it('DELETE /api/repos/:repositoryId delete repo');
 });
