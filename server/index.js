@@ -2,13 +2,15 @@ const {isAbsolute, resolve} = require('path');
 const express = require('express');
 const {exit, cwd} = process;
 
-const input = process.argv[2];
+if (!process.env.PATH_TO_REPOS) {
+	const input = process.argv[2];
 
-if (!input) {
-	console.error('Expect path to repos directory.');
-	exit(1);
+	if (!input) {
+		console.error('Expect path to repos directory.');
+		exit(1);
+	}
+	process.env.PATH_TO_REPOS = isAbsolute(input) ? input : resolve(cwd(), input);
 }
-process.env.PATH_TO_REPOS = isAbsolute(input) ? input : resolve(cwd(), input);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
