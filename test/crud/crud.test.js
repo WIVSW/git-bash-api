@@ -66,5 +66,36 @@ describe('Basic CRUD test', () => {
 			})
 			.catch(done);
 	});
-	it('DELETE /api/repos/:repositoryId delete repo');
+
+	it('DELETE /api/repos/:repositoryId delete repo', (done) => {
+		const {id} = REPO_TO_ADD;
+		const deleteRepo = () => new Promise((resolve, reject) => {
+			agent
+				.delete(`/api/repos/${id}`)
+				.expect(200)
+				.expect((response) => {
+					const repos = getBodyFromResponse(response);
+					assert.strictEqual(repos.length, 1);
+					assert.strictEqual(repos[0].id, id);
+				})
+				.end((error) => error ? reject(error) : resolve());
+		});
+
+		deleteRepo()
+			.then(() => {
+				agent
+					.get('/api/repos')
+					.expect(200)
+					.expect((response) => {
+						const repos = getBodyFromResponse(response);
+						assert.strictEqual(Array.isArray(repos), true);
+						assert.strictEqual(repos.length, REPOS_IDS.length);
+						assert.strictEqual(repos.every((r) => typeof r === 'object'), true);
+						assert.strictEqual(repos.every(
+							(r) => REPOS_IDS.includes(r.id)), true);
+					})
+					.end(done);
+			})
+			.catch(done);
+	});
 });
