@@ -12,22 +12,26 @@ process.env.PATH_TO_REPOS = PATH_TO_REPOS;
 const app = require('../../server');
 const agent = request.agent(app);
 
+const getBodyFromResponse = ({res}) => JSON.parse(res.text).data;
+
 describe('Basic CRUD test', () => {
 	before(() => createEmptyRepos(PATH_TO_REPOS, REPOS_IDS));
 	after(() => fse.remove(PATH_TO_REPOS));
 
-	it('GET Hello World!', function(done) {
+	it('GET /api/repos return json of repos', (done) => {
 		agent
-			.get('/')
+			.get('/api/repos')
 			.expect(200)
-			.expect(
-				({res}) =>
-					assert.strictEqual(res.text, 'Hello World!')
-			)
+			.expect((response) => {
+				const repos = getBodyFromResponse(response);
+				assert.strictEqual(Array.isArray(repos), true);
+				assert.strictEqual(repos.length, REPOS_IDS.length);
+				assert.strictEqual(repos.every((r) => typeof r === 'object'), true);
+				assert.strictEqual(repos.every((r) => REPOS_IDS.includes(r)), true);
+			})
 			.end(done);
 	});
 
-	it('GET /api/repos return json of repos');
 	it('POST /api/repos/:repositoryId create repo');
 	it('DELETE /api/repos/:repositoryId delete repo');
 });
