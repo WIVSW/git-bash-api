@@ -16,6 +16,10 @@ module.exports = {
   },
   'rules': {
     'no-tabs': 'off',
-    'indent': [ 'error', 'tab' ]
+    'indent': [ 'error', 'tab' ],
+    'new-cap': [ 2, { 'capIsNewExceptions': [
+        "express.Router"
+      ]
+    }]
   },
 };

@@ -1,6 +1,7 @@
 const {isAbsolute, resolve} = require('path');
 const express = require('express');
 const {exit, cwd} = process;
+const apiRoute = require('./routes/api');
 
 if (!process.env.PATH_TO_REPOS) {
 	const input = process.argv[2];
@@ -15,7 +16,7 @@ if (!process.env.PATH_TO_REPOS) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use('/api', apiRoute);
 
 app.listen(PORT, () => {
 	console.log(`Express server listening on port ${PORT}`);

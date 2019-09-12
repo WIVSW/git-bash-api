@@ -27,7 +27,7 @@ describe('Basic CRUD test', () => {
 				assert.strictEqual(Array.isArray(repos), true);
 				assert.strictEqual(repos.length, REPOS_IDS.length);
 				assert.strictEqual(repos.every((r) => typeof r === 'object'), true);
-				assert.strictEqual(repos.every((r) => REPOS_IDS.includes(r)), true);
+				assert.strictEqual(repos.every((r) => REPOS_IDS.includes(r.id)), true);
 			})
 			.end(done);
 	});
