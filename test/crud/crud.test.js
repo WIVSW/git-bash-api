@@ -11,6 +11,11 @@ const REPO_TO_ADD = {
 	url: 'https://github.com/WIVSW/git-bash-api.git',
 };
 
+const REPO_FAKE = {
+	id: 'fake-repo',
+	url: 'https://github.com/WIVSW/fake-repo.git',
+};
+
 process.env.PATH_TO_REPOS = PATH_TO_REPOS;
 
 const app = require('../../server');
@@ -67,35 +72,46 @@ describe('Basic CRUD test', () => {
 			.catch(done);
 	});
 
-	it('DELETE /api/repos/:repositoryId delete repo', (done) => {
-		const {id} = REPO_TO_ADD;
-		const deleteRepo = () => new Promise((resolve, reject) => {
-			agent
-				.delete(`/api/repos/${id}`)
-				.expect(200)
-				.expect((response) => {
-					const repos = getBodyFromResponse(response);
-					assert.strictEqual(repos.length, 1);
-					assert.strictEqual(repos[0].id, id);
+	it(
+		'POST /api/repos/:repositoryId ' +
+		'return 404 when remote is not exist', (done) => {
+			const {id, url} = REPO_FAKE;
+			const postRepo = () => new Promise((resolve, reject) => {
+				agent
+					.post(`/api/repos/${id}`)
+					.send({url})
+					.expect(404)
+					.expect((response) => {
+						const data = getBodyFromResponse(response);
+						assert.strictEqual(data, null);
+					})
+					.end((error) => error ? reject(error) : resolve());
+			});
+
+			postRepo()
+				.then(() => {
+					agent
+						.get('/api/repos')
+						.expect(200)
+						.expect((response) => {
+							const repos = getBodyFromResponse(response);
+							assert.strictEqual(Array.isArray(repos), true);
+							assert.strictEqual(repos.length, REPOS_IDS.length + 1);
+							assert.strictEqual(repos.every((r) => r.id !== id), true);
+						})
+						.end(done);
 				})
-				.end((error) => error ? reject(error) : resolve());
+				.catch(done);
 		});
 
-		deleteRepo()
-			.then(() => {
-				agent
-					.get('/api/repos')
-					.expect(200)
-					.expect((response) => {
-						const repos = getBodyFromResponse(response);
-						assert.strictEqual(Array.isArray(repos), true);
-						assert.strictEqual(repos.length, REPOS_IDS.length);
-						assert.strictEqual(repos.every((r) => typeof r === 'object'), true);
-						assert.strictEqual(repos.every(
-							(r) => REPOS_IDS.includes(r.id)), true);
-					})
-					.end(done);
+	it('DELETE /api/repos/:repositoryId delete repo', (done) => {
+		agent
+			.delete(`/api/repos/asdfdfaskdashrqhwerqwretgdhsdf`)
+			.expect(404)
+			.expect((response) => {
+				const data = getBodyFromResponse(response);
+				assert.strictEqual(data, null);
 			})
-			.catch(done);
+			.end(done);
 	});
 });
