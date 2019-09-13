@@ -1,4 +1,5 @@
 const {isAbsolute, resolve} = require('path');
+const fs = require('fs');
 const express = require('express');
 const {exit, cwd} = process;
 const apiRoute = require('./routes/api');
@@ -11,6 +12,12 @@ if (!process.env.PATH_TO_REPOS) {
 		exit(1);
 	}
 	process.env.PATH_TO_REPOS = isAbsolute(input) ? input : resolve(cwd(), input);
+}
+
+if (!fs.existsSync(process.env.PATH_TO_REPOS)) {
+	fs.mkdirSync(process.env.PATH_TO_REPOS, {
+		recursive: true,
+	});
 }
 
 const app = express();
