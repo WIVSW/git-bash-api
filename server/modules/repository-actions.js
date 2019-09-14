@@ -6,18 +6,20 @@ const axios = require('axios');
 
 const exec = promisify(require('child_process').exec);
 const exists = promisify(fs.exists);
+const readdir = promisify(fs.readdir);
 
 const Response = require('../models/responses/response');
 const NotFound = require('../models/responses/not-found');
 const AlreadyExist = require('../models/responses/repository-exist');
 const NotExist = require('../models/responses/repository-not-exist');
 
+const {PATH_TO_REPOS} = process.env;
+
 const execute = async (cmd, optRepoId = '') => await exec(cmd, {
-	cwd: path.resolve(process.env.PATH_TO_REPOS, `./${optRepoId}`),
+	cwd: path.resolve(PATH_TO_REPOS, `./${optRepoId}`),
 });
 
-const getRepoPath = (repoId) =>
-	path.resolve(process.env.PATH_TO_REPOS, `./${repoId}`);
+const getRepoPath = (repoId) =>	path.resolve(PATH_TO_REPOS, `./${repoId}`);
 
 const isRemoteRepoExist = async (url) => {
 	try {
@@ -79,7 +81,13 @@ const remove = async (repoId) => {
 	}
 };
 
+const getReposList = async () => {
+	const repoIds = await readdir(PATH_TO_REPOS);
+	return repoIds.map((id) => ({id}));
+};
+
 module.exports = {
 	download,
 	remove,
+	getReposList,
 };
