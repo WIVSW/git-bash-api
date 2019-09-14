@@ -1,12 +1,14 @@
 const {promisify} = require('util');
-const path = require('path');
+const {resolve} = require('path');
 const fs = require('fs');
 
 const axios = require('axios');
 
 const exec = promisify(require('child_process').exec);
-const exists = promisify(fs.exists);
 const readdir = promisify(fs.readdir);
+const rmdir = promisify(fs.rmdir);
+const stat = promisify(fs.stat);
+const unlink = promisify(fs.unlink);
 
 const Response = require('../models/responses/response');
 const NotFound = require('../models/responses/not-found');
@@ -19,7 +21,7 @@ const execute = async (cmd, optRepoId = '') => await exec(cmd, {
 	cwd: getRepoPath(optRepoId),
 });
 
-const getRepoPath = (repoId) =>	path.resolve(PATH_TO_REPOS, `./${repoId}`);
+const getRepoPath = (repoId) =>	resolve(PATH_TO_REPOS, `./${repoId}`);
 
 const isRemoteRepoExist = async (url) => {
 	try {
@@ -30,12 +32,17 @@ const isRemoteRepoExist = async (url) => {
 	}
 };
 
-const isRepoExist = async (repoId) => {
+const isPathExist = async (path) => {
 	try {
-		return await exists(getRepoPath(repoId));
+		await stat(path);
+		return true;
 	} catch (error) {
 		return false;
 	}
+};
+
+const isRepoExist = async (repoId) => {
+	return await isPathExist(getRepoPath(repoId));
 };
 
 const check = async (action, expected, error) => {
@@ -68,17 +75,38 @@ const download = async (repoId, url) => {
 	}
 };
 
-const remove = async (repoId) => {
+const removeRecursive = async (path) => {
+	// Вообще в обычной ситуации я бы использовал библиотеку
+	// Но мне показалось, что задание направленно на взаимодействие
+	// с базовыми модулями node.js, поэтому реализовал сам
+	let stats;
 	try {
-		await check(
-			isRepoExist.bind(null, repoId),
-			true,
-			new NotExist()
-		);
-		await execute(`rm -rf ${repoId}`);
+		stats = await stat(path);
 	} catch (error) {
-		throw error instanceof Response ? error : new NotFound();
+		return;
 	}
+
+	if (stats.isDirectory()) {
+		const files = await readdir(path);
+		const pathes = files.map((file) => resolve(path, `./${file}`));
+
+		if (pathes.length) {
+			await Promise.all(pathes.map(removeRecursive));
+		}
+
+		await rmdir(path);
+	} else {
+		await unlink(path);
+	}
+};
+
+const remove = async (repoId) => {
+	await check(
+		isRepoExist.bind(null, repoId),
+		true,
+		new NotExist()
+	);
+	await removeRecursive(getRepoPath(repoId));
 };
 
 const getReposList = async () => {
