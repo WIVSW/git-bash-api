@@ -9,6 +9,8 @@ const exists = promisify(fs.exists);
 
 const Response = require('../models/responses/response');
 const NotFound = require('../models/responses/not-found');
+const AlreadyExist = require('../models/responses/repository-exist');
+const NotExist = require('../models/responses/repository-not-exist');
 
 const execute = async (cmd, optRepoId = '') => await exec(cmd, {
 	cwd: path.resolve(process.env.PATH_TO_REPOS, `./${optRepoId}`),
@@ -49,12 +51,12 @@ const download = async (repoId, url) => {
 				check(
 					isRemoteRepoExist.bind(null, url),
 					true,
-					new Error('Invalid url')
+					new NotExist()
 				) :	Promise.resolve(),
 			check(
 				isRepoExist.bind(null, repoId),
 				false,
-				new Error('The repository already exist')
+				new AlreadyExist()
 			),
 		]);
 
@@ -69,7 +71,7 @@ const remove = async (repoId) => {
 		await check(
 			isRepoExist.bind(null, repoId),
 			true,
-			new Error('The repository not exist')
+			new NotExist()
 		);
 		await execute(`rm -rf ${repoId}`);
 	} catch (error) {
