@@ -4,16 +4,20 @@ const {
 	download,
 } = require('../modules/repository-actions');
 
+const {getCommits} = require('../modules/commits-actions');
+
 const Actions = {
 	READ_REPOS_LIST: 'read-repos-list',
 	REMOVE_REPO: 'remove-repo',
 	DOWNLOAD_REPO: 'download-repo',
+	READ_COMMITS_LIST: 'read-commits-list',
 };
 
 const Handers = {};
 Handers[Actions.READ_REPOS_LIST] = getReposList;
 Handers[Actions.REMOVE_REPO] = remove;
 Handers[Actions.DOWNLOAD_REPO] = download;
+Handers[Actions.READ_COMMITS_LIST] = getCommits;
 
 const memo = new Map();
 
@@ -48,8 +52,13 @@ const downloadRepo = async (...args) => {
 	return await execute(Actions.DOWNLOAD_REPO, args);
 };
 
+const readCommitsList = async (...args) => {
+	return await execute(Actions.READ_COMMITS_LIST, args);
+};
+
 module.exports = {
 	readReposList,
 	removeRepo,
 	downloadRepo,
+	readCommitsList,
 };
