@@ -7,6 +7,9 @@ const axios = require('axios');
 const exec = promisify(require('child_process').exec);
 const exists = promisify(fs.exists);
 
+const Response = require('../models/responses/response');
+const NotFound = require('../models/responses/not-found');
+
 const execute = async (cmd, optRepoId = '') => await exec(cmd, {
 	cwd: path.resolve(process.env.PATH_TO_REPOS, `./${optRepoId}`),
 });
@@ -57,7 +60,7 @@ const download = async (repoId, url) => {
 
 		await execute(`git clone ${url} ${repoId}`);
 	} catch (error) {
-		throw error;
+		throw error instanceof Response ? error : new NotFound();
 	}
 };
 
@@ -70,7 +73,7 @@ const remove = async (repoId) => {
 		);
 		await execute(`rm -rf ${repoId}`);
 	} catch (error) {
-		throw error;
+		throw error instanceof Response ? error : new NotFound();
 	}
 };
 
