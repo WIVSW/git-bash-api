@@ -7,8 +7,8 @@ const axios = require('axios');
 const exec = promisify(require('child_process').exec);
 const exists = promisify(fs.exists);
 
-const execute = async (cmd, optRepoId) => await exec(cmd, {
-	cwd: path.resolve(process.env.PATH_TO_REPOS, `./${optRepoId || ''}`),
+const execute = async (cmd, optRepoId = '') => await exec(cmd, {
+	cwd: path.resolve(process.env.PATH_TO_REPOS, `./${optRepoId}`),
 });
 
 const getRepoPath = (repoId) =>
@@ -61,6 +61,20 @@ const download = async (repoId, url) => {
 	}
 };
 
+const remove = async (repoId) => {
+	try {
+		await check(
+			isRepoExist.bind(null, repoId),
+			true,
+			new Error('The repository not exist')
+		);
+		await execute(`rm -rf ${repoId}`);
+	} catch (error) {
+		throw error;
+	}
+};
+
 module.exports = {
 	download,
+	remove,
 };
