@@ -32,11 +32,8 @@ const execute = async (key, args = []) => {
 
 	memo.set(callId, promise);
 
-	const data = await promise;
-
-	memo.delete(callId);
-
-	return data;
+	return promise
+		.finally(() => memo.delete(callId));
 };
 
 const readReposList = async () => {
