@@ -16,7 +16,7 @@ const NotExist = require('../models/responses/repository-not-exist');
 const {PATH_TO_REPOS} = process.env;
 
 const execute = async (cmd, optRepoId = '') => await exec(cmd, {
-	cwd: path.resolve(PATH_TO_REPOS, `./${optRepoId}`),
+	cwd: getRepoPath(optRepoId),
 });
 
 const getRepoPath = (repoId) =>	path.resolve(PATH_TO_REPOS, `./${repoId}`);
