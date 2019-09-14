@@ -4,7 +4,7 @@ const {
 	download,
 } = require('../modules/repository-actions');
 
-const {getCommits} = require('../modules/commits-actions');
+const {getCommitsList} = require('../modules/commits-actions');
 
 const Actions = {
 	READ_REPOS_LIST: 'read-repos-list',
@@ -17,7 +17,7 @@ const Handers = {};
 Handers[Actions.READ_REPOS_LIST] = getReposList;
 Handers[Actions.REMOVE_REPO] = remove;
 Handers[Actions.DOWNLOAD_REPO] = download;
-Handers[Actions.READ_COMMITS_LIST] = getCommits;
+Handers[Actions.READ_COMMITS_LIST] = getCommitsList;
 
 const memo = new Map();
 

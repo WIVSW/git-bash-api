@@ -4,24 +4,18 @@ const fs = require('fs');
 
 const axios = require('axios');
 
-const exec = promisify(require('child_process').exec);
 const readdir = promisify(fs.readdir);
 const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
 const unlink = promisify(fs.unlink);
 
+const {execute, getRepoPath} = require('./utils');
 const Response = require('../models/responses/response');
 const NotFound = require('../models/responses/not-found');
 const AlreadyExist = require('../models/responses/repository-exist');
 const NotExist = require('../models/responses/repository-not-exist');
 
 const {PATH_TO_REPOS} = process.env;
-
-const execute = async (cmd, optRepoId = '') => await exec(cmd, {
-	cwd: getRepoPath(optRepoId),
-});
-
-const getRepoPath = (repoId) =>	resolve(PATH_TO_REPOS, `./${repoId}`);
 
 const isRemoteRepoExist = async (url) => {
 	try {
@@ -69,7 +63,7 @@ const download = async (repoId, url) => {
 			),
 		]);
 
-		await execute(`git clone ${url} ${repoId}`);
+		await execute('git', ['clone', url, repoId]);
 	} catch (error) {
 		throw error instanceof Response ? error : new NotFound();
 	}

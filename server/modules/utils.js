@@ -1,3 +1,7 @@
+const {promisify} = require('util');
+const {resolve} = require('path');
+const exec = promisify(require('child_process').execFile);
+
 const Response = require('../models/responses/response');
 const Success = require('../models/responses/success');
 const Unknown = require('../models/responses/unknown');
@@ -17,6 +21,18 @@ const handleRequest = async (action, req, res, ...rest) => {
 		.send({message, data});
 };
 
+const {PATH_TO_REPOS} = process.env;
+
+const getRepoPath = (repoId) =>	resolve(PATH_TO_REPOS, `./${repoId}`);
+
+const execute = async (cmd, args = [], optRepoId = '') => await exec(
+	cmd, args, {
+		cwd: getRepoPath(optRepoId),
+	}
+);
+
 module.exports = {
 	handleRequest,
+	execute,
+	getRepoPath,
 };
