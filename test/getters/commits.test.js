@@ -3,6 +3,8 @@ const request = require('supertest');
 const app = require('../../server');
 const agent = request.agent(app);
 
+const getBodyFromResponse = ({res}) => JSON.parse(res.text).data;
+
 describe('Commits tests', () => {
 	describe('GET /api/repos/:repositoryId/commits/:commitHash', () => {
 		const url = (id, hash) => `/api/repos/${id || ''}/commits/${hash || ''}`;
@@ -61,8 +63,8 @@ describe('Commits tests', () => {
 					const {strictEqual} = assert;
 					strictEqual(Array.isArray(commits), true,
 						'Expect commits to be Array');
-					strictEqual(commits.length, branch.commits,
-						`Expect to receive ${branch.commits} commits`);
+					strictEqual(commits.length, branch.commits.length,
+						`Expect to receive ${branch.commits.length} commits`);
 				})
 				.end(done);
 		});
