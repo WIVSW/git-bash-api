@@ -87,8 +87,16 @@ router.post('/', async (req, res) => {
 router.delete('/', async (req, res) => {
 	const {repositoryId} = req;
 	try {
+		await check(
+			isRepoExist.bind(null, repositoryId),
+			true,
+			new Error('The repository not exist')
+		);
 		await exec(
-			`cd ${process.env.PATH_TO_REPOS} && rm -rf ${repositoryId}`
+			`rm -rf ${repositoryId}`,
+			{
+				cwd: process.env.PATH_TO_REPOS,
+			}
 		);
 		res
 			.status(200)
@@ -97,7 +105,7 @@ router.delete('/', async (req, res) => {
 			}]});
 	} catch (error) {
 		res
-			.status(400)
+			.status(404)
 			.send({message: 'Not found', data: null});
 	}
 });
