@@ -92,7 +92,7 @@ describe('Getters test', () => {
 	before(
 		() => createRepos(PATH_TO_REPOS, REPOS)
 			.then((repos) => {
-				process.env.TEST_REPOS = REPOS;
+				process.env.TEST_REPOS = JSON.stringify(REPOS);
 			})
 	);
 	after(() => fse.remove(PATH_TO_REPOS));
