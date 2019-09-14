@@ -4,11 +4,12 @@ const Fail = require('./fail');
  */
 class NotFound extends Fail {
 	/**
+	 * @param {string=} optMessage
 	 */
-	constructor() {
+	constructor(optMessage) {
 		super({
 			code: 404,
-			message: 'Not found',
+			message: optMessage || 'Not found',
 		});
 	}
 };
