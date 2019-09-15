@@ -9,4 +9,12 @@ router.get('/', handleRequest.bind(null, async (req) => {
 	return await readCommitsList(repositoryId, hash);
 }));
 
+router.get('/offset/:offset/limit/:limit',
+	handleRequest.bind(null, async (req) => {
+		const {repositoryId, hash} = req;
+		const {offset, limit} = req.params;
+		return await readCommitsList(repositoryId, hash, offset, limit);
+	})
+);
+
 module.exports = router;

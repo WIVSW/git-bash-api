@@ -66,11 +66,10 @@ const commits = async (repoId, hash, offset, limit) => {
 				`--pretty="${getCommitFormat()}"`,
 			], repoId
 		);
-		const result = stdout
-			.match(/({).{0,}(})/g)
+		const jsons = stdout.match(/({).{0,}(})/g) || [];
+		return jsons
 			.map((json) => JSON.parse(json))
 			.map(parseCommit);
-		return result;
 	} catch (error) {
 		throw new HashNotExist();
 	}

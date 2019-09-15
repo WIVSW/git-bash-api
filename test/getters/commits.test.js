@@ -8,6 +8,7 @@ const getBodyFromResponse = ({res}) => JSON.parse(res.text).data;
 describe('Commits tests', () => {
 	describe('GET /api/repos/:repositoryId/commits/:commitHash', () => {
 		const url = (id, hash) => `/api/repos/${id || ''}/commits/${hash || ''}`;
+
 		it('All props exist', (done) => {
 			const TEST_REPOS = JSON.parse(process.env.TEST_REPOS);
 			const repository = TEST_REPOS[0];
@@ -85,6 +86,25 @@ describe('Commits tests', () => {
 			agent
 				.get(url(repository.name, 'asdfghagsdhjfakjsbdhfdks'))
 				.expect(404)
+				.end(done);
+		});
+
+		it('Pagination works', (done) => {
+			const TEST_REPOS = JSON.parse(process.env.TEST_REPOS);
+			const repository = TEST_REPOS[0];
+			const branch = repository.branches[0];
+
+			agent
+				.get(`${url(repository.name, branch.name)}/offset/2/limit/3`)
+				.expect(200)
+				.expect((response) => {
+					const commits = getBodyFromResponse(response);
+					const {strictEqual} = assert;
+					strictEqual(Array.isArray(commits), true,
+						'Expect commits to be Array');
+					strictEqual(commits.length, 3,
+						`Expect to receive ${3} commits`);
+				})
 				.end(done);
 		});
 	});
