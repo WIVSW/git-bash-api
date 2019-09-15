@@ -76,8 +76,33 @@ const commits = async (repoId, hash, offset, limit) => {
 	}
 };
 
-const getCommitsList = async (repoId, hash, offset = 0, limit = 2) => {
-	return await commits(repoId, hash, offset, limit);
+const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
+	let result = [];
+
+	const cmd = async (skip, count) => await commits(repoId, hash, skip, count);
+
+	const load = async (skip, count) => {
+		const commits = await cmd(skip, count);
+		result = result.concat(commits);
+
+		if (result.length > limit) {
+			// больше чем нужно
+			result.slice(0, limit);
+			return;
+		}
+
+		if (commits.length < count) {
+			// коммиты закончились
+			return;
+		}
+
+		const newSkip = skip + count;
+
+		return await load(newSkip, newSkip + COMMITS_CHUNK);
+	};
+
+	await load(offset, limit < COMMITS_CHUNK ? limit : COMMITS_CHUNK );
+	return result;
 };
 
 module.exports = {
