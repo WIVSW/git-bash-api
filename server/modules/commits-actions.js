@@ -1,4 +1,3 @@
-const SEPARATOR = '~!@?';
 const COMMITS_CHUNK = 5;
 
 const HashNotExist = require('../models/responses/hash-not-exist');
@@ -28,10 +27,32 @@ FormatKeysMap[CommitProps.MESSAGE_SUBJECT] = '%s';
 FormatKeysMap[CommitProps.MESSAGE_BODY] = '%b';
 
 const getCommitFormat = () => {
-	return Object
+	return `{${ Object
 		.keys(FormatKeysMap)
-		.map((key) => `${key}='${FormatKeysMap[key]}'`)
-		.join(' ') + ` ${SEPARATOR}`;
+		.map((key) => `"${key}":"${FormatKeysMap[key]}"`)
+		.join()}}`;
+};
+
+const parseHashes = (hash) => hash ? hash.split(' ').filter(Boolean) : [];
+
+const parseCommit = (obj) => {
+	const rawTS = obj[CommitProps.TIMESTAMP];
+	return {
+		author: obj[CommitProps.AUTHOR] || null,
+		hash: {
+			short: parseHashes(obj[CommitProps.HASH_SHORT]),
+			full: parseHashes(obj[CommitProps.HASH_FULL]),
+		},
+		parent: {
+			short: parseHashes(obj[CommitProps.PARENT_SHORT]),
+			full: parseHashes(obj[CommitProps.PARENT_FULL]),
+		},
+		message: {
+			body: obj[CommitProps.MESSAGE_BODY] || null,
+			subject: obj[CommitProps.MESSAGE_SUBJECT] || null,
+		},
+		timestamp: rawTS ? parseInt(rawTS) * 1000 : null,
+	};
 };
 
 const commits = async (repoId, hash, offset, limit) => {
@@ -45,12 +66,17 @@ const commits = async (repoId, hash, offset, limit) => {
 				`--pretty="${getCommitFormat()}"`,
 			], repoId
 		);
+		const result = stdout
+			.match(/({).{0,}(})/g)
+			.map((json) => JSON.parse(json))
+			.map(parseCommit);
+		return result;
 	} catch (error) {
 		throw new HashNotExist();
 	}
 };
 
-const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
+const getCommitsList = async (repoId, hash, offset = 0, limit = 2) => {
 	return await commits(repoId, hash, offset, limit);
 };
 

@@ -28,21 +28,19 @@ describe('Commits tests', () => {
 						'Expect commit author field to be specified');
 					strictEqual(typeof c[0].hash, 'object',
 						'Expect commit hash to be specified');
-					strictEqual(typeof c[0].hash.full, 'string',
+					strictEqual(typeof c[0].hash.full.length, 'number',
 						'Expect full commit hash to be specified');
-					strictEqual(typeof c[0].hash.short, 'string',
+					strictEqual(typeof c[0].hash.short.length, 'number',
 						'Expect short commit hash to be specified');
 					strictEqual(typeof c[0].message, 'object',
 						'Expect commit message to be specified');
-					strictEqual(typeof c[0].message.body, 'string',
-						'Expect commit message body to be specified');
 					strictEqual(typeof c[0].message.subject, 'string',
 						'Expect commit message subject to be specified');
 					strictEqual(typeof c[0].parent, 'object',
 						'Expect commit parent to be specified');
-					strictEqual(typeof c[0].parent.full, 'string',
+					strictEqual(Array.isArray(c[0].parent.full), true,
 						'Expect commit parent full to be specified');
-					strictEqual(typeof c[0].parent.short, 'string',
+					strictEqual(Array.isArray(c[0].parent.short), true,
 						'Expect commit parent short to be specified');
 					strictEqual(typeof c[0].timestamp, 'number',
 						'Expect commit timestamp to be specified');
