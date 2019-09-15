@@ -1,8 +1,10 @@
 const COMMITS_CHUNK = 5;
 
 const HashNotExist = require('../models/responses/hash-not-exist');
-const {execute} = require('./utils');
+const {execute, getRepoPath} = require('./utils');
 const {join} = require('path');
+const {spawn} = require('child_process');
+const readline = require('readline');
 
 const CommitProps = {
 	HASH: 'hash',
@@ -106,6 +108,7 @@ const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
 };
 
 const getFilesList = async (repoId, hash, path) => {
+	console.log(repoId, hash);
 	try {
 		const {stdout} = await execute(
 			'git', [
@@ -132,7 +135,51 @@ const getFilesList = async (repoId, hash, path) => {
 	}
 };
 
+const spawnCmd = async (cmd, args = [], optRepoId = '') => {
+	return new Promise((resolve, reject) => {
+		let out = '';
+		const child = spawn(cmd, args, {
+			cwd: getRepoPath(optRepoId),
+		});
+
+		const r1 = readline.createInterface({
+			input: child.stdout,
+			terminal: false,
+		});
+
+		r1.on('line', function(line) {
+			out += `${line}\n`;
+		});
+
+		child.on('error', (error) => {
+			reject(error);
+		});
+
+		child.on('close', (code) => {
+			if (code === 0) {
+				resolve(out);
+			} else {
+				reject(out);
+			}
+		});
+	});
+};
+
+const getCommitDiff = async (repoId, hash) => {
+	try {
+		return await spawnCmd(
+			'git', [
+				'show',
+				hash,
+			], repoId
+		);
+	} catch (error) {
+		throw new HashNotExist();
+	}
+};
+
 module.exports = {
 	getCommitsList,
 	getFilesList,
+	getCommitDiff,
 };
