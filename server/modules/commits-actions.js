@@ -2,6 +2,7 @@ const COMMITS_CHUNK = 5;
 
 const HashNotExist = require('../models/responses/hash-not-exist');
 const {execute} = require('./utils');
+const {join} = require('path');
 
 const CommitProps = {
 	HASH: 'hash',
@@ -104,6 +105,34 @@ const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
 	return result;
 };
 
+const getFilesList = async (repoId, hash, path) => {
+	try {
+		const {stdout} = await execute(
+			'git', [
+				'ls-tree',
+				hash,
+			], join(repoId, `./${path}`)
+		);
+		return stdout
+			.split('\n')
+			.filter(Boolean)
+			.map((row) => {
+				const array = row.split('\t');
+				const name = array.slice(-1)[0] || null;
+				const isFile = array.some((col) => col.includes('blob'));
+				const isDir = array.some((col) => col.includes('tree'));
+				return {
+					name,
+					isFile,
+					isDir,
+				};
+			});
+	} catch (error) {
+		throw new HashNotExist();
+	}
+};
+
 module.exports = {
 	getCommitsList,
+	getFilesList,
 };
