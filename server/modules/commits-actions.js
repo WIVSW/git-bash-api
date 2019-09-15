@@ -178,8 +178,23 @@ const getCommitDiff = async (repoId, hash) => {
 	}
 };
 
+const getBlob = async (repoId, hash, path) => {
+	try {
+		return await spawnCmd(
+			'git', [
+				'cat-file',
+				`${hash}:${path}`,
+				'-p',
+			], repoId
+		);
+	} catch (error) {
+		throw new HashNotExist();
+	}
+};
+
 module.exports = {
 	getCommitsList,
 	getFilesList,
 	getCommitDiff,
+	getBlob,
 };

@@ -8,6 +8,7 @@ const {
 	getCommitsList,
 	getFilesList,
 	getCommitDiff,
+	getBlob,
 } = require('../modules/commits-actions');
 
 const Actions = {
@@ -17,6 +18,7 @@ const Actions = {
 	READ_COMMITS_LIST: 'read-commits-list',
 	LIST_DIR: 'list-dir',
 	COMMIT_DIFF: 'commit-diff',
+	READ_BLOB: 'read-blob',
 };
 
 const Handers = {};
@@ -26,6 +28,7 @@ Handers[Actions.DOWNLOAD_REPO] = download;
 Handers[Actions.READ_COMMITS_LIST] = getCommitsList;
 Handers[Actions.LIST_DIR] = getFilesList;
 Handers[Actions.COMMIT_DIFF] = getCommitDiff;
+Handers[Actions.READ_BLOB] = getBlob;
 
 const memo = new Map();
 
@@ -72,6 +75,10 @@ const readCommitDiff = async (...args) => {
 	return await execute(Actions.COMMIT_DIFF, args);
 };
 
+const readBlob = async (...args) => {
+	return await execute(Actions.READ_BLOB, args);
+};
+
 module.exports = {
 	readReposList,
 	removeRepo,
@@ -79,4 +86,5 @@ module.exports = {
 	readCommitsList,
 	listDir,
 	readCommitDiff,
+	readBlob,
 };

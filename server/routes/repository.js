@@ -4,6 +4,7 @@ const router = express.Router();
 const parseCommitHash = require('../middleware/parse-commit-hash');
 const commitsRoute = require('./commits');
 const filesRoute = require('./files');
+const blobRoute = require('./blob');
 
 const {removeRepo, downloadRepo} = require('../modules/actions');
 const {handleRequest} = require('../modules/utils');
@@ -28,5 +29,7 @@ router.delete('/', handleRequest.bind(null, async (req) => {
 router.use('/commits/:hash/', parseCommitHash, commitsRoute);
 
 router.use('/tree/:hash', parseCommitHash, filesRoute);
+
+router.use('/blob/:hash', parseCommitHash, blobRoute);
 
 module.exports = router;
