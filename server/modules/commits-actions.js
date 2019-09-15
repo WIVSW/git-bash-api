@@ -29,11 +29,16 @@ FormatKeysMap[CommitProps.AUTHOR] = '%aN';
 FormatKeysMap[CommitProps.MESSAGE_SUBJECT] = '%s';
 FormatKeysMap[CommitProps.MESSAGE_BODY] = '%b';
 
+const COMMIT_START = `СOMMIT_START`;
+const COMMIT_END = `COMMIT_END`;
+const PROP_START = `PROPERTY_START`;
+const PROP_END = `PROPERTY_END`;
+
 const getCommitFormat = () => {
-	return `{${ Object
+	return `${COMMIT_START}${ Object
 		.keys(FormatKeysMap)
-		.map((key) => `"${key}":"${FormatKeysMap[key]}"`)
-		.join()}}`;
+		.map((key) => `${PROP_START}${key}===${FormatKeysMap[key]}${PROP_END}`)
+		.join('')}${COMMIT_END}`;
 };
 
 const parseHashes = (hash) => hash ? hash.split(' ').filter(Boolean) : [];
@@ -60,19 +65,55 @@ const parseCommit = (obj) => {
 
 const commits = async (repoId, hash, offset, limit) => {
 	try {
-		const {stdout} = await execute(
-			'git', [
-				'log',
-				hash,
-				`--skip=${offset}`,
-				`--max-count=${limit}`,
-				`--pretty="${getCommitFormat()}"`,
-			], repoId
-		);
-		const jsons = stdout.match(/({).{0,}(})/g) || [];
-		return jsons
-			.map((json) => JSON.parse(json))
-			.map(parseCommit);
+		const args = [
+			'log',
+			hash,
+			`--pretty="${getCommitFormat()}"`,
+		];
+
+		if (offset > 0) {
+			args.push(`--skip=${offset}`);
+		}
+
+		if (isFinite(limit)) {
+			args.push(`--max-count=${limit}`);
+		}
+
+		const stdout = await spawnCmd('git', args, repoId, (out, line) => {
+			if (!out) {
+				out = {
+					commits: [],
+					string: '',
+				};
+			}
+
+			out.string += `${line}\n`;
+			const start = out.string.indexOf(COMMIT_START);
+			const end = out.string.lastIndexOf(COMMIT_END);
+
+			if (end !== -1) {
+				const row = out.string.slice(start, end + COMMIT_END.length);
+				const rawCommit = row
+					.split(PROP_END)
+					.map((prop) => {
+						const index = prop.indexOf(PROP_START) + PROP_START.length;
+						return prop.slice(index);
+					})
+					.filter(Boolean)
+					.map((prop) => {
+						let [key, value] = prop.split('===');
+						value = value || null;
+						return {[key]: value};
+					})
+					.reduce((a, b) => Object.assign(a, b), {});
+				out.string = out.string.slice(end + COMMIT_END.length);
+				const parsedCommit = parseCommit(rawCommit);
+				out.commits.push(parsedCommit);
+			}
+
+			return out;
+		});
+		return stdout && stdout.commits || [];
 	} catch (error) {
 		throw new HashNotExist();
 	}
@@ -82,6 +123,8 @@ const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
 	let result = [];
 
 	const cmd = async (skip, count) => await commits(repoId, hash, skip, count);
+
+	return await cmd(offset, limit);
 
 	const load = async (skip, count) => {
 		const commits = await cmd(skip, count);
@@ -108,7 +151,6 @@ const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
 };
 
 const getFilesList = async (repoId, hash, path) => {
-	console.log(repoId, hash);
 	try {
 		const {stdout} = await execute(
 			'git', [
@@ -135,9 +177,17 @@ const getFilesList = async (repoId, hash, path) => {
 	}
 };
 
-const spawnCmd = async (cmd, args = [], optRepoId = '') => {
+const spawnCmd = async (cmd, args = [], optRepoId = '', optParser) => {
+	const defaultParser = (out, line) => {
+		if (!out) {
+			out = '';
+		}
+
+		return `${out}${line}\n`;
+	};
+	const parser = typeof optParser !== 'undefined' ? optParser : defaultParser;
 	return new Promise((resolve, reject) => {
-		let out = '';
+		let out;
 		const child = spawn(cmd, args, {
 			cwd: getRepoPath(optRepoId),
 		});
@@ -148,7 +198,7 @@ const spawnCmd = async (cmd, args = [], optRepoId = '') => {
 		});
 
 		r1.on('line', function(line) {
-			out += `${line}\n`;
+			out = parser(out, line);
 		});
 
 		child.on('error', (error) => {
