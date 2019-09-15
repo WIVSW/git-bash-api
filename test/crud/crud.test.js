@@ -26,6 +26,7 @@ const getBodyFromResponse = ({res}) => JSON.parse(res.text).data;
 describe('Basic CRUD test', () => {
 	before(() => createEmptyRepos(PATH_TO_REPOS, REPOS_IDS));
 	after(() => fse.remove(PATH_TO_REPOS));
+	beforeEach(() => process.env.PATH_TO_REPOS = PATH_TO_REPOS);
 
 	it('GET /api/repos return json of repos', (done) => {
 		agent
