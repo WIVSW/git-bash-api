@@ -21,15 +21,16 @@ const handleRequest = async (action, req, res, ...rest) => {
 		.send({message, data});
 };
 
-const {PATH_TO_REPOS} = process.env;
+const getRepoPath = (repoId) =>
+	resolve(process.env.PATH_TO_REPOS, `./${repoId}`);
 
-const getRepoPath = (repoId) =>	resolve(PATH_TO_REPOS, `./${repoId}`);
-
-const execute = async (cmd, args = [], optRepoId = '') => await exec(
-	cmd, args, {
-		cwd: getRepoPath(optRepoId),
-	}
-);
+const execute = async (cmd, args = [], optRepoId = '') => {
+	return await exec(
+		cmd, args, {
+			cwd: getRepoPath(optRepoId),
+		}
+	);
+};
 
 module.exports = {
 	handleRequest,

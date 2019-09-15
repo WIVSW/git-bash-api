@@ -96,6 +96,7 @@ describe('Getters test', () => {
 			})
 	);
 	after(() => fse.remove(PATH_TO_REPOS));
+	beforeEach(() => process.env.PATH_TO_REPOS = PATH_TO_REPOS);
 
 	require('./commits.test');
 });

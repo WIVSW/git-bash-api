@@ -15,8 +15,6 @@ const NotFound = require('../models/responses/not-found');
 const AlreadyExist = require('../models/responses/repository-exist');
 const NotExist = require('../models/responses/repository-not-exist');
 
-const {PATH_TO_REPOS} = process.env;
-
 const isRemoteRepoExist = async (url) => {
 	try {
 		const {status} = await axios.get(url);
@@ -104,7 +102,7 @@ const remove = async (repoId) => {
 };
 
 const getReposList = async () => {
-	const repoIds = await readdir(PATH_TO_REPOS);
+	const repoIds = await readdir(process.env.PATH_TO_REPOS);
 	return repoIds.map((id) => ({id}));
 };
 
