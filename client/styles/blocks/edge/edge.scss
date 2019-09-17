@@ -1,0 +1,14 @@
+$BORDER_COLOR: #F0F2F3;
+$BORDER_WIDTH: 1px;
+
+.edge {
+	border: 0 solid $BORDER_COLOR;
+
+	&_top {
+		border-top-width: $BORDER_WIDTH;
+	}
+
+	&_bottom {
+		border-bottom-width: $BORDER_WIDTH;
+	}
+}

@@ -1,0 +1,50 @@
+$SPACE: (
+	'xxxs': 2px,
+	'xxs': 4px,
+	'xs': 8px,
+	's': 12px,
+	'm': 16px,
+	'l': 20px,
+	'xl': 24px,
+	'xxl': 32px,
+	'xxxl': 40px,
+	'xxxxl': 48px,
+	'xxxxxl': 72px,
+);
+
+.grid {
+	display: flex;
+	overflow: hidden;
+
+	&__item {
+		display: flex;
+	}
+
+	&_v-align {
+		&_center {
+			align-items: center;
+		}
+	}
+
+	@each $type, $space in $SPACE {
+		&_col-gap_#{$type} {
+			margin-top: -1 * $space;
+			margin-bottom: -1 * $space;
+
+			.grid__item {
+				padding-top: $space;
+				padding-bottom: $space;
+			}
+		}
+
+		&_row-gap_#{$type} {
+			margin-left: $space * -1;
+			margin-right: $space * -1;
+
+			.grid__item {
+				padding-left: $space;
+				padding-right: $space;
+			}
+		}
+	}
+}

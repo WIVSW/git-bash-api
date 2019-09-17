@@ -1,0 +1,13 @@
+.text {
+	&_weight {
+		&_bold {
+			font-weight: bold;
+		}
+	}
+	&_size {
+		&_m {
+			font-size: 13px;
+			letter-spacing: 0.3px;
+		}
+	}
+}
