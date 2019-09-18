@@ -8,7 +8,7 @@ const resolvePromiseWithValue = (value) => new CustomPromise((resolve) => {
 	}, 10);
 });
 
-const rejectPromiseWithValue = (value) => new CustomPromise((resolve, reject) => {
+const rejectPromiseWithValue = (value) => new CustomPromise((_, reject) => {
 	setTimeout(() => {
 		reject(value);
 	}, 10);
@@ -37,6 +37,28 @@ describe('Custom Promise', () => {
 	it('Can reject value', (done) => {
 		const TEST_VALUE = 42;
 		rejectPromiseWithValue(TEST_VALUE)
+			.then(null, (data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Resolve chain works', (done) => {
+		const TEST_VALUE = 42;
+		resolvePromiseWithValue(TEST_VALUE)
+			.then(null, null)
+			.then(null, null)
+			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Reject chain works', (done) => {
+		const TEST_VALUE = 42;
+		rejectPromiseWithValue(TEST_VALUE)
+			.then(null, null)
+			.then(null, null)
 			.then(null, (data) => {
 				assert.strictEqual(data, TEST_VALUE);
 				done();
