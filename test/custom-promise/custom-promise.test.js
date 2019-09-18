@@ -2,6 +2,12 @@ const assert = require('assert');
 
 const CustomPromise = require('../../lib/custom-promise/custom-promise');
 
+const resolvePromiseWithValue = (value) => new CustomPromise((resolve) => {
+	setTimeout(() => {
+		resolve(value);
+	}, 10);
+});
+
 describe('Custom Promise', () => {
 	it('should throw an Exception if no resolver', () => {
 		try {
@@ -12,6 +18,13 @@ describe('Custom Promise', () => {
 				'Promise resolver undefined is not a function');
 		}
 	});
-});
 
-console.log(CustomPromise);
+	it('Can resolve value', (done) => {
+		const TEST_VALUE = 42;
+		resolvePromiseWithValue(TEST_VALUE)
+			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+});
