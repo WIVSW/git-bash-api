@@ -112,4 +112,52 @@ describe('Custom Promise', () => {
 				done();
 			});
 	});
+
+	it('Can resolve return promise usage', (done) => {
+		const TEST_VALUE = 42;
+		resolvePromiseWithValue(null)
+			.then(() => {
+				return resolvePromiseWithValue(TEST_VALUE);
+			})
+			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can resolve return promise usage in reject', (done) => {
+		const TEST_VALUE = 42;
+		rejectPromiseWithValue(null)
+			.then(null, () => {
+				return resolvePromiseWithValue(TEST_VALUE);
+			})
+			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can reject if rejected promise was return from resolve', (done) => {
+		const TEST_VALUE = 42;
+		resolvePromiseWithValue(null)
+			.then(() => {
+				return rejectPromiseWithValue(TEST_VALUE);
+			})
+			.then(null, (data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can reject if rejected promise was return from reject', (done) => {
+		const TEST_VALUE = 42;
+		rejectPromiseWithValue(null)
+			.then(null, () => {
+				return rejectPromiseWithValue(TEST_VALUE);
+			})
+			.then(null, (data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
 });
