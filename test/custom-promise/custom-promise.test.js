@@ -160,4 +160,35 @@ describe('Custom Promise', () => {
 				done();
 			});
 	});
+
+	it('Test from the task description', (done) => {
+		const promise = new CustomPromise(function(resolve){
+			resolve(42);
+		});
+
+		promise
+			.then(function(value) {
+				return value + 1;
+			})
+			.then(function(value) {
+				assert.strictEqual(value, 43);
+				return new CustomPromise(function(resolve) {
+					resolve(137);
+				});
+			})
+			.then(function(value) {
+				assert.strictEqual(value, 137);
+				throw new Error();
+			})
+			.then(
+				function() {},
+				function() {
+					return 'ошибка обработана';
+				}
+			)
+			.then(function(value) {
+				assert.strictEqual(value, 'ошибка обработана');
+				done();
+			});
+	});
 });
