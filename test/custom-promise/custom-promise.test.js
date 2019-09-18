@@ -8,6 +8,12 @@ const resolvePromiseWithValue = (value) => new CustomPromise((resolve) => {
 	}, 10);
 });
 
+const rejectPromiseWithValue = (value) => new CustomPromise((resolve, reject) => {
+	setTimeout(() => {
+		reject(value);
+	}, 10);
+});
+
 describe('Custom Promise', () => {
 	it('should throw an Exception if no resolver', () => {
 		try {
@@ -23,6 +29,15 @@ describe('Custom Promise', () => {
 		const TEST_VALUE = 42;
 		resolvePromiseWithValue(TEST_VALUE)
 			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can reject value', (done) => {
+		const TEST_VALUE = 42;
+		rejectPromiseWithValue(TEST_VALUE)
+			.then(null, (data) => {
 				assert.strictEqual(data, TEST_VALUE);
 				done();
 			});
