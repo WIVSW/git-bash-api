@@ -64,4 +64,52 @@ describe('Custom Promise', () => {
 				done();
 			});
 	});
+
+	it('Can resolve return usage', (done) => {
+		const TEST_VALUE = 42;
+		resolvePromiseWithValue(null)
+			.then(() => {
+				return TEST_VALUE;
+			})
+			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can resolve return usage in reject', (done) => {
+		const TEST_VALUE = 42;
+		rejectPromiseWithValue(null)
+			.then(null, () => {
+				return TEST_VALUE;
+			})
+			.then((data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can reject if exception was thrown from resolve', (done) => {
+		const TEST_VALUE = 42;
+		resolvePromiseWithValue(null)
+			.then(() => {
+				throw TEST_VALUE;
+			})
+			.then(null, (data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
+
+	it('Can reject if exception was thrown from reject', (done) => {
+		const TEST_VALUE = 42;
+		rejectPromiseWithValue(null)
+			.then(null, () => {
+				throw TEST_VALUE;
+			})
+			.then(null, (data) => {
+				assert.strictEqual(data, TEST_VALUE);
+				done();
+			});
+	});
 });
