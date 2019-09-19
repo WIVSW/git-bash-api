@@ -1,0 +1,37 @@
+$BREAKPOINT: 768px;
+
+$SPACE: (
+	'xxxs': 2px,
+	'xxs': 4px,
+	'xs': 8px,
+	's': 12px,
+	'm': 16px,
+	'l': 20px,
+	'xl': 24px,
+	'xxl': 32px,
+	'xxxl': 40px,
+	'xxxxl': 48px,
+	'xxxxxl': 72px,
+);
+
+$MOBILE_SPACE: (
+	'xxxs': 0px,
+	'xxs': 0px,
+	'xs': 0px,
+	's': 0px,
+	'm': 0px,
+	'l': 13px,
+	'xl': 0px,
+	'xxl': 0px,
+	'xxxl': 0px,
+	'xxxxl': 0px,
+	'xxxxxl': 0px,
+);
+
+@function getSpace($type, $isMobile: false) {
+	@if ($isMobile) {
+		@return map-get($MOBILE_SPACE, $type);
+	} @else {
+		@return map-get($SPACE, $type);
+	}
+}

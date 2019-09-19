@@ -1,6 +1,34 @@
+@import "../../const";
+
 .block {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: Arial, Helvetica, sans-serif;
+
+	&_space {
+		@each $type, $space in $SPACE {
+			&_#{$type} {
+				padding: $space;
+			}
+		};
+	}
+
+	&_space-v {
+		@each $type, $space in $SPACE {
+			&_#{$type} {
+				padding-top: $space;
+				padding-bottom: $space;
+			}
+		};
+	}
+
+	&_space-h {
+		@each $type, $space in $SPACE {
+			&_#{$type} {
+				padding-left: $space;
+				padding-right: $space;
+			}
+		};
+	}
 }

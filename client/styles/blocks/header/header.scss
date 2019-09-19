@@ -1,17 +1,26 @@
+@import "../../const";
 @import "../edge/edge";
 
+$BORDER_COLOR: #F0F2F3;
 .header {
+	$space: 13px;
 	width: 100%;
-	background: purple;
-	padding: 0 32px;
+	border-color: $BORDER_COLOR;
+	padding: 0 15px;
 	height: 60px;
+	display: flex;
 
 	&__dropdown {
-		margin: -$BORDER_WIDTH 0;
+		align-items: flex-end;
 	}
 
-	@media (min-width: 768px) {
-		padding: 0 32px;
+	&__item {
+		padding-left: $space;
+		padding-right: $space;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		padding: 0 31px;
 		height: 56px;
 	}
 }

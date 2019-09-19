@@ -1,14 +1,22 @@
-$BORDER_COLOR: #F0F2F3;
+@import "../../const";
+
 $BORDER_WIDTH: 1px;
+$TRANSPARENT_COLOR: rgba(0, 0, 0, 0);
 
 .edge {
-	border: 0 solid $BORDER_COLOR;
+	border: $BORDER_WIDTH solid;
 
-	&_top {
-		border-top-width: $BORDER_WIDTH;
-	}
+	@media (min-width: $BREAKPOINT) {
+		&_top {
+			border-right-color: $TRANSPARENT_COLOR;
+			border-bottom-color: $TRANSPARENT_COLOR;
+			border-left-color: $TRANSPARENT_COLOR;
+		}
 
-	&_bottom {
-		border-bottom-width: $BORDER_WIDTH;
+		&_bottom {
+			border-top-color: $TRANSPARENT_COLOR;
+			border-right-color: $TRANSPARENT_COLOR;
+			border-left-color: $TRANSPARENT_COLOR;
+		}
 	}
 }

@@ -3,21 +3,17 @@ $COLOR_RED: #FF4F49;
 .select {
 	height: 100%;
 	position: relative;
+	border: 0 solid rgba(0, 0, 0, 0);
 
 	&_active {
-		.select__title {
-			border-bottom-color: $COLOR_RED;
-		}
+		border-top-width: 3px;
+		border-bottom-width: 3px;
+		border-bottom-color: $COLOR_RED;
+		margin: -1px 0;
 	}
 
 	&__title {
 		height: 100%;
-		align-items: center;
-		display: inline-flex;
-		border: 3px solid rgba(0, 0, 0, 0);
-		border-left: 0;
-		border-right: 0;
-		box-sizing: border-box;
 	}
 
 	&__icon {
