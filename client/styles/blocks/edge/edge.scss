@@ -1,22 +1,23 @@
 @import "../../const";
 
+$BORDER_COLOR: #F0F2F3;
 $BORDER_WIDTH: 1px;
 $TRANSPARENT_COLOR: rgba(0, 0, 0, 0);
 
 .edge {
-	border: $BORDER_WIDTH solid;
+	border: $BORDER_WIDTH solid $BORDER_COLOR;
+	border-bottom-width: $BORDER_WIDTH + 1px;
 
 	@media (min-width: $BREAKPOINT) {
+		border-color: $TRANSPARENT_COLOR;
+		border-bottom-width: $BORDER_WIDTH;
+
 		&_top {
-			border-right-color: $TRANSPARENT_COLOR;
-			border-bottom-color: $TRANSPARENT_COLOR;
-			border-left-color: $TRANSPARENT_COLOR;
+			border-top-color: $BORDER_COLOR;
 		}
 
 		&_bottom {
-			border-top-color: $TRANSPARENT_COLOR;
-			border-right-color: $TRANSPARENT_COLOR;
-			border-left-color: $TRANSPARENT_COLOR;
+			border-bottom-color: $BORDER_COLOR;
 		}
 	}
 }

@@ -1,13 +1,11 @@
 @import "../../const";
 @import "../edge/edge";
 
-$BORDER_COLOR: #F0F2F3;
 .header {
 	$space: 13px;
 	width: 100%;
-	border-color: $BORDER_COLOR;
 	padding: 0 15px;
-	height: 60px;
+	height: 61px;
 	display: flex;
 
 	&__dropdown {
