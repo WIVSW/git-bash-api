@@ -1,18 +1,18 @@
 @import "../../const";
 @import "../edge/edge";
 
-.header {
+.Header {
 	$space: 13px;
 	width: 100%;
 	padding: 0 15px;
 	height: 61px;
 	display: flex;
 
-	&__dropdown {
+	&-Dropdown {
 		align-items: flex-end;
 	}
 
-	&__item {
+	&-Item {
 		padding-left: $space;
 		padding-right: $space;
 	}

@@ -7,7 +7,7 @@
 			margin-top: -1 * $gap;
 			margin-bottom: -1 * $gap;
 
-			.grid__item {
+			.Grid-Item {
 				padding-top: $gap;
 				padding-bottom: $gap;
 			}
@@ -21,7 +21,7 @@
 			margin-left: $gap * -1;
 			margin-right: $gap * -1;
 
-			.grid__item {
+			.Grid-Item {
 				padding-left: $gap;
 				padding-right: $gap;
 			}
@@ -29,12 +29,12 @@
 	}
 }
 
-.grid {
+.Grid {
 	display: flex;
 	width: 100%;
 	float: left;
 
-	&__item {
+	&-Item {
 		display: flex;
 	}
 

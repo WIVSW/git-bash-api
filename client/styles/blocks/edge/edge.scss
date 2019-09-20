@@ -4,7 +4,7 @@ $BORDER_COLOR: #F0F2F3;
 $BORDER_WIDTH: 1px;
 $TRANSPARENT_COLOR: rgba(0, 0, 0, 0);
 
-.edge {
+.Edge {
 	border: $BORDER_WIDTH solid $BORDER_COLOR;
 
 	&_top {

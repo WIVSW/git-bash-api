@@ -1,13 +1,13 @@
 @import "../../const";
 
-.logo {
+.Logo {
 	padding: 19px 0;
 
 	@media (min-width: $BREAKPOINT) {
 		padding: 18px 0;
 	}
 
-	&__image {
+	&-Image {
 		margin: -3px 0;
 	}
 }

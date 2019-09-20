@@ -1,6 +1,6 @@
 $COLOR_RED: #FF4F49;
 
-.select {
+.Select {
 	height: 100%;
 	position: relative;
 	border: 0 solid rgba(0, 0, 0, 0);
@@ -12,11 +12,11 @@ $COLOR_RED: #FF4F49;
 		margin: -1px 0;
 	}
 
-	&__title {
+	&-Title {
 		height: 100%;
 	}
 
-	&__icon {
+	&-Icon {
 		display: inline;
 		position: absolute;
 		top: 50%;
