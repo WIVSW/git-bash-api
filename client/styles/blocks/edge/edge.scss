@@ -6,18 +6,26 @@ $TRANSPARENT_COLOR: rgba(0, 0, 0, 0);
 
 .edge {
 	border: $BORDER_WIDTH solid $BORDER_COLOR;
-	border-bottom-width: $BORDER_WIDTH + 1px;
+
+	&_top {
+		border-top-width: $BORDER_WIDTH + 1px;
+	}
+
+	&_bottom {
+		border-bottom-width: $BORDER_WIDTH + 1px;
+	}
 
 	@media (min-width: $BREAKPOINT) {
 		border-color: $TRANSPARENT_COLOR;
-		border-bottom-width: $BORDER_WIDTH;
 
 		&_top {
 			border-top-color: $BORDER_COLOR;
+			border-top-width: $BORDER_WIDTH;
 		}
 
 		&_bottom {
 			border-bottom-color: $BORDER_COLOR;
+			border-bottom-width: $BORDER_WIDTH;
 		}
 	}
 }
