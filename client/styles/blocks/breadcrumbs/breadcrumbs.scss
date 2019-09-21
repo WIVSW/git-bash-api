@@ -5,7 +5,7 @@ $TEXT_COLOR: #7F8285;
 .Breadcrumbs {
 	color: $TEXT_COLOR;
 	font-size: 14px;
-	padding: 9px 0 10px;
+	padding: 11px 0 12px;
 	border-bottom: 1px solid #e5e5e5;
 
 	&-Item {
@@ -28,10 +28,11 @@ $TEXT_COLOR: #7F8285;
 		position: relative;
 		top: 2px;
 		left: -1px;
+		margin: -2px 0;
 		transform: rotate(3deg);
 	}
 
 	@media (min-width: $BREAKPOINT) {
-		padding: 6px 0 12px;
+		padding: 12px 0 14px;
 	}
 }
