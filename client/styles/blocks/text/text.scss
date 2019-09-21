@@ -1,13 +1,39 @@
+@import "../../const";
+
 .Text {
 	&_weight {
 		&_bold {
 			font-weight: bold;
+			color: #000;
 		}
 	}
 	&_size {
 		&_m {
 			font-size: 13px;
+		}
+	}
+
+	&_letter-space {
+		&_m {
+			letter-spacing: -0.5px;
+		}
+
+		&_l {
 			letter-spacing: 0.3px;
+		}
+
+		&_xl {
+			letter-spacing: 1px;
+		}
+	}
+
+	&_responsive-size {
+		&_l {
+			font-size: 20px;
+
+			@media (min-width: $BREAKPOINT) {
+				font-size: 24px;
+			}
 		}
 	}
 }

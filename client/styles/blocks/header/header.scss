@@ -17,6 +17,10 @@
 		padding-right: $space;
 	}
 
+	&-Icon {
+		right: -17px;
+	}
+
 	@media (min-width: $BREAKPOINT) {
 		padding: 0 31px;
 		height: 56px;

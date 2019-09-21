@@ -4,6 +4,7 @@ $COLOR_RED: #FF4F49;
 	height: 100%;
 	position: relative;
 	border: 0 solid rgba(0, 0, 0, 0);
+	display: inline-block;
 
 	&_active {
 		border-top-width: 3px;
