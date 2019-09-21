@@ -11,6 +11,34 @@
 		&_m {
 			font-size: 13px;
 		}
+
+		&_l {
+			font-size: 14px;
+		}
+	}
+
+	&_type {
+		&_person {
+			white-space: nowrap;
+			color: inherit;
+			text-decoration: none;
+			display: inline-block;
+
+			&::first-letter {
+				color: #FF3029;
+			}
+		}
+
+		&_link {
+			color: #1774e9;
+			text-decoration: none;
+		}
+	}
+
+	&_l-height {
+		&_xl {
+			line-height: 20px;
+		}
 	}
 
 	&_letter-space {
@@ -19,10 +47,22 @@
 		}
 
 		&_l {
-			letter-spacing: 0.3px;
+			letter-spacing: 0.2px;
 		}
 
 		&_xl {
+			letter-spacing: 0.3px;
+		}
+
+		&_xxl {
+			letter-spacing: 0.5px;
+		}
+
+		&_xxxl {
+			letter-spacing: 0.7px;
+		}
+
+		&_xxxxl {
 			letter-spacing: 1px;
 		}
 	}
