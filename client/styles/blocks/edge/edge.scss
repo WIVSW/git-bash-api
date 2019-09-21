@@ -15,6 +15,10 @@ $TRANSPARENT_COLOR: rgba(0, 0, 0, 0);
 		border-bottom-width: $BORDER_WIDTH + 1px;
 	}
 
+	&_layout {
+		border-bottom: $BORDER_WIDTH solid #e5e5e5;
+	}
+
 	@media (min-width: $BREAKPOINT) {
 		border-color: $TRANSPARENT_COLOR;
 

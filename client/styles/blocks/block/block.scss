@@ -6,6 +6,28 @@
 	box-sizing: border-box;
 	font-family: Arial, Helvetica, sans-serif;
 
+	&_indent-b {
+		&_xxxs {
+			margin-bottom: 6px;
+		}
+
+		&_m {
+			margin-bottom: 11px;
+		}
+	}
+
+	&_d-indent-b {
+		@media (min-width: $BREAKPOINT) {
+			&_xxs {
+				margin-bottom: 9px;
+			}
+
+			&_m {
+				margin-bottom: 12px;
+			}
+		}
+	}
+
 	&_space {
 		@each $type, $space in $SPACE {
 			&_#{$type} {
