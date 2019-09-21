@@ -1,0 +1,44 @@
+@import "../../const";
+
+$COLUMNS_SIZE: 5;
+$TABLE_SIZES: 1, 2, 3, 4, 5;
+
+.Table {
+
+	&-Head {
+		display: none;
+		color: #B8BEC3;
+		padding: 15px 0 11px;
+	}
+
+	&-Row {
+		display: flex;
+	}
+
+	&-Cell {
+		box-sizing: border-box;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		&-Head {
+			display: block;
+		}
+		&-Cell {
+			text-align: left;
+			padding-right: 9px;
+			padding-left: 9px;
+			flex-grow: 5;
+
+			&:last-child {
+				text-align: right;
+			}
+
+			@for $i from 1 through 10 {
+				&_col_#{$i} {
+					flex-grow: $i;
+				}
+			}
+		}
+
+	}
+}
