@@ -4,39 +4,72 @@ $COLUMNS_SIZE: 5;
 $TABLE_SIZES: 1, 2, 3, 4, 5;
 
 .Table {
+	width: 100%;
+
+	&-Row {
+		display: flex;
+
+		&:last-child {
+			.Table-Cell {
+				border: none;
+			}
+		}
+	}
 
 	&-Head {
 		display: none;
 		color: #B8BEC3;
-		padding: 15px 0 11px;
-	}
 
-	&-Row {
-		display: flex;
+		.Table-Cell {
+			border-bottom: 1px solid #E5E5E5;
+		}
 	}
 
 	&-Cell {
 		box-sizing: border-box;
+		border-bottom: 1px solid #E5E5E5;
 	}
 
 	@media (min-width: $BREAKPOINT) {
-		&-Head {
-			display: block;
+		display: table;
+
+		&-Row {
+			display: table-row;
 		}
+
 		&-Cell {
+			display: table-cell;
 			text-align: left;
-			padding-right: 9px;
-			padding-left: 9px;
-			flex-grow: 5;
+			border-color: #F2F2F2;
+			padding-top: 15px;
+			padding-bottom: 15px;
 
 			&:last-child {
 				text-align: right;
 			}
 
-			@for $i from 1 through 10 {
-				&_col_#{$i} {
-					flex-grow: $i;
+			&_size {
+				&_s {
+					width: 15%;
 				}
+
+				&_m {
+					width: 17.5%;
+				}
+
+				&_l {
+					width: 18.5%;
+				}
+
+				&_xl {
+					width: 35%;
+				}
+			}
+		}
+
+		&-Head {
+			.Table-Cell {
+				padding-bottom: 11px;
 			}
 		}
 
