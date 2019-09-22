@@ -2,6 +2,7 @@
 
 .Layout {
 	padding: 0 getSpace('m');
+	overflow: hidden;
 
 	@media (min-width: $BREAKPOINT) {
 		padding: 0 getSpace('xxl');
