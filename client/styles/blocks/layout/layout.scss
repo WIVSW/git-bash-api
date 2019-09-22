@@ -15,5 +15,11 @@
 				padding: 0 getSpace('m') 0 getSpace('xxl');
 			}
 		}
+
+		&_history {
+			@media (min-width: $BREAKPOINT) {
+				padding: 0 getSpace('m') 0 getSpace('xxl');
+			}
+		}
 	}
 }

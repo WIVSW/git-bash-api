@@ -34,6 +34,10 @@
 		margin-bottom: 6px;
 	}
 
+	&-Col {
+		display: flex;
+	}
+
 	&-Joiner {
 		position: relative;
 		&::before {
@@ -60,6 +64,14 @@
 
 	@media (min-width: $BREAKPOINT) {
 		padding: 16px 0;
+
+		&-Group {
+			padding-bottom: 3px;
+		}
+
+		&-Item {
+			padding-bottom: 8px;
+		}
 
 		&_m-hidable {
 			display: flex;
