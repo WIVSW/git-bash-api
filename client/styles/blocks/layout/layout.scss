@@ -1,7 +1,7 @@
 @import "../../const";
 
 .Layout {
-	padding: 0 getSpace('m');
+	padding-left: getSpace('m');
 
 	@media (min-width: $BREAKPOINT) {
 		padding: 0 getSpace('xxl');

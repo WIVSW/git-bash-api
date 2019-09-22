@@ -53,4 +53,13 @@
 			}
 		};
 	}
+
+	@media (min-width: $BREAKPOINT) {
+		&_d-space-h {
+			&_xs {
+				padding-left: 9px;
+				padding-right: 9px;
+			}
+		}
+	}
 }
