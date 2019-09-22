@@ -23,6 +23,10 @@ $TABLE_SIZES: 1, 2, 3, 4, 5;
 		}
 	}
 
+	&-CellIcon {
+		right: 3px;
+	}
+
 	@media (max-width: $BREAKPOINT - 1px) {
 		&-Person {
 			display: inline;
@@ -71,6 +75,10 @@ $TABLE_SIZES: 1, 2, 3, 4, 5;
 
 		&-Row {
 			display: table-row;
+		}
+
+		&-CellIcon {
+			display: none;
 		}
 
 		&-Cell {
