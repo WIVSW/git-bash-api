@@ -1,9 +1,19 @@
 @import "../../const";
 
 .Layout {
-	padding: getSpace('m');
+	padding: 0 getSpace('m');
 
 	@media (min-width: $BREAKPOINT) {
 		padding: 0 getSpace('xxl');
+	}
+
+	&_responsive-space {
+		&_branches {
+			padding: 0 0 0 getSpace('m');
+
+			@media (min-width: $BREAKPOINT) {
+				padding: 0 getSpace('m') 0 getSpace('xxl');
+			}
+		}
 	}
 }

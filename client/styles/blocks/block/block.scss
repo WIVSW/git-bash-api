@@ -54,6 +54,52 @@
 		};
 	}
 
+	&_m-space-v {
+		&_s {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		&_m {
+			padding-top: 6px;
+			padding-bottom: 6px;
+		}
+	}
+
+	&_m-space-h {
+		&_xxs {
+			padding-left: 3px;
+			padding-right: 3px;
+		}
+	}
+
+	&_m-space-t {
+		&_m {
+			padding-top: 6px;
+		}
+	}
+
+	&_m-space-b {
+		&_s {
+			padding-top: 5px;
+		}
+		&_l {
+			padding-bottom: 7px;
+		}
+
+		&_xxl {
+			padding-bottom: 10px;
+		}
+	}
+
+	&_m-space-l {
+	}
+
+	&_m-space-r {
+		&_xxxl {
+			padding-right: 20px;
+		}
+	}
+
 	@media (min-width: $BREAKPOINT) {
 		&_d-space-h {
 			&_xs {

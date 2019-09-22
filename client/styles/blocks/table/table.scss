@@ -17,10 +17,6 @@ $TABLE_SIZES: 1, 2, 3, 4, 5;
 				border: none;
 			}
 		}
-
-		@media (max-width: $BREAKPOINT - 1px) {
-			padding: 6px 20px 7px 0;
-		}
 	}
 
 	&-CellIcon {
@@ -52,7 +48,6 @@ $TABLE_SIZES: 1, 2, 3, 4, 5;
 		box-sizing: border-box;
 
 		@media (max-width: $BREAKPOINT - 1px) {
-			padding: 6px 3px;
 
 			&_order {
 				@for $i from 1 through 5 {
