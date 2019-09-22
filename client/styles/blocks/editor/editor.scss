@@ -1,0 +1,51 @@
+.Editor {
+	margin-left: -16px;
+	margin-right: -16px;
+
+	&-Head {
+		background: #FAFBFC;
+		border-radius: 4px 4px 0 0;
+		border: 1px solid #f0f2f3;
+	}
+
+	&-HeadWrap {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 6px 16px;
+	}
+
+	&-HeadRow {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	&-HeadCol {
+		display: flex;
+		overflow: hidden;
+		padding: 6px 0;
+		max-width: 86%;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		margin-left: 0;
+		margin-right: 0;
+
+		&-HeadRow {
+			width: auto;
+			margin: 0 -6px;
+			align-items: center;
+		}
+
+		&-HeadWrap {
+			flex-wrap: nowrap;
+			padding: 4px 15px 4px 12px;
+		}
+
+		&-HeadCol {
+			padding: 6px;
+			max-width: inherit;
+		}
+	}
+}

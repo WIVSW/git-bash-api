@@ -18,6 +18,14 @@
 		}
 	}
 
+	&_overflow {
+		&_dots {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
 	&_size {
 		&_s {
 			font-size: 12px;
