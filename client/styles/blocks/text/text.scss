@@ -7,6 +7,17 @@
 			color: #000;
 		}
 	}
+
+	&_color {
+		&_gray {
+			color: #7F8285;
+		}
+
+		&_black {
+			color: #000;
+		}
+	}
+
 	&_size {
 		&_s {
 			font-size: 12px;
@@ -26,6 +37,10 @@
 
 		&_xxl {
 			font-size: 17px;
+		}
+
+		&_xxxxl {
+			font-size: 20px;
 		}
 	}
 
@@ -55,9 +70,16 @@
 		&_xl {
 			line-height: 20px;
 		}
+
+		&_xxl {
+			line-height: 28px;
+		}
 	}
 
 	&_letter-space {
+		&_xs {
+			letter-spacing: -0.3px;
+		}
 		&_s {
 			letter-spacing: -0.2px;
 		}
