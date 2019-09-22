@@ -19,6 +19,10 @@
 		&_xl {
 			font-size: 16px;
 		}
+
+		&_xxl {
+			font-size: 17px;
+		}
 	}
 
 	&_type {
@@ -40,12 +44,19 @@
 	}
 
 	&_l-height {
+		&_l {
+			line-height: 17px;
+		}
+
 		&_xl {
 			line-height: 20px;
 		}
 	}
 
 	&_letter-space {
+		&_s {
+			letter-spacing: -0.2px;
+		}
 		&_m {
 			letter-spacing: -0.5px;
 		}

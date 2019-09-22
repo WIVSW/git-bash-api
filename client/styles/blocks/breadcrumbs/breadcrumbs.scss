@@ -5,6 +5,7 @@ $TEXT_COLOR: #7F8285;
 .Breadcrumbs {
 	color: $TEXT_COLOR;
 	padding: 11px 0 12px;
+	display: flex;
 
 	&-Item {
 		color: $TEXT_COLOR;
@@ -32,5 +33,13 @@ $TEXT_COLOR: #7F8285;
 
 	@media (min-width: $BREAKPOINT) {
 		padding: 12px 0 14px;
+	}
+
+	&_responsive_space {
+		&_history {
+			@media (min-width: $BREAKPOINT) {
+				padding: 8px 0 14px;
+			}
+		}
 	}
 }
