@@ -9,7 +9,7 @@
 	<title>Commit</title>
 </head>
 <!-- style="position: relative; top: -200px" -->
-<body class="Block">
+<body class="Block" style="position: relative; top: -179px;">
 
 <!-- HEADER -->
 <div class="Header Edge Edge_bottom Block">
@@ -105,6 +105,196 @@
 						</span>
 						</a>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="Editor-Body">
+			<div class="Editor-Separator">
+				<div class="Text Text_size_s Text_color_ghost">@@ -270, 160  +270, 161 @@</div>
+				<div class="Editor-Loaders">
+					<a href="" class="Editor-Loader IconPlus IconPlus_type_flex">
+						<span class="IconPlus-Icon">
+							<img src="./img/arrow-down-small.svg" alt="">
+						</span>
+						<span class="Text Text_size_s Text_color_ghost">Below 20 lines</span>
+					</a>
+					<a href="" class="Editor-Loader IconPlus IconPlus_type_flex">
+						<span class="IconPlus-Icon">
+							<img src="./img/arrow-up-small.svg" alt="">
+						</span>
+						<span class="Text Text_size_s Text_color_black">Above 20 lines</span>
+					</a>
+				</div>
+			</div>
+			<div class="Editor-CodeWrap">
+				<div class="Editor-Code">
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">1</div>
+						<div class="Editor-Col Editor-LineNumber">1</div>
+						<div class="Editor-Col">package ru.yandex.devtools.intellij.arc.client;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">2</div>
+						<div class="Editor-Col Editor-LineNumber">2</div>
+						<div class="Editor-Col"></div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">3</div>
+						<div class="Editor-Col">import java.util.ArrayList;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">4</div>
+						<div class="Editor-Col">import java.util.Collection;</div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">5</div>
+						<div class="Editor-Col">import java.util.List;</div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">6</div>
+						<div class="Editor-Col"></div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber">3</div>
+						<div class="Editor-Col Editor-LineNumber">7</div>
+						<div class="Editor-Col">import com.intellij.openapi.diagnostic.Logger;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">8</div>
+						<div class="Editor-Col">import com.intellij.openapi.project.Project;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">4</div>
+						<div class="Editor-Col Editor-LineNumber">9</div>
+						<div class="Editor-Col">import com.intellij.openapi.vcs.FilePath;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">5</div>
+						<div class="Editor-Col Editor-LineNumber">10</div>
+						<div class="Editor-Col">import com.intellij.openapi.vcs.VcsException;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">6</div>
+						<div class="Editor-Col Editor-LineNumber">11</div>
+						<div class="Editor-Col">import com.intellij.openapi.vfs.VirtualFile;</div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber">7</div>
+						<div class="Editor-Col Editor-LineNumber">12</div>
+						<div class="Editor-Col">import com.intellij.vcsUtil.VcsUtil;</div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">13</div>
+						<div class="Editor-Col">import org.jetbrains.annotations.NotNull;</div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">14</div>
+						<div class="Editor-Col"></div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">8</div>
+						<div class="Editor-Col Editor-LineNumber">15</div>
+						<div class="Editor-Col">import ru.yandex.devtools.intellij.arc.ArcContext;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">9</div>
+						<div class="Editor-Col Editor-LineNumber">16</div>
+						<div class="Editor-Col">import ru.yandex.devtools.intellij.arc.ArcRevisionNumber;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">10</div>
+						<div class="Editor-Col Editor-LineNumber">17</div>
+						<div class="Editor-Col">import ru.yandex.devtools.intellij.arc.ArcStatus;</div>
+					</div>
+					<div class="Editor-Line Editor_color_green">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">18</div>
+						<div class="Editor-Col">import ru.yandex.devtools.intellij.arc.ui.ArcResetDialog;</div>
+					</div>
+					<div class="Editor-Line">
+						<div class="Editor-Col Editor-LineNumber">11</div>
+						<div class="Editor-Col Editor-LineNumber">19</div>
+						<div class="Editor-Col"></div>
+					</div>
+					<div class="Editor-Line Editor_color_red">
+						<div class="Editor-Col Editor-LineNumber">12</div>
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col">import java.util.ArrayList;</div>
+					</div>
+					<div class="Editor-Line Editor_color_red">
+						<div class="Editor-Col Editor-LineNumber">13</div>
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col">import java.util.Collection;</div>
+					</div>
+					<div class="Editor-Line Editor_color_red">
+						<div class="Editor-Col Editor-LineNumber">14</div>
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col">import java.util.List;</div>
+					</div>
+					<div class="Editor-Line Editor_color_red">
+						<div class="Editor-Col Editor-LineNumber">15</div>
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col"></div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber">16</div>
+						<div class="Editor-Col Editor-LineNumber">20</div>
+						<div class="Editor-Col">/**</div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber">17</div>
+						<div class="Editor-Col Editor-LineNumber">21</div>
+						<div class="Editor-Col">	* @author Dmitry Andreev <<span>a</span> href="mailto:AndreevDm@yandex-team.ru"><<span>/a></span></div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber"></div>
+						<div class="Editor-Col Editor-LineNumber">22</div>
+						<div class="Editor-Col">	* @date 11/10/2018</div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber">18</div>
+						<div class="Editor-Col Editor-LineNumber">23</div>
+						<div class="Editor-Col">*/</div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber">19</div>
+						<div class="Editor-Col Editor-LineNumber">24</div>
+						<div class="Editor-Col">	public ArcCli(String arcBinaryPath) {</div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber">20</div>
+						<div class="Editor-Col Editor-LineNumber">25</div>
+						<div class="Editor-Col">        this.arcBinaryPath = arcBinaryPath;</div>
+					</div>
+					<div class="Editor-Line ">
+						<div class="Editor-Col Editor-LineNumber">21</div>
+						<div class="Editor-Col Editor-LineNumber">26</div>
+						<div class="Editor-Col">    }</div>
+					</div>
+				</div>
+			</div>
+			<div class="Editor-Separator">
+				<div class="Text Text_size_s Text_color_ghost">@@ -270, 160  +270, 161 @@</div>
+				<div class="Editor-Loaders">
+					<a href="" class="Editor-Loader IconPlus IconPlus_type_flex">
+						<span class="IconPlus-Icon">
+							<img src="./img/arrow-down-small.svg" alt="">
+						</span>
+						<span class="Text Text_size_s Text_color_ghost">Below 20 lines</span>
+					</a>
+					<a href="" class="Editor-Loader IconPlus IconPlus_type_flex">
+						<span class="IconPlus-Icon">
+							<img src="./img/arrow-up-small.svg" alt="">
+						</span>
+						<span class="Text Text_size_s Text_color_black">Above 20 lines</span>
+					</a>
 				</div>
 			</div>
 		</div>
