@@ -22,5 +22,9 @@
 				padding: 0 getSpace('m') 0 getSpace('xxl');
 			}
 		}
+
+		&_details {
+			padding: 0 0 0 getSpace('m');
+		}
 	}
 }

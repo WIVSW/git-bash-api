@@ -6,6 +6,13 @@
 
 	&-Head {
 		background: #FAFBFC;
+		position: relative;
+
+		&_color {
+			&_gray {
+				background: #F5F5F5;
+			}
+		}
 	}
 
 	&_color {
@@ -29,6 +36,12 @@
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+
+		&_orientation {
+			&_left {
+				justify-content: flex-start;
+			}
+		}
 	}
 
 	&-HeadCol {
@@ -36,6 +49,15 @@
 		overflow: hidden;
 		padding: 6px 0;
 		max-width: 86%;
+
+		&_grow {
+			flex-grow: 1;
+		}
+
+		&_right {
+			position: absolute;
+			right: 7px;
+		}
 	}
 
 	&-Loaders {
@@ -64,6 +86,12 @@
 		line-height: 20px;
 		display: table;
 		width: 100%;
+
+		&_font-color {
+			&_blue {
+				color: #103056;
+			}
+		}
 	}
 
 	&-Line {
@@ -114,9 +142,17 @@
 		}
 	}
 
+	&-Hidable {
+		display: none;
+	}
+
 	@media (min-width: $BREAKPOINT) {
 		margin-left: 0;
 		margin-right: 0;
+
+		&-Hidable {
+			display: flex;
+		}
 
 		&-Loaders {
 			display: flex;

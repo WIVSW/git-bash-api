@@ -7,6 +7,16 @@ $TEXT_COLOR: #7F8285;
 	padding: 11px 0 12px;
 	display: flex;
 
+	&_type {
+		&_block {
+			display: block;
+			line-height: 22px;
+			@media (min-width: $BREAKPOINT) {
+				line-height: normal;
+			}
+		}
+	}
+
 	&-Item {
 		color: $TEXT_COLOR;
 		text-decoration: none;
