@@ -2,14 +2,14 @@ const {
 	getReposList,
 	remove,
 	download,
-} = require('../modules/repository-actions');
+} = require('./repository-actions');
 
 const {
 	getCommitsList,
 	getFilesList,
 	getCommitDiff,
 	getBlob,
-} = require('../modules/commits-actions');
+} = require('./commits-actions');
 
 const Actions = {
 	READ_REPOS_LIST: 'read-repos-list',
