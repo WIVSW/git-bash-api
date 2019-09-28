@@ -1,0 +1,156 @@
+@import "../../const";
+
+.Block {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, Helvetica, sans-serif;
+
+	&_indent-t {
+		&_m {
+			margin-top: 14px;
+		}
+		&_xl {
+			margin-top: 16px;
+		}
+	}
+
+	&_indent-b {
+		&_xxxxxs {
+			margin-bottom: 4px;
+		}
+
+		&_xxxs {
+			margin-bottom: 6px;
+		}
+
+		&_xxs {
+			margin-bottom: 7px;
+		}
+
+		&_m {
+			margin-bottom: 11px;
+		}
+	}
+
+	&_d-indent-b {
+		@media (min-width: $BREAKPOINT) {
+			&_xxxxxs {
+				margin-bottom: 5px;
+			}
+
+			&_xxs {
+				margin-bottom: 9px;
+			}
+
+			&_m {
+				margin-bottom: 12px;
+			}
+		}
+	}
+
+	&_space {
+		@each $type, $space in $SPACE {
+			&_#{$type} {
+				padding: $space;
+			}
+		};
+	}
+
+	&_space-v {
+		@each $type, $space in $SPACE {
+			&_#{$type} {
+				padding-top: $space;
+				padding-bottom: $space;
+			}
+		};
+	}
+
+	&_space-h {
+		@each $type, $space in $SPACE {
+			&_#{$type} {
+				padding-left: $space;
+				padding-right: $space;
+			}
+		};
+	}
+
+	&_m-space-v {
+		&_s {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		&_m {
+			padding-top: 6px;
+			padding-bottom: 6px;
+		}
+	}
+
+	&_m-space-h {
+		&_xxs {
+			padding-left: 3px;
+			padding-right: 3px;
+		}
+
+		&_m {
+			padding-left: 6px;
+			padding-right: 6px;
+		}
+	}
+
+	&_m-space-t {
+		&_m {
+			padding-top: 6px;
+		}
+	}
+
+	&_m-space-b {
+		&_s {
+			padding-top: 5px;
+		}
+		&_l {
+			padding-bottom: 7px;
+		}
+
+		&_xxl {
+			padding-bottom: 10px;
+		}
+	}
+
+	&_m-space-l {
+	}
+
+	&_m-space-r {
+		&_m {
+			padding-right: 13px;
+		}
+		&_xxxl {
+			padding-right: 20px;
+		}
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		&_d-indent-t {
+			&_xxl {
+				margin-top: 21px;
+			}
+		}
+
+		&_d-space-h {
+			&_xs {
+				padding-left: 9px;
+				padding-right: 9px;
+			}
+		}
+
+		&_d-space-r {
+			&_xxxl {
+				padding-right: 11px;
+			}
+
+			&_xxxxxxxxl {
+				padding-right: 180px;
+			}
+		}
+	}
+}

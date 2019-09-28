@@ -1,0 +1,144 @@
+@import "../../const";
+
+.Text {
+	&_weight {
+		&_bold {
+			font-weight: bold;
+			color: #000;
+		}
+	}
+
+	&_color {
+		&_gray {
+			color: #7F8285;
+		}
+
+		&_black {
+			color: #000;
+		}
+
+		&_green {
+			color: #19BC4D;
+		}
+
+		&_red {
+			color: #FF3029;
+		}
+
+		&_ghost {
+			color: #B8BEC3;
+		}
+
+		&_pale {
+			color: #999999;
+		}
+	}
+
+	&_overflow {
+		&_dots {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	&_size {
+		&_s {
+			font-size: 12px;
+		}
+
+		&_m {
+			font-size: 13px;
+		}
+
+		&_l {
+			font-size: 14px;
+		}
+
+		&_xl {
+			font-size: 16px;
+		}
+
+		&_xxl {
+			font-size: 17px;
+		}
+
+		&_xxxxl {
+			font-size: 20px;
+		}
+	}
+
+	&_type {
+		&_person {
+			white-space: nowrap;
+			color: inherit;
+			text-decoration: none;
+			display: inline-block;
+
+			&::first-letter {
+				color: #FF3029;
+			}
+		}
+
+		&_link {
+			color: #1774e9;
+			text-decoration: none;
+		}
+	}
+
+	&_l-height {
+		&_l {
+			line-height: 17px;
+		}
+
+		&_xl {
+			line-height: 20px;
+		}
+
+		&_xxl {
+			line-height: 28px;
+		}
+	}
+
+	&_letter-space {
+		&_xs {
+			letter-spacing: -0.3px;
+		}
+		&_s {
+			letter-spacing: -0.2px;
+		}
+		&_m {
+			letter-spacing: -0.5px;
+		}
+
+		&_l {
+			letter-spacing: 0.2px;
+		}
+
+		&_xl {
+			letter-spacing: 0.3px;
+		}
+
+		&_xxl {
+			letter-spacing: 0.5px;
+		}
+
+		&_xxxl {
+			letter-spacing: 0.7px;
+		}
+
+		&_xxxxl {
+			letter-spacing: 1px;
+		}
+	}
+
+	&_responsive-size {
+		&_l {
+			font-size: 20px;
+
+			@media (min-width: $BREAKPOINT) {
+				font-size: 24px;
+			}
+		}
+	}
+}

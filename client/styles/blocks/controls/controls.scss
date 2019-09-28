@@ -1,0 +1,23 @@
+@import "../../const";
+
+.Controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	margin-top: 7px;
+	margin-bottom: 10px;
+
+	@media (min-width: $BREAKPOINT) {
+		&-BackButton {
+			display: none;
+		}
+
+		&-ShowButton {
+			position: absolute;
+			right: 0;
+			top: 8px;
+		}
+	}
+
+}

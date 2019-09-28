@@ -1,0 +1,31 @@
+.IconPlus {
+	display: table;
+	vertical-align: middle;
+	text-decoration: none;
+
+	&-Icon {
+		padding-right: 8px;
+		display: table-cell;
+		vertical-align: middle;
+		position: relative;
+
+		&_space {
+			&_s {
+				padding-right: 5px;
+			}
+		}
+	}
+
+	&_type_h {
+		.IconPlus-Icon {
+			top: 2px
+		}
+	}
+
+	&_type {
+		&_flex {
+			display: flex;
+		}
+	}
+
+}

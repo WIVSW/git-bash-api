@@ -1,0 +1,23 @@
+@import "../../const";
+
+.PageDescription {
+	&-Select {
+		color: #7F8285;
+		margin-bottom: 6px;
+	}
+
+	&-Icon {
+		right: -14px;
+		transform: translate(0%, -60%);
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		&-Select {
+			margin-bottom: 7px;
+		}
+
+		&-Icon {
+			right: -16px;
+		}
+	}
+}

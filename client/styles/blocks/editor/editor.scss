@@ -1,0 +1,177 @@
+.Editor {
+	margin-left: -16px;
+	margin-right: -16px;
+	border-radius: 4px;
+	border: 1px solid #f0f2f3;
+
+	&-Head {
+		background: #FAFBFC;
+		position: relative;
+
+		&_color {
+			&_gray {
+				background: #F5F5F5;
+			}
+		}
+	}
+
+	&_color {
+		&_green {
+			background: #E6FFED;
+		}
+
+		&_red {
+			background: #FFEEF0;
+		}
+	}
+
+	&-HeadWrap {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 6px 16px;
+	}
+
+	&-HeadRow {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+
+		&_orientation {
+			&_left {
+				justify-content: flex-start;
+			}
+		}
+	}
+
+	&-HeadCol {
+		display: flex;
+		overflow: hidden;
+		padding: 6px 0;
+		max-width: 86%;
+
+		&_grow {
+			flex-grow: 1;
+		}
+
+		&_right {
+			position: absolute;
+			right: 7px;
+		}
+	}
+
+	&-Loaders {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%);
+		justify-content: space-between;
+	}
+
+	&-Separator {
+		line-height: 28px;
+		padding: 0 15px;
+		background: #F1F8FF;
+		position: relative;
+	}
+
+	&-Loader {
+		padding: 0 17px;
+		letter-spacing: 1.7px;
+	}
+
+	&-Code {
+		font-size: 13px;
+		line-height: 20px;
+		display: table;
+		width: 100%;
+
+		&_font-color {
+			&_blue {
+				color: #103056;
+			}
+		}
+	}
+
+	&-Line {
+		display: table-row;
+
+		&::before {
+			content: '';
+			padding-left: 13px;
+		}
+	}
+
+	&-Col {
+		display: table-cell;
+		white-space: pre;
+	}
+
+	&-LineNumber {
+		padding: 0 9px;
+		min-width: 11px;
+		width: 1%;
+		color: #B8BEC3;
+
+		&:last-child {
+			padding-right: 4px;
+		}
+	}
+
+	&-Number {}
+
+	&-CodeWrap {
+		width: 100%;
+		overflow: auto;
+
+		&::-webkit-scrollbar-track {
+			border-radius: 5px;
+			background-color: rgba(0,0,0,0);
+		}
+
+		&::-webkit-scrollbar {
+			width: 6px;
+			height: 6px;
+			background-color: rgba(0,0,0,0);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 5px;
+			background-color: #C1C1C1;
+		}
+	}
+
+	&-Hidable {
+		display: none;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		margin-left: 0;
+		margin-right: 0;
+
+		&-Hidable {
+			display: flex;
+		}
+
+		&-Loaders {
+			display: flex;
+		}
+
+		&-HeadRow {
+			width: auto;
+			margin: 0 -6px;
+			align-items: center;
+		}
+
+		&-HeadWrap {
+			flex-wrap: nowrap;
+			padding: 4px 15px 4px 12px;
+		}
+
+		&-HeadCol {
+			padding: 6px;
+			max-width: inherit;
+		}
+	}
+}

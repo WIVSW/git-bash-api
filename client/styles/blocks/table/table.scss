@@ -1,0 +1,117 @@
+@import "../../const";
+
+$COLUMNS_SIZE: 5;
+$TABLE_SIZES: 1, 2, 3, 4, 5;
+
+.Table {
+	width: 100%;
+
+	&-Row {
+		display: flex;
+		position: relative;
+		flex-wrap: wrap;
+		border-bottom: 1px solid #E5E5E5;
+
+		&:last-child {
+			.Table-Cell {
+				border: none;
+			}
+		}
+	}
+
+	&-CellIcon {
+		right: 3px;
+	}
+
+	@media (max-width: $BREAKPOINT - 1px) {
+		&-Person {
+			display: inline;
+			&::before {
+				content: 'by ';
+			}
+			&::after {
+				content: ',';
+			}
+		}
+	}
+
+	&-Head {
+		display: none;
+		color: #B8BEC3;
+
+		.Table-Cell {
+			border-bottom: 1px solid #E5E5E5;
+		}
+	}
+
+	&-Cell {
+		box-sizing: border-box;
+
+		@media (max-width: $BREAKPOINT - 1px) {
+
+			&_order {
+				@for $i from 1 through 5 {
+					&_#{$i} {
+						order: #{$i};
+					}
+				}
+			}
+
+			&_m-width {
+				&_full {
+					width: 100%;
+				}
+			}
+		}
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		display: table;
+
+		&-Row {
+			display: table-row;
+		}
+
+		&-CellIcon {
+			display: none;
+		}
+
+		&-Cell {
+			display: table-cell;
+			text-align: left;
+			border-color: #F2F2F2;
+			padding-top: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px solid #E5E5E5;
+
+			&:last-child {
+				text-align: right;
+			}
+
+			&_size {
+				&_s {
+					width: 15%;
+				}
+
+				&_m {
+					width: 17.5%;
+				}
+
+				&_l {
+					width: 18.5%;
+				}
+
+				&_xl {
+					width: 35%;
+				}
+			}
+		}
+
+		&-Head {
+			.Table-Cell {
+				padding-bottom: 11px;
+			}
+		}
+
+	}
+}

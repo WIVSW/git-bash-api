@@ -1,0 +1,58 @@
+@import "../const";
+
+
+@mixin column($map) {
+	@each $type, $gap in $map {
+		&_col-gap_#{$type} {
+			margin-top: -1 * $gap;
+			margin-bottom: -1 * $gap;
+
+			.Grid-Item {
+				padding-top: $gap;
+				padding-bottom: $gap;
+			}
+		}
+	}
+}
+
+@mixin row($map) {
+	@each $type, $gap in $map {
+		&_row-gap_#{$type} {
+			margin-left: $gap * -1;
+			margin-right: $gap * -1;
+
+			.Grid-Item {
+				padding-left: $gap;
+				padding-right: $gap;
+			}
+		}
+	}
+}
+
+.Grid {
+	display: flex;
+	width: 100%;
+	float: left;
+
+	&-Item {
+		display: flex;
+	}
+
+	&_v-align {
+		&_center {
+			align-items: center;
+		}
+
+		&_bottom {
+			align-items: flex-end;
+		}
+	}
+
+	@include column($MOBILE_SPACE);
+	@include row($MOBILE_SPACE);
+
+	@media (min-width: $BREAKPOINT) {
+		@include column($SPACE);
+		@include row($SPACE);
+	}
+}
