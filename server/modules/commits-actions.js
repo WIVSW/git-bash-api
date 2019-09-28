@@ -1,5 +1,3 @@
-const COMMITS_CHUNK = 5;
-
 const HashNotExist = require('../models/responses/hash-not-exist');
 const {execute, getRepoPath} = require('./utils');
 const {join} = require('path');
