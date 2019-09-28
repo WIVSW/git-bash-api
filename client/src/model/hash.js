@@ -6,12 +6,12 @@ class Hash {
 	 */
 	constructor(data) {
 		/**
-		 * @type {string}
+		 * @type {Array<string>}
 		 */
 		this.short = data.short;
 
 		/**
-		 * @type {string}
+		 * @type {Array<string>}
 		 */
 		this.full = data.full;
 	}
