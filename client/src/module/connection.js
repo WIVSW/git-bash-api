@@ -18,8 +18,8 @@ class Connection {
 
 	/**
 	 * @param {string} url
-	 * @param {string} method
-	 * @param {?Object} postData
+	 * @param {string=} method
+	 * @param {Object=} postData
 	 * @return {Promise<Object>}
 	 */
 	async request(url, method = 'get', postData) {
