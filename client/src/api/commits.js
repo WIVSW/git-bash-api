@@ -47,12 +47,12 @@ class CommitsApi extends Api {
 
 	/**
 	 * @param {string} repoId
-	 * @param {string} pattern
+	 * @param {string=} pattern
 	 * @param {string=} source (branchName|commitHash)
 	 * @param {string=} path
 	 * @return {Promise<Array<CommitsApi.TreeInfo>>}
 	 */
-	async searchTrees(repoId, pattern, source = 'master', path = '') {
+	async getTrees(repoId, pattern = '', source = 'master', path = '') {
 		const infoMap = {};
 		const items = await this.getFiles(repoId, source, path);
 		const matches = items.filter((item) =>
