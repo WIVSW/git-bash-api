@@ -38,7 +38,7 @@ class Connection {
 			throw new Error(`Request Failed!`);
 		}
 
-		return data;
+		return data.data;
 	}
 }
 

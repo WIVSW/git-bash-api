@@ -22,6 +22,15 @@ class Api {
 	async _request(url, method, postData) {
 		return await this._connection.request(url, method, postData);
 	}
+
+	/**
+	 * @param {string} string
+	 * @return {string}
+	 * @private
+	 */
+	_uri(string) {
+		return encodeURIComponent(string);
+	}
 }
 
 export default Api;

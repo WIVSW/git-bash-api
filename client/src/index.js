@@ -3,3 +3,4 @@ import 'babel-polyfill';
 import DIC from './dic';
 
 const dic = new DIC();
+window.DIC = dic;
