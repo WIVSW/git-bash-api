@@ -7,7 +7,7 @@
     "start": "node server/index.js",
     "test": "npm run test:lint && npm run test:unit",
     "test:unit": "export NODE_ENV=test && mocha --timeout=5000 --recursive test/index.test.js",
-    "test:lint": "$(npm bin)/eslint server test"
+    "test:lint": "$(npm bin)/eslint server test client/src client/webpack client/webpack.config.js"
   },
   "repository": {
     "type": "git",

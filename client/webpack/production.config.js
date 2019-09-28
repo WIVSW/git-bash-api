@@ -1,7 +1,7 @@
 const fromRoot = require('./helpers/from-root');
 
-const { entry, optimization } = require('./common.config');
-const { babel, sass } = require('./rules');
+const {entry, optimization} = require('./common.config');
+const {babel, sass} = require('./rules');
 const {
 	clean,
 	html,
