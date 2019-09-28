@@ -162,7 +162,7 @@ describe('Custom Promise', () => {
 	});
 
 	it('Test from the task description', (done) => {
-		const promise = new CustomPromise(function(resolve){
+		const promise = new CustomPromise(function(resolve) {
 			resolve(42);
 		});
 
