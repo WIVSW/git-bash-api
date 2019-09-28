@@ -65,7 +65,6 @@ const commits = async (repoId, hash, offset, limit) => {
 	try {
 		const args = [
 			'log',
-			hash,
 			`--pretty="${getCommitFormat()}"`,
 		];
 
@@ -76,6 +75,8 @@ const commits = async (repoId, hash, offset, limit) => {
 		if (isFinite(limit)) {
 			args.push(`--max-count=${limit}`);
 		}
+
+		args.push(hash);
 
 		const stdout = await spawnCmd('git', args, repoId, (out, line) => {
 			if (!out) {
@@ -125,6 +126,7 @@ const getFilesList = async (repoId, hash, path) => {
 	try {
 		const {stdout} = await execute(
 			'git', [
+				'--no-pager',
 				'ls-tree',
 				hash,
 			], join(repoId, `./${path}`)
@@ -132,17 +134,12 @@ const getFilesList = async (repoId, hash, path) => {
 		return stdout
 			.split('\n')
 			.filter(Boolean)
-			.map((row) => {
-				const array = row.split('\t');
-				const name = array.slice(-1)[0] || null;
-				const isFile = array.some((col) => col.includes('blob'));
-				const isDir = array.some((col) => col.includes('tree'));
-				return {
-					name,
-					isFile,
-					isDir,
-				};
-			});
+			.map((row) => row
+				.split(/(\s|\t)/g)
+				.map((prop) => prop.trim())
+				.filter(Boolean)
+			)
+			.map(([mode, type, object, name]) => ({mode, type, object, name}));
 	} catch (error) {
 		throw new HashNotExist();
 	}
