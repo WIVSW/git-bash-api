@@ -1,0 +1,26 @@
+.Form {
+	display: flex;
+	padding: 10px 0;
+	margin: 0 -10px;
+
+	&-Col {
+		display: flex;
+		padding: 0 10px;
+
+		&_type {
+			&_big {
+				flex-grow: 1;
+			}
+		}
+	}
+
+	&-Input {
+		width: 100%;
+	}
+
+	&-Control {
+		border-radius: 15px;
+		outline: none;
+		padding: 5px 10px;
+	}
+}

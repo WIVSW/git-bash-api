@@ -24,7 +24,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use('/api', apiRoute);
+app.use(express.static(resolve(__dirname, '../client/build')));
+app.use('/api', (req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers',
+		'Origin, X-Requested-With, Content-Type, Accept');
+	next();
+}, apiRoute);
 
 app.listen(PORT, () => {
 	console.log(`Express server listening on port ${PORT}`);
