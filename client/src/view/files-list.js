@@ -54,9 +54,27 @@ class FilesList extends View {
 		</div>
 		`;
 
-		this._state.forEach((tree) => {
-			html += this._renderTree(tree);
-		});
+		if (this._state.length) {
+			this._state.forEach((tree) => {
+				html += this._renderTree(tree);
+			});
+		} else {
+			html += `
+				<div class="Table-Row 
+					Block_m-space-t_m Block_m-space-b_l Block_m-space-r_xxxl">
+					<div class="Table-Cell Table-Cell_m-width_full
+						Table-Cell_order_1 Block_d-space-h_xs Block_m-space-v_m
+						Block_m-space-h_xxs">
+						<div class="IconPlus">
+							<span class="Text Text_size_l Text_weight_bold">
+								No found files 
+							</span>
+						</div>
+				</div>
+					
+				</div>
+			`;
+		}
 
 		this._$el.innerHTML = html;
 	}
@@ -126,7 +144,7 @@ class FilesList extends View {
 	 */
 	_formatDate(date) {
 		const month = FilesList.Monthes[date.getMonth()];
-		return `${month} ${date.getDay()}, ${date.getFullYear()}`;
+		return `${month} ${date.getDay() + 1}, ${date.getFullYear()}`;
 	}
 }
 
