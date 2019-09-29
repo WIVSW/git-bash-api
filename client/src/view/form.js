@@ -32,6 +32,8 @@ class Form extends View {
 			this.setState(this._store.getState().repos);
 		});
 
+		this._$el.addEventListener('submit', this._onSubmit.bind(this));
+
 		this._actions.loadRepos();
 	}
 
@@ -49,7 +51,8 @@ class Form extends View {
 		if (this._state.length) {
 			html = `
 				<div class="Form-Col Form-Col_type_big">
-					<input type="text" class="Form-Input Form-Control">
+					<input type="text" name="pattern"
+						placeholder="Type something" class="Form-Input Form-Control">
 				</div>
 				<div class="Form-Col">
 					<button type="submit" class="Button Form-Button Form-Control">
@@ -60,6 +63,22 @@ class Form extends View {
 		}
 
 		this._$el.innerHTML = html;
+	}
+
+	/**
+	 * @param {Event} event
+	 * @private
+	 */
+	_onSubmit(event) {
+		event.preventDefault();
+		const input = event.target.querySelector('input[name=pattern]');
+		const value = input ? input.value : '';
+
+		if (value) {
+			this._actions.loadTrees(null, value);
+		}
+
+		input.value = '';
 	}
 }
 
