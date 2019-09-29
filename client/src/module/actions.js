@@ -40,7 +40,7 @@ class Actions {
 			}
 
 			dispatch({
-				type: 'LOAD_TREES',
+				type: Actions.Types.LOAD_TREES,
 				payload: trees,
 			});
 		});
@@ -58,11 +58,19 @@ class Actions {
 			}
 
 			dispatch({
-				type: 'LOAD_REPOS',
+				type: Actions.Types.LOAD_REPOS,
 				payload: repos,
 			});
 		});
 	}
 }
+
+/**
+ * @enum {string}
+ */
+Actions.Types = {
+	LOAD_TREES: 'load-trees',
+	LOAD_REPOS: 'load-repos',
+};
 
 export default Actions;

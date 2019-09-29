@@ -10,8 +10,6 @@ const {
 	sass: sassPlugin,
 } = require('./plugins');
 
-const SERVER_URL = 'http://localhost:3000/';
-
 module.exports = {
 	entry,
 	output: {
