@@ -1,6 +1,4 @@
 import View from './view';
-import TreeItem from "../model/tree-item";
-import Commit from "../model/commit";
 
 /**
  */

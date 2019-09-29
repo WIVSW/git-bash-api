@@ -1,6 +1,8 @@
 import Connection from './module/connection';
 import CommitsApi from './api/commits';
 import ReposApi from './api/repos';
+import Store from './store/store';
+import PromiseMiddleware from './module/promise-middleware';
 
 /**
  */
@@ -24,6 +26,15 @@ class DIC {
 		 * @type {ReposApi}
 		 */
 		this.api.repos = new ReposApi(connection);
+
+		/**
+		 * @type {Store}
+		 */
+		this.store = Store.createStore(
+			(...args) => console.log('reduce', ...args),
+			{trees: []},
+			PromiseMiddleware
+		);
 	}
 }
 
