@@ -29,13 +29,6 @@ class FilesList extends View {
 	/**
 	 * @override
 	 */
-	clear() {
-		this._$el.innerHTML = '';
-	}
-
-	/**
-	 * @override
-	 */
 	render() {
 		// Начал было реализовывать рендер
 		// на DocumentFragment, но слишком много

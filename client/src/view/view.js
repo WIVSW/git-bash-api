@@ -26,14 +26,8 @@ class View {
 	 */
 	setState(state) {
 		this._state = state;
-		this.clear();
 		this.render();
 	}
-
-	/**
-	 * @abstract
-	 */
-	clear() {}
 
 	/**
 	 * @abstract
