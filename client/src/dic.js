@@ -34,7 +34,7 @@ class DIC {
 		 */
 		this.store = Store.createStore(
 			reducer,
-			{trees: []},
+			{repos: [], trees: []},
 			PromiseMiddleware
 		);
 
