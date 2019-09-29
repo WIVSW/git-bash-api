@@ -11,7 +11,7 @@ class Connection {
 		 * @private
 		 */
 		this._fetcher = axios.create({
-			baseURL: '/api/',
+			baseURL: 'http://localhost:3000/api/',
 			timeout: 30 * 1000,
 		});
 	}

@@ -29,13 +29,6 @@ module.exports = {
 	devServer: {
 		host: 'localhost', // Defaults to `localhost`
 		port: 9000, // Defaults to 8080
-		historyApiFallback: true,
-		proxy: {
-			'/api': {
-				target: SERVER_URL,
-				secure: false,
-			},
-		},
 	},
 	plugins: [
 		sassPlugin,
