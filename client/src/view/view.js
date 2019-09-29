@@ -7,10 +7,10 @@ class View {
 	 */
 	constructor($el, state = {}) {
 		/**
-		 * @type {Object}
+		 * @type {*}
 		 * @private
 		 */
-		this._state = {};
+		this._state = null;
 
 		/**
 		 * @type {HTMLElement}
@@ -22,10 +22,10 @@ class View {
 	}
 
 	/**
-	 * @param {Object} state
+	 * @param {*} state
 	 */
 	setState(state) {
-		this._state = Object.assign({}, this._state, state);
+		this._state = state;
 		this.clear();
 		this.render();
 	}

@@ -4,14 +4,26 @@ import View from './view';
  */
 class FilesList extends View {
 	/**
+	 * @param {Store} store
 	 */
-	constructor() {
+	constructor(store) {
 		super(
 			document.getElementsByClassName('Table')[0],
-			{
-				trees: [],
-			},
+			store.getState().trees,
 		);
+
+		/**
+		 * @type {Store}
+		 * @private
+		 */
+		this._store = store;
+
+		// Да, от событий нужно отписываться,
+		// но это синглтон, поэтому пока что
+		// отписка от событий - мертвый код
+		this._store.subscribe(() => {
+			this.setState(this._store.getState().trees);
+		});
 	}
 
 	/**
@@ -49,7 +61,7 @@ class FilesList extends View {
 		</div>
 		`;
 
-		this._state.trees.forEach((tree) => {
+		this._state.forEach((tree) => {
 			html += this._renderTree(tree);
 		});
 

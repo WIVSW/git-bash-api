@@ -3,6 +3,8 @@ import CommitsApi from './api/commits';
 import ReposApi from './api/repos';
 import Store from './store/store';
 import PromiseMiddleware from './module/promise-middleware';
+import Actions from './module/actions';
+import reducer from './module/reducer';
 
 /**
  */
@@ -31,10 +33,15 @@ class DIC {
 		 * @type {Store}
 		 */
 		this.store = Store.createStore(
-			(...args) => console.log('reduce', ...args),
+			reducer,
 			{trees: []},
 			PromiseMiddleware
 		);
+
+		/**
+		 * @type {Actions}
+		 */
+		this.actions = new Actions(this.store, this.api);
 	}
 }
 

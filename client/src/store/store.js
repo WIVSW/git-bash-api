@@ -1,20 +1,11 @@
-import EventEmitter from 'event-emitter';
-
 /**
  */
-class Store extends EventEmitter {
+class Store{
 	/**
 	 * @param {function} reducer
 	 * @param {Object=} state
 	 */
 	constructor(reducer, state = {}) {
-		super();
-
-		/**
-		 * @const {string}
-		 */
-		this.EVENT_STORE_UPDATE = 'store-update';
-
 		/**
 		 * @type {function}
 		 * @private
@@ -26,6 +17,13 @@ class Store extends EventEmitter {
 		 * @private
 		 */
 		this._state = state;
+
+		/**
+		 * @type {Array<function>}
+		 * @private
+		 */
+		this._listeners = [];
+
 	}
 
 	/**
@@ -33,9 +31,8 @@ class Store extends EventEmitter {
 	 * @return {void}
 	 */
 	dispatch(action) {
-		this._state = this._reducer(action);
-
-		this.emit(this.EVENT_STORE_UPDATE);
+		this._state = this._reducer(action, this._state);
+		this._listeners.forEach((listener) => listener());
 	}
 
 	/**
@@ -46,13 +43,21 @@ class Store extends EventEmitter {
 	}
 
 	/**
+	 * Хотел использовать библиотеку,
+	 * но почему-то babel криво работал с наследованием
+	 * времени разбираться не было
 	 * @param {function} listener
 	 * @return {function} unsubscribe function
 	 */
 	subscribe(listener) {
-		this.on(this.EVENT_STORE_UPDATE, listener);
+		this._listeners.push(listener);
 
-		return this.off.bind(this, this.EVENT_STORE_UPDATE, listener);
+		return () => {
+			const index = this._listeners.indexOf(listener);
+			if (index) {
+				this._listeners.splice(index, 1);
+			}
+		};
 	}
 
 	/**
@@ -92,6 +97,7 @@ class Store extends EventEmitter {
 		/**
 		 */
 		class MiddlewaredStore extends Store {
+
 			/**
 			 * @param {Array<*>} args
 			 * @return {void}
@@ -110,7 +116,12 @@ class Store extends EventEmitter {
 		const chain = middlewares.map((mw) => mw(middlewareApi));
 		// Делаем так, чтобы миддлвар вызывал другой миддлвар,
 		// когда закончил выполнение
-		newDispatch = chain.reduce((a, next) => a(next));
+		if (chain.length > 1) {
+			newDispatch = chain.reduce((a, next) => a(next))();
+		} else {
+			newDispatch = chain[0](() => {});
+		}
+
 
 		return store;
 	}

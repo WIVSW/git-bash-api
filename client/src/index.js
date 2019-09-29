@@ -5,4 +5,4 @@ import FilesList from './view/files-list';
 
 const dic = new DIC();
 window.DIC = dic;
-window.FILES_LIST = new FilesList();
+window.FILES_LIST = new FilesList(dic.store);
