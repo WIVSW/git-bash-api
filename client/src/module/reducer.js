@@ -4,6 +4,10 @@ export default ({type, payload}, state) => {
 		return Object.assign({}, state, {
 			trees: payload,
 		});
+	case 'LOAD_REPOS':
+		return Object.assign({}, state, {
+			repos: payload,
+		});
 	default:
 		return state;
 	}

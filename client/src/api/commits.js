@@ -19,11 +19,12 @@ class CommitsApi extends Api {
 	 * @return {Promise<Array<TreeItem>>}
 	 */
 	async getFiles(repoId, source = 'master', path = '') {
+		const fullpath = path ? `${this._uri(path)}/` : '';
 		const datas = await this
 			._request(
 				`/repos/${this._uri(repoId)}/` +
 				`tree/${this._uri(source)}/` +
-				`${this._uri(path)}/`
+				`${fullpath}`
 			);
 		return datas.map((data) => new TreeItem(data));
 	}
@@ -52,7 +53,7 @@ class CommitsApi extends Api {
 	 * @param {string=} path
 	 * @return {Promise<Array<CommitsApi.TreeInfo>>}
 	 */
-	async getTrees(repoId, pattern = '', source = 'master', path = '') {
+	async getTrees(repoId, pattern = '', source = 'develop', path = '') {
 		const infoMap = {};
 		const items = await this.getFiles(repoId, source, path);
 		const matches = items.filter((item) =>

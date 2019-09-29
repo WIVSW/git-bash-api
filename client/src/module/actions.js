@@ -26,18 +26,41 @@ class Actions {
 	}
 
 	/**
-	 * @param {string} repoId
+	 * @param {string=} repoId
 	 * @param {string=} pattern
 	 */
-	loadTrees(repoId = 'react', pattern) {
-		this._store.dispatch((dispatch, getState) => {
-			return this._apiCommits
-				.getTrees(repoId, pattern)
-				.catch(() => ([]))
-				.then((trees) => dispatch({
-					type: 'LOAD_TREES',
-					payload: trees,
-				}));
+	loadTrees(repoId, pattern) {
+		this._store.dispatch(async (dispatch, getState) => {
+			repoId = repoId || getState().repos[0].id;
+			let trees = null;
+			try {
+				trees = await this._apiCommits.getTrees(repoId, pattern);
+			} catch (error) {
+				trees = [];
+			}
+
+			dispatch({
+				type: 'LOAD_TREES',
+				payload: trees,
+			});
+		});
+	}
+
+	/**
+	 */
+	loadRepos() {
+		this._store.dispatch(async (dispatch, getState) => {
+			let repos = null;
+			try {
+				repos = await this._apiRepos.getRepos();
+			} catch (error) {
+				repos = [];
+			}
+
+			dispatch({
+				type: 'LOAD_REPOS',
+				payload: repos,
+			});
 		});
 	}
 }
