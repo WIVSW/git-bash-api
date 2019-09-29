@@ -1,5 +1,6 @@
 import Connection from './module/connection';
 import CommitsApi from './api/commits';
+import ReposApi from './api/repos';
 
 /**
  */
@@ -18,6 +19,11 @@ class DIC {
 		 * @type {CommitsApi}
 		 */
 		this.api.commits = new CommitsApi(connection);
+
+		/**
+		 * @type {ReposApi}
+		 */
+		this.api.repos = new ReposApi(connection);
 	}
 }
 
