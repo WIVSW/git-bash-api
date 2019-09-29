@@ -1,6 +1,6 @@
 /**
  */
-class Store{
+class Store {
 	/**
 	 * @param {function} reducer
 	 * @param {Object=} state
@@ -23,7 +23,6 @@ class Store{
 		 * @private
 		 */
 		this._listeners = [];
-
 	}
 
 	/**
@@ -97,7 +96,6 @@ class Store{
 		/**
 		 */
 		class MiddlewaredStore extends Store {
-
 			/**
 			 * @param {Array<*>} args
 			 * @return {void}

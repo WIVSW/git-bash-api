@@ -25,6 +25,10 @@ class Actions {
 		this._apiCommits = api.commits;
 	}
 
+	/**
+	 * @param {string} repoId
+	 * @param {string=} pattern
+	 */
 	loadTrees(repoId = 'react', pattern) {
 		this._store.dispatch((dispatch, getState) => {
 			return this._apiCommits
@@ -36,7 +40,6 @@ class Actions {
 				}));
 		});
 	}
-
 }
 
 export default Actions;
