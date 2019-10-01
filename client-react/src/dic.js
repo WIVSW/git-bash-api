@@ -1,6 +1,7 @@
 import Connection from './module/connection';
 import CommitsApi from './api/commits';
 import ReposApi from './api/repos';
+import { createStore } from 'redux';
 
 /**
  */
@@ -24,6 +25,19 @@ class DIC {
 		 * @type {ReposApi}
 		 */
 		this.api.repos = new ReposApi(connection);
+
+		/**
+		 * @type {Store}
+		 */
+		this.store = createStore(
+			(state) => state,
+			{
+				repos: [
+					{ id: 'some-name'}
+				],
+				trees: [],
+			}
+		)
 	}
 }
 
