@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+
 import './index.css';
 import App from './App';
-import DIC from './dic';
-const dic = new DIC();
+import api from './api';
+import store from './redux/store';
 
-window.DIC = dic;
+window.DIC = api;
+window.STORE = store;
 ReactDOM.render(
 	(
-		<Provider store={dic.store}>
+		<Provider store={store}>
 			<App />
 		</Provider>
 	),

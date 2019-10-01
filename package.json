@@ -43,6 +43,7 @@
     "react-dom": "^16.10.1",
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
-    "redux-promise-middleware": "^6.1.1"
+    "redux-promise-middleware": "^6.1.1",
+    "redux-promise-middleware-actions": "^3.0.1"
   }
 }
