@@ -1,0 +1,29 @@
+// TODO: Разобраться с зависимостями
+@import "../../const";
+//@import "../edge/edge";
+
+.Header {
+	$space: 13px;
+	width: 100%;
+	padding: 0 15px;
+	height: 61px;
+	display: flex;
+
+	&-Dropdown {
+		align-items: flex-end;
+	}
+
+	&-Item {
+		padding-left: $space;
+		padding-right: $space;
+	}
+
+	&-Icon {
+		right: -17px;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		padding: 0 31px;
+		height: 56px;
+	}
+}
