@@ -1,6 +1,8 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import { cn } from '@bem-react/classname';
+
+import {selectRepo} from '../../redux/repos/actions'
 
 import Dropdown from "../Dropdown/Dropdown";
 import Logo from '../Logo/Logo';
@@ -16,9 +18,14 @@ import './Header.scss';
 const cnHeader = cn('Header');
 
 const Header = () => {
+	const dispatch = useDispatch();
 	const repos = useSelector((state) => state.repos.items);
 	const selected = useSelector((state) => state.repos.selected);
 	const repoName = selected || (repos[0] && repos[0].id) || '';
+	const items = repos.map((repo) => ({
+		id: repo.id,
+		text: repo.id
+	}));
 
 	return (
 		<div className={cnHeader(null, [
@@ -50,7 +57,11 @@ const Header = () => {
 						]
 					)
 				}>
-					<Dropdown iconClassName={cnHeader('Icon')}>
+					<Dropdown
+						iconClassName={cnHeader('Icon')}
+						items={items}
+						onSelect={(repoId) => dispatch(selectRepo(repoId))}
+					>
 						<Text mods={{size: 'm', 'letter-space': 'xl', weight: 'bold', }}>Repository </Text>
 						<Text mods={{size: 'm', 'letter-space': 'xl', }}>{repoName}</Text>
 					</Dropdown>

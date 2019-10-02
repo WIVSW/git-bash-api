@@ -1,0 +1,19 @@
+.List {
+
+	&_pointer {
+		.List-Item {
+			cursor: pointer;
+		}
+	}
+
+	&_shadow {
+		&_dropdown {
+			box-shadow: 0 9px 11px rgba(53, 73, 93, 0.2);
+		}
+	}
+
+	&-Item {
+		min-width: 200px;
+		padding: 15px 22px;
+	}
+}

@@ -1,0 +1,10 @@
+.Dropdown {
+	position: relative;
+
+	&-List {
+		display: block;
+		position: absolute;
+		background-color: #fff;
+		top: 100%;
+	}
+}

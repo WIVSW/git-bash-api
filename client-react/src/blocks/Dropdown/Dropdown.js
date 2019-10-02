@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { cn } from '@bem-react/classname';
 
 import './Dropdown.scss';
 import Select from "../Select/Select";
 import {cnBlock} from "../Block/Block";
+import List from "../List/List";
 
 const cnDropdown = cn('Dropdown');
+
+const INITIAL_STATE = {
+	opened: false,
+};
 
 const Dropdown = ({
     className = '',
 	iconClassName,
+	items = [],
+	onSelect = null,
 	children,
 }) => {
+	const [state, setState] = useState(INITIAL_STATE);
+	const onToggle = useCallback(() => setState({
+		opened: !state.opened
+	}), [state, setState])
 	return (
-		<div className={cnDropdown(null, [className, cnBlock()])}>
+		<div
+			className={cnDropdown(null, [className, cnBlock()])}
+			onClick={onToggle}
+		>
 			<Select
 				className={cnDropdown('Select')}
 				mods={{active: true}}
@@ -23,6 +37,16 @@ const Dropdown = ({
 			>
 				{children}
 			</Select>
+			{
+				state.opened ?
+					<List
+						className={cnDropdown('List')}
+						mods={{pointer: true, shadow: 'dropdown'}}
+						items={items}
+						onSelect={onSelect ? onSelect : null}
+					/>
+				: null
+			}
 		</div>
 	);
 };
