@@ -21,7 +21,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const repos = useSelector((state) => state.repos.items);
 	const selected = useSelector((state) => state.repos.selected);
-	const repoName = selected || (repos[0] && repos[0].id) || '';
+	const repoName = selected || '';
 	const items = repos.map((repo) => ({
 		id: repo.id,
 		text: repo.id

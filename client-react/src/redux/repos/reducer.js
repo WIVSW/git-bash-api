@@ -9,9 +9,13 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case `${ReposActions.LOAD}_${ActionType.Fulfilled}`:
+			const {payload} = action;
+			const selected = state.selected ||
+				(payload[0] && payload[0].id) || null;
 			return {
 				...state,
-				items: action.payload
+				selected,
+				items: payload
 			};
 		case ReposActions.SELECT:
 			return {
