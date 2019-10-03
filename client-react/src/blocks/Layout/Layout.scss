@@ -1,0 +1,30 @@
+@import "../../const";
+
+.Layout {
+	padding: 0 getSpace('m');
+	overflow: hidden;
+
+	@media (min-width: $BREAKPOINT) {
+		padding: 0 getSpace('xxl');
+	}
+
+	&_responsive-space {
+		&_branches {
+			padding: 0 0 0 getSpace('m');
+
+			@media (min-width: $BREAKPOINT) {
+				padding: 0 getSpace('m') 0 getSpace('xxl');
+			}
+		}
+
+		&_history {
+			@media (min-width: $BREAKPOINT) {
+				padding: 0 getSpace('m') 0 getSpace('xxl');
+			}
+		}
+
+		&_details {
+			padding: 0 0 0 getSpace('m');
+		}
+	}
+}

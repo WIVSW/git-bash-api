@@ -16,7 +16,6 @@ const Dropdown = ({
     className = '',
 	iconClassName,
 	items = [],
-	onSelect = null,
 	children,
 }) => {
 	const [state, setState] = useState(INITIAL_STATE);
@@ -41,9 +40,8 @@ const Dropdown = ({
 				state.opened ?
 					<List
 						className={cnDropdown('List')}
-						mods={{pointer: true, shadow: 'dropdown'}}
+						mods={{shadow: 'dropdown'}}
 						items={items}
-						onSelect={onSelect ? onSelect : null}
 					/>
 				: null
 			}
