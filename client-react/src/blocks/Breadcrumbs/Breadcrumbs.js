@@ -28,14 +28,15 @@ const Breadcrumbs = ({
 					.map((crumb, i, arr) => {
 						const isLast = (arr.length - 1) === i;
 						return (
-							<React.Fragment>
+							<React.Fragment key={`${crumb.text}_FRAGMENT`}>
 								<Link
+									key={crumb.text}
 									to={crumb.url}
 									className={cnBreadcrumbs('Item', {
 										selected: isLast
 									})}
 								>{crumb.text}</Link>
-								{isLast ? null : <span className="Breadcrumbs-Separator">/</span>}
+								{isLast ? null : <span key={`${crumb.text}/`} className="Breadcrumbs-Separator">/</span>}
 							</React.Fragment>
 						)
 					})
