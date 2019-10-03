@@ -8,12 +8,10 @@ import Footer from './blocks/Footer/Footer';
 import Layout from "./blocks/Layout/Layout";
 
 
-const Wrapper = ({
-    match
-}) => {
+const Wrapper = (props) => {
     const items = useSelector((state) => state.repos.items);
     const dispatch = useDispatch();
-    const id = match.params.id || null;
+    const id = props.match.params.id || null;
     if (!(
         id && items.length &&
         items.some((item) => item.id === id)
@@ -25,9 +23,9 @@ const Wrapper = ({
 
     return (
         <React.Fragment>
-            <Header/>
-            <Layout/>
-            <Footer/>
+            <Header {...props} />
+            <Layout {...props} />
+            <Footer {...props} />
         </React.Fragment>
     );
 };
@@ -51,7 +49,7 @@ function App() {
                 </Route>
                 <Route path={'/repository/:id'} component={Wrapper} />
                 <Route path={'/404/'} component={NotFound} />
-                <Route path={'*'}>
+                <Route>
                     <Redirect to={'/404/'}/>
                 </Route>
             </Switch>
