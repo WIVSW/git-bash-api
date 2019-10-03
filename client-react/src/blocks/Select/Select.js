@@ -4,6 +4,7 @@ import { cn } from '@bem-react/classname';
 import './Select.scss';
 import Icon from "../Icon/Icon";
 import arrowIcon from "../../img/arrow-down.svg";
+import {cnBlock} from "../Block/Block";
 
 export const cnSelect = cn('Select');
 
@@ -16,7 +17,7 @@ const Select = ({
 	children
 }) => {
 	return (
-		<div className={cnSelect(mods, [className])}>
+		<div className={cnSelect(mods, [className, cnBlock()])}>
 			<div className={cnSelect('Title', [titleMix])}>
 				{children}
 			</div>

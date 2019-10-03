@@ -1,0 +1,18 @@
+@import "../../const";
+
+.Footer {
+	display: none;
+	justify-content: space-between;
+	color: #7F8285;
+	font-size: 13px;
+	padding: 17px 19px;
+	letter-spacing: -0.1px;
+
+	&-Version {
+		padding-right: 30px;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		display: flex;
+	}
+}

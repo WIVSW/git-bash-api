@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import {load} from './redux/repos/actions'
 import Header from './blocks/Header/Header';
+import Footer from './blocks/Footer/Footer';
 
 function App() {
   const repos = useSelector((state) => state.repos.items);
@@ -15,6 +16,7 @@ function App() {
   return (
       <React.Fragment>
         <Header/>
+        <Footer/>
       </React.Fragment>
   );
 }
