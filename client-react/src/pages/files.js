@@ -72,9 +72,10 @@ const parseTrees = (trees = [], url, id, hash, path = '') => {
 	const rows = dirs
 		.concat(blobs)
 		.map(({treeItem, commit}) => {
+			const fullPath = path ? `${path}/${treeItem.name}` : treeItem.name;
 			return createRow(
 				treeItem.name,
-				`/repository/${id}/${treeItem.mode}/${hash}/${path}/${treeItem.name}`,
+				`/repository/${id}/${treeItem.mode}/${hash}/${fullPath}`,
 				treeItem.mode,
 				commit.hash ? commit.hash.short[0] || '' : '',
 				commit.subject,
