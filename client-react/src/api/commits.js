@@ -72,7 +72,7 @@ class CommitsApi extends Api {
 				})
 		);
 
-		return Object.values(infoMap);
+		return Object.values(infoMap)
 	}
 }
 

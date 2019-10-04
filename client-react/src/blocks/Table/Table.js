@@ -11,6 +11,8 @@ const Table = ({
     className = '',
     mods = {},
 	cells = [],
+	rows = [],
+	children,
 }) => {
 	return (
 		<div className={cnTable(mods, [className])}>
@@ -30,6 +32,8 @@ const Table = ({
 					);
 				})}
 			</div>
+			{rows.map((row) => <div>{row.name.value}</div>)}
+			{children}
 		</div>
 	);
 };

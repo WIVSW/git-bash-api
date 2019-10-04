@@ -3,19 +3,50 @@ import {ReposActions} from './actions';
 
 const INITIAL_STATE = {
 	items: [],
+	trees: {},
 	selected: null,
+	filesLoading: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+		case `${ReposActions.LOAD_FILES}_${ActionType.Pending}`:
+			return {
+				...state,
+				filesLoading: true,
+			};
+		case `${ReposActions.LOAD_FILES}_${ActionType.Rejected}`:
+			return {
+				...state,
+				filesLoading: false,
+			};
+		case `${ReposActions.LOAD_FILES}_${ActionType.Fulfilled}`:
+			const {repoId, path, trees} = action.payload;
+			const cached = state.trees[repoId] || {};
+			const newCached = Object
+				.keys(cached)
+				.slice(-3)
+				.reduce((a, b) => a[b], {});
+			const newTrees = {
+				...state.trees,
+				[repoId]: {
+					...newCached,
+					[path]: trees
+				}
+			};
+			return {
+				...state,
+				trees: newTrees,
+				filesLoading: false,
+			};
 		case `${ReposActions.LOAD}_${ActionType.Fulfilled}`:
 			const {payload} = action;
 			const selected = state.selected ||
 				(payload[0] && payload[0].id) || null;
 			return {
 				...state,
+				items: payload,
 				selected,
-				items: payload
 			};
 		case ReposActions.SELECT:
 			return {
