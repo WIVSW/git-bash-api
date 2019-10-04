@@ -3,7 +3,7 @@ import { cn } from '@bem-react/classname';
 
 import './Icon.scss';
 
-const cnIcon = cn('Icon');
+export const cnIcon = cn('Icon');
 
 const Icon = ({
 	className = '',

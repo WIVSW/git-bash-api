@@ -90,6 +90,9 @@ const TABLE_CELLS = [
 		text: 'name',
 		size: 'm',
 		order: 1,
+		weight: 'bold',
+		mobileLink: true,
+		mobileWidthFull: true
 	},
 	{
 		text: 'last commit',
@@ -100,7 +103,8 @@ const TABLE_CELLS = [
 	{
 		text: 'commit message',
 		size: 'xl',
-		order: 2
+		order: 2,
+		mobileWidthFull: true
 	},
 	{
 		text: 'committer',
