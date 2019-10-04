@@ -3,6 +3,7 @@ import Page from './page';
 import Table from "../blocks/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {loadFiles} from "../redux/repos/actions";
+import TreeItem from "../model/tree-item";
 
 const createFilesTabs = (matchUrl, repoId, hash = 'master') => {
 	const treeUrl = `/repository/${repoId}/tree`;
@@ -26,34 +27,63 @@ const formatDate = (date) => {
 	return `${month} ${date.getDay() + 1}, ${date.getFullYear()}`;
 };
 
-const parseTrees = (trees = [], url) => {
+const createRow = (
+	name,
+	link,
+	iconType = '',
+	hash = '',
+	subject = '',
+	author = '',
+	date = ''
+) => ({
+	name: {
+		value: name,
+		url: link,
+		iconType,
+	},
+	'last commit': {
+		value: hash,
+		url: '/404/',
+	},
+	'commit message': {
+		value: subject,
+	},
+	committer: {
+		value: author,
+		url: '/404/',
+	},
+	updated: {
+		value: date,
+	},
+});
+
+const parseTrees = (trees = [], url, path = '') => {
 	const dirs = trees.filter((file) => file.treeItem.isDir);
 	const blobs = trees.filter((file) => file.treeItem.isFile);
 	const urlPart = url.split('/').filter(Boolean);
-	return dirs.concat(blobs).map(({treeItem, commit}) => {
-		return {
-			name: {
-				value: treeItem.name,
-				url: urlPart.concat([treeItem.name])
+	const pathPart = path.split('/').filter(Boolean);
+	const prepended = pathPart.length ? [createRow(
+		'..',
+		`/${urlPart.slice(0, -1).join('/')}`,
+		TreeItem.Types.TREE
+		)] : [];
+
+	const rows = dirs
+		.concat(blobs)
+		.map(({treeItem, commit}) => {
+			return createRow(
+				treeItem.name,
+				urlPart
+					.concat([treeItem.name])
 					.reduce((a, b) => `${a}/${b}`, ''),
-				iconType: treeItem.mode
-			},
-			'last commit': {
-				value: commit.hash ? commit.hash.short[0] || '' : '',
-				url: '/404/',
-			},
-			'commit message': {
-				value: commit.subject,
-			},
-			committer: {
-				value: commit.author,
-				url: '/404/',
-			},
-			updated: {
-				value: formatDate(commit.date),
-			},
-		};
-	});
+				treeItem.mode,
+				commit.hash ? commit.hash.short[0] || '' : '',
+				commit.subject,
+				commit.author,
+				formatDate(commit.date)
+			);
+		});
+	return prepended.concat(rows);
 };
 
 const TABLE_CELLS = [
@@ -99,7 +129,7 @@ const FilesPage = (props) => {
 		dispatch(loadFiles(id, hash, path, url));
 	}
 
-	const rows = (files.length && parseTrees(files, url)) || [];
+	const rows = (files.length && parseTrees(files, url, path)) || [];
 
 	return (
 		<Page {...props} tabs={tabs}>
