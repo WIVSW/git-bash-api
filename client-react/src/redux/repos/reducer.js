@@ -29,7 +29,10 @@ export default (state = INITIAL_STATE, action) => {
 			const newCached = Object
 				.keys(cached)
 				.slice(-3)
-				.reduce((a, b) => a[b], {});
+				.reduce((a, b) => {
+					a[b] = cached[b];
+					return a;
+				}, {});
 			const newTrees = {
 				...state.trees,
 				[repoId]: {
