@@ -15,10 +15,10 @@ const Table = ({
 	return (
 		<div className={cnTable(mods, [className])}>
 			<div className={cnTable('Row', null, [cnTable('Head')])}>
-				{cells.map(({text, size}) => {
+				{cells.map(({text, size}, i) => {
 					const cellName = `${text.slice(0, 1).toUpperCase()}${text.slice(1)}`;
 					return (
-						<div className={cnTable(
+						<div key={i} className={cnTable(
 							'Cell',
 							{size},
 							[cnBlock({'d-space-h': 'xs'})]
