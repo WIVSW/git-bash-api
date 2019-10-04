@@ -1,5 +1,6 @@
 import React from 'react';
 import Breadcrumbs from "../blocks/Breadcrumbs/Breadcrumbs";
+import Tabs from "../blocks/Tabs/Tabs";
 
 const parseCrumbs = (path, params) => {
 	const crumbs = [];
@@ -28,18 +29,19 @@ const parseCrumbs = (path, params) => {
 			return `${a}/${b}`
 		}, '');
 	return crumbs;
-}
+};
 
 const Page = ({
 	history,
 	match,
+	tabs,
 	children
 }) => {
 	const crumbs = match.path ? parseCrumbs(match.path, match.params) : [];
 	return (
 		<React.Fragment>
 			<Breadcrumbs crumbs={crumbs}/>
-			{children}
+			<Tabs tabs={tabs}>{children}</Tabs>
 		</React.Fragment>
 	);
 };

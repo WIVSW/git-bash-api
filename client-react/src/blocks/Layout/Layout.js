@@ -32,6 +32,9 @@ const Layout = ({
 					history
 					content
 				/>
+				<Route path={`${match.path}/:tab/`}>
+					<Redirect to={'/404/'}/>
+				</Route>
 			</Switch>
 		</div>
 	);

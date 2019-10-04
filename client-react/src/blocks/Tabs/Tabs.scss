@@ -1,0 +1,17 @@
+$GRID_SPACE_MOBILE: 13px;
+
+.Tabs {
+	&-Item {
+		text-transform: uppercase;
+		padding: 10px 0;
+		margin-left: $GRID_SPACE_MOBILE;
+		margin-right: $GRID_SPACE_MOBILE;
+		color: #7F8285;
+		font-weight: bold;
+	}
+
+	&-Wrap {
+		margin-left: -$GRID_SPACE_MOBILE;
+		margin-right: -$GRID_SPACE_MOBILE;
+	}
+}

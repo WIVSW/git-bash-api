@@ -1,6 +1,8 @@
 @import "../../const";
 
 .Text {
+	text-decoration: none;
+
 	&_weight {
 		&_bold {
 			font-weight: bold;
