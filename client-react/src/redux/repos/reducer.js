@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 	trees: {},
 	selected: null,
 	filesLoading: false,
+	loadingError: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,11 +15,13 @@ export default (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				filesLoading: true,
+				loadingError: null,
 			};
 		case `${ReposActions.LOAD_FILES}_${ActionType.Rejected}`:
 			return {
 				...state,
 				filesLoading: false,
+				loadingError: action.payload && action.payload.message
 			};
 		case `${ReposActions.LOAD_FILES}_${ActionType.Fulfilled}`:
 			const {repoId, path, trees} = action.payload;
@@ -38,6 +41,7 @@ export default (state = INITIAL_STATE, action) => {
 				...state,
 				trees: newTrees,
 				filesLoading: false,
+				loadingError: null,
 			};
 		case `${ReposActions.LOAD}_${ActionType.Fulfilled}`:
 			const {payload} = action;

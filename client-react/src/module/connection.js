@@ -32,7 +32,13 @@ class Connection {
 			options.data = postData;
 		}
 
-		const {data} = await this._fetcher.request(options);
+		let data;
+		try {
+			const response = await this._fetcher.request(options);
+			data = response.data;
+		} catch (e) {
+			throw e.response && e.response.data;
+		}
 
 		if (!data) {
 			throw new Error(`Request Failed!`);

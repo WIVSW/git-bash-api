@@ -4,6 +4,7 @@ import Table from "../blocks/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {loadFiles} from "../redux/repos/actions";
 import TreeItem from "../model/tree-item";
+import {Redirect} from 'react-router-dom';
 
 const createFilesTabs = (matchUrl, repoId, hash = 'master') => {
 	const treeUrl = `/repository/${repoId}/tree`;
@@ -122,8 +123,13 @@ const FilesPage = (props) => {
 	const dispatch = useDispatch();
 	const files = useSelector(({repos}) => (repos.trees[id] && repos.trees[id][path]) || []);
 	const isLoading = useSelector(({repos}) => repos.filesLoading);
+	const error = useSelector(({repos}) => repos.loadingError);
 
-	if (!isLoading && !files.length) {
+	if (error) {
+		return <Redirect to={'/404/'}/>
+	}
+
+	if (!error && !isLoading && !files.length) {
 		dispatch(loadFiles(id, hash, path, url));
 	}
 
