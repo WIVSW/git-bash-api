@@ -57,7 +57,7 @@ const createRow = (
 	},
 });
 
-const parseTrees = (trees = [], url, path = '') => {
+const parseTrees = (trees = [], url, id, hash, path = '') => {
 	const dirs = trees.filter((file) => file.treeItem.isDir);
 	const blobs = trees.filter((file) => file.treeItem.isFile);
 	const urlPart = url.split('/').filter(Boolean);
@@ -73,9 +73,7 @@ const parseTrees = (trees = [], url, path = '') => {
 		.map(({treeItem, commit}) => {
 			return createRow(
 				treeItem.name,
-				urlPart
-					.concat([treeItem.name])
-					.reduce((a, b) => `${a}/${b}`, ''),
+				`/repository/${id}/${treeItem.mode}/${hash}/${path}/${treeItem.name}`,
 				treeItem.mode,
 				commit.hash ? commit.hash.short[0] || '' : '',
 				commit.subject,
@@ -129,7 +127,7 @@ const FilesPage = (props) => {
 		dispatch(loadFiles(id, hash, path, url));
 	}
 
-	const rows = (files.length && parseTrees(files, url, path)) || [];
+	const rows = (files.length && parseTrees(files, url, id, hash, path)) || [];
 
 	return (
 		<Page {...props} tabs={tabs}>
