@@ -9,4 +9,9 @@ module.exports = {
 			}
 		},
 	},
+	plugins: {
+		'html-reporter/hermione': {
+			path: 'reports',
+		}
+	}
 };

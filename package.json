@@ -36,6 +36,7 @@
     "eslint-plugin-react-hooks": "^2.1.1",
     "fs-extra": "^8.1.0",
     "hermione": "^2.12.6",
+    "html-reporter": "^4.13.1",
     "mocha": "^6.2.0",
     "node-sass": "^4.12.0",
     "selenium-standalone": "^6.16.0",
