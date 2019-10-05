@@ -14,5 +14,5 @@ describe('Page of the', () => {
 		return TEST_DATA;
 	});
 
-	require('./pages/repository.test');
+	require('./pages/files-list.test');
 });
