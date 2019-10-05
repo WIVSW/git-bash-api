@@ -80,10 +80,7 @@ class CommitsApi extends Api {
 	 * @param {string} repoId
 	 * @param {string=} hash (branchName|commitHash)
 	 * @param {string=} path
-	 * @return {Promise<Array<{
-	 *     treeItem: TreeItem,
-	 *     commit: Commit
-	 * }>>}
+	 * @return {Promise<Blob>}
 	 */
 	async getBlob(repoId, hash = 'master', path) {
 		let url = `/repos/${this._uri(repoId)}/blob/${this._uri(hash)}`;
@@ -93,7 +90,11 @@ class CommitsApi extends Api {
 
 		const blob = await this._request(url);
 
-		return new Blob(blob);
+		return new Blob({
+			id: Blob.createId(repoId, hash, path),
+			blob,
+			url: decodeURIComponent(url)
+		});
 	}
 }
 
