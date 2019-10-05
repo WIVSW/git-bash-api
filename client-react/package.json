@@ -2,7 +2,7 @@
   "name": "client-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "",
   "proxy": "http://localhost:4554",
   "dependencies": {
     "react-scripts": "3.1.2"
