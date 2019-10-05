@@ -27,6 +27,7 @@
   "homepage": "https://github.com/WIVSW/git-bash-api#readme",
   "devDependencies": {
     "assert": "^2.0.0",
+    "chai": "^4.2.0",
     "eslint": "^6.3.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-flowtype": "^4.3.0",
