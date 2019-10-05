@@ -63,7 +63,8 @@ const BlobPage = (props) => {
 					<Editor className={cnBlock({
 						'indent-t': 'xl',
 						'd-indent-t': 'm'
-					})} lines={lines}/>
+					})} lines={lines}
+					    filename={(blob && blob.filename) || void 0}/>
 			}
 		</Page>
 	);
