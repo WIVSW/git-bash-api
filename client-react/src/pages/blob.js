@@ -24,6 +24,13 @@ const createBlobTabs = (matchUrl, repoId, hash = 'master', path = '') => {
 	];
 };
 
+const parseLines = (rows = []) => {
+	return rows.map((row, i) => ({
+		numbers: [i + 1],
+		value: row
+	}))
+};
+
 const BlobPage = (props) => {
 	const {id, hash, path = ''} = props.match.params;
 	const {url} = props.match;
@@ -46,6 +53,8 @@ const BlobPage = (props) => {
 		dispatch(loadBlob(id, hash, path,));
 	}
 
+	const lines = (blob && parseLines(blob.rows)) || [];
+
 	return (
 		<Page {...props} tabs={tabs}>
 			{
@@ -54,7 +63,7 @@ const BlobPage = (props) => {
 					<Editor className={cnBlock({
 						'indent-t': 'xl',
 						'd-indent-t': 'm'
-					})}/>
+					})} lines={lines}/>
 			}
 		</Page>
 	);

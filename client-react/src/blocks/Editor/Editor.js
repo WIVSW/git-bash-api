@@ -16,7 +16,8 @@ export const cnEditorHeadCol = (mods = {}) => cnEditor('HeadCol', mods);
 const Editor = ({
 	className = '',
 	mods = {},
-	filename = ''
+	filename = '',
+	lines = [],
 }) => {
 	return (
 		<div className={cnEditor(mods, [className])}>
@@ -73,7 +74,30 @@ const Editor = ({
 					<div className={cnEditor('Code', {
 						'font-color': 'blue'
 					})}>
-						EDITOR
+						{lines.map(({
+							numbers = [],
+							value = '',
+						}, i) => {
+							return (
+								<div key={i} className={cnEditor('Line')}>
+									{numbers.map((number, j) => (
+											<div key={j} className={
+												cnEditor('Col', null, [
+													cnEditor('LineNumber')
+												])
+											}>
+												{number}
+											</div>
+									))}
+									<div
+										key={numbers.length}
+										className={cnEditor('Col')}
+									>
+										{value}
+									</div>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			</div>
