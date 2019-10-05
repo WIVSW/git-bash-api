@@ -1,0 +1,16 @@
+.Button {
+	padding: 7px 12px 3px;
+	color: #000;
+	box-sizing: border-box;
+	border-radius: 3px;
+
+	&_color {
+		&_gray {
+			background-color: #E6E6E6;
+		}
+	}
+
+	&_bordered {
+		border: 1px solid #CCCCCC;
+	}
+}

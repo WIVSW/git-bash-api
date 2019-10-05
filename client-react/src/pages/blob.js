@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom';
 import Editor from "../blocks/Editor/Editor";
 import Blob from "../model/blob";
 import {loadBlob} from "../redux/files/actions";
+import {cnBlock} from "../blocks/Block/Block";
 
 const createBlobTabs = (matchUrl, repoId, hash = 'master', path = '') => {
 	const blobUrl = `/repository/${repoId}/blob/${hash}/${path}`;
@@ -50,7 +51,10 @@ const BlobPage = (props) => {
 			{
 				isLoading ?
 					<div>Loading...</div> :
-					<Editor/>
+					<Editor className={cnBlock({
+						'indent-t': 'xl',
+						'd-indent-t': 'm'
+					})}/>
 			}
 		</Page>
 	);
