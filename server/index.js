@@ -31,6 +31,8 @@ app.use('/api', (req, res, next) => {
 		'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 }, apiRoute);
+app.use((req, res) =>
+	res.sendFile(resolve(__dirname, `../client-react/build/index.html`)));
 
 app.listen(PORT, () => {
 	console.log(`App is running on http://localhost:${PORT}/`);
