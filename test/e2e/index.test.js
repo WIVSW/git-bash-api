@@ -15,4 +15,5 @@ describe('Page of the', () => {
 	});
 
 	require('./pages/files-list.test');
+	require('./pages/blob.test.js');
 });

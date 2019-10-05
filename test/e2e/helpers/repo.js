@@ -38,8 +38,26 @@ const getFilesList = async (
 		.filter(Boolean);
 };
 
+const findFirstMd = async (repoId, branch) => {
+	const files = await getFilesList(repoId, branch);
+	return files.filter((file) => file.includes('.md'))[0];
+};
+
+const readFile = async (repoId, branch, path) => {
+	const {stdout} = await execute('git', [
+		'--no-pager',
+		'cat-file',
+		`${branch}:${path}`,
+		'-p',
+	], repoId);
+
+	return stdout;
+};
+
 module.exports = {
 	getAllRepos,
 	getTestData,
 	getFilesList,
+	findFirstMd,
+	readFile,
 };
