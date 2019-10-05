@@ -2,7 +2,7 @@ const {getAllRepos} = require('./helpers/repo');
 
 const BRANCH = 'master';
 
-describe('Page of the', () => {
+describe('', () => {
 	beforeEach(async () => {
 		const REPO_NAMES = await getAllRepos();
 		const TEST_DATA = {
@@ -14,6 +14,10 @@ describe('Page of the', () => {
 		return TEST_DATA;
 	});
 
-	require('./pages/files-list.test');
-	require('./pages/blob.test.js');
+	describe('Page of the', () => {
+		//require('./pages/files-list.test');
+		//require('./pages/blob.test');
+	});
+
+	require('./transition.test');
 });

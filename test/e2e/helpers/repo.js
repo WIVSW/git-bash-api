@@ -54,10 +54,27 @@ const readFile = async (repoId, branch, path) => {
 	return stdout;
 };
 
+const getListItemByType = async (type, repoId, branch, path = './') => {
+	const {stdout} = await execute('git', [
+		'--no-pager',
+		'ls-tree',
+		`${branch}:${path}`,
+	], repoId);
+
+	const item = stdout
+		.split('\n')
+		.find((item) => item && item.includes(type));
+
+	return item
+		.split('\t')
+		.slice(-1)[0];
+};
+
 module.exports = {
 	getAllRepos,
 	getTestData,
 	getFilesList,
 	findFirstMd,
 	readFile,
+	getListItemByType,
 };
