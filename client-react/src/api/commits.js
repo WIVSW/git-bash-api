@@ -1,6 +1,7 @@
 import Api from './api';
 import TreeItem from '../model/tree-item';
 import Commit from '../model/commit';
+import Blob from "../model/blob";
 
 /**
  */
@@ -73,6 +74,26 @@ class CommitsApi extends Api {
 		);
 
 		return Object.values(infoMap)
+	}
+
+	/**
+	 * @param {string} repoId
+	 * @param {string=} hash (branchName|commitHash)
+	 * @param {string=} path
+	 * @return {Promise<Array<{
+	 *     treeItem: TreeItem,
+	 *     commit: Commit
+	 * }>>}
+	 */
+	async getBlob(repoId, hash = 'master', path) {
+		let url = `/repos/${this._uri(repoId)}/blob/${this._uri(hash)}`;
+		if (path) {
+			url += `/${this._uri(path)}`
+		}
+
+		const blob = await this._request(url);
+
+		return new Blob(blob);
 	}
 }
 

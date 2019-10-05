@@ -44,12 +44,6 @@ const parseCrumbs = (params = {}, fullUrl) => {
 	}
 
 	return crumbs;
-	return [
-		{
-			text: params.id,
-			url: `/repository/${params.id}`
-		}
-	]
 };
 
 const Page = ({
