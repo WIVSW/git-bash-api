@@ -10,8 +10,11 @@ import {cnBlock} from "../Block/Block";
 import {Link} from "react-router-dom";
 import {cnButton} from "../Button/Button";
 
+import {isReservedWord} from "../../module/code-parser";
+
 export const cnEditor = cn('Editor');
 export const cnEditorHeadCol = (mods = {}) => cnEditor('HeadCol', mods);
+
 
 const Editor = ({
 	className = '',
@@ -78,6 +81,13 @@ const Editor = ({
 							numbers = [],
 							value = '',
 						}, i) => {
+							const values = value
+								.split(' ')
+								.map((word, z) => {
+									return isReservedWord(word.trim()) ?
+										(<b key={z}>{word} </b>) :
+										(<React.Fragment key={z}>{word} </React.Fragment>);
+								});
 							return (
 								<div key={i} className={cnEditor('Line')}>
 									{numbers.map((number, j) => (
@@ -93,7 +103,7 @@ const Editor = ({
 										key={numbers.length}
 										className={cnEditor('Col')}
 									>
-										{value}
+										{values}
 									</div>
 								</div>
 							);
