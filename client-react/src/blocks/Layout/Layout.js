@@ -5,6 +5,7 @@ import {Switch, Route, Redirect} from "react-router-dom";
 
 import './Layout.scss';
 import FilesPage from "../../pages/files";
+import BlobPage from "../../pages/blob";
 
 const cnLayout = cn('Layout');
 
@@ -32,7 +33,17 @@ const Layout = ({
 					history
 					content
 				/>
-				<Route path={`${match.path}/:tab/`}>
+				<Route exact path={`${match.path}/blob`}>
+					<Redirect to={`${match.url}/tree/${DEFAULT_BRANCH}`}/>
+				</Route>
+				<Route
+					path={`${match.path}/blob/:hash/:path*`}
+					component={BlobPage}
+					match
+					history
+					content
+				/>
+				<Route path={`${match.path}/:tab*/`}>
 					<Redirect to={'/404/'}/>
 				</Route>
 			</Switch>

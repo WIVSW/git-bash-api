@@ -2,33 +2,54 @@ import React from 'react';
 import Breadcrumbs from "../blocks/Breadcrumbs/Breadcrumbs";
 import Tabs from "../blocks/Tabs/Tabs";
 
-const parseCrumbs = (path, params) => {
-	const crumbs = [];
-	path
+const parseCrumbs = (params = {}, fullUrl) => {
+	const path = params.path || '';
+	const map = {
+		repository: params.id,
+		tree: params.hash,
+	};
+
+	const parts = path
 		.split('/')
-		.filter(Boolean)
-		.reduce((a, b) => {
-			if (b.includes(':')) {
-				const matched = b.match(/[\w\n]+/g);
-				const param = matched[0] || null;
-				const value = params[param];
-				let values = [];
+		.filter(Boolean);
 
-				if (value) {
-					values = param === 'path' ?
-						value.split('/') : [value];
-				}
+	parts
+		.slice(0, -1)
+		.forEach((part) => map[part] = null);
 
-				return values.reduce((p, c) => {
-					const part = `${p}/${c}`;
-					const inst = { text: c, url: part };
-					crumbs.push(inst);
-					return part;
-				}, a);
+	const crumbs = [];
+	Object
+		.keys(map)
+		.reduce((url, key) => {
+			let link = `${url}/${key}`;
+			let value = map[key];
+			if (value) {
+				link += `/${value}`
+			} else {
+				value = key;
 			}
-			return `${a}/${b}`
+			crumbs.push({
+				text: value,
+				url: link
+			});
+			return link;
 		}, '');
+
+	const last = parts.slice(-1)[0];
+	if (last) {
+		crumbs.push({
+			text: last,
+			url: fullUrl
+		})
+	}
+
 	return crumbs;
+	return [
+		{
+			text: params.id,
+			url: `/repository/${params.id}`
+		}
+	]
 };
 
 const Page = ({
@@ -37,7 +58,7 @@ const Page = ({
 	tabs,
 	children
 }) => {
-	const crumbs = match.path ? parseCrumbs(match.path, match.params) : [];
+	const crumbs = match.path ? parseCrumbs(match.params, match.url) : [];
 	return (
 		<React.Fragment>
 			<Breadcrumbs crumbs={crumbs}/>
