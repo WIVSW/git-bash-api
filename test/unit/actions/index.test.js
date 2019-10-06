@@ -39,4 +39,16 @@ describe('Action', () => {
 		assert.ok(spy.calledWith('git', args, 'react/'),
 			'Expected call git --no-pager ls-tree');
 	});
+
+	it('getCommitDiff will call git show', async () => {
+		const mock = sinon.mock(deps);
+		const args = [
+			'show',
+			'master',
+		];
+		mock.expects('spawnCmd').once().withArgs('git', args, 'react');
+		const {getCommitDiff} = commitsActions(deps);
+		await getCommitDiff('react', 'master');
+		mock.verify();
+	});
 });
