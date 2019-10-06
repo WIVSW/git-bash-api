@@ -53,6 +53,15 @@ const deleteUrl = (agent, url) => {
 	}));
 };
 
+const postUrl = (agent, url, data) => {
+	return new Promise(((resolve, reject) => {
+		agent
+			.post(url)
+			.send(data)
+			.end((err) => err ? reject(err) : resolve() );
+	}));
+};
+
 const testWrapper = async (actions, test) => {
 	const {server, agent} = await createServer(actions);
 
@@ -136,5 +145,18 @@ describe('Router', () => {
 			mock.verify();
 		});
 	});
-	it('POST /api/repos calls downloadRepo');
+
+	it('POST /api/repos calls downloadRepo', async () => {
+		const REPO_ID = 'react';
+		const URL = 'https://github.com/facebook/react/';
+		const mock = sinon.mock(actions);
+		mock.expects('downloadRepo').once().withArgs(REPO_ID, URL);
+
+		await testWrapper(actions, async (agent) => {
+			await postUrl(agent, `/api/repos/${REPO_ID}`, {
+				url: URL,
+			});
+			mock.verify();
+		});
+	});
 });
