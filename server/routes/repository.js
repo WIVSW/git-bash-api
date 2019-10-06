@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const parseCommitHash = require('../middleware/parse-commit-hash');
-const commitsRoute = require('./commits');
-const filesRoute = require('./files');
-const blobRoute = require('./blob');
-
-const {removeRepo, downloadRepo} = require('../modules/actions');
 const {handleRequest} = require('../modules/utils');
 
+
+const deps = {
+	actions: null,
+	commitsRoute: null,
+	filesRoute: null,
+	blobRoute: null,
+};
 
 router.get('/', (req, res) => {
 	res.redirect(`/api/repos/${req.repositoryId}/tree/master`);
@@ -16,20 +18,34 @@ router.get('/', (req, res) => {
 
 router.post('/', handleRequest.bind(null, async (req) => {
 	const {repositoryId: id, body: {url}} = req;
-	await downloadRepo(id, url);
+	await deps.actions.downloadRepo(id, url);
 	return [{id}];
 }));
 
 router.delete('/', handleRequest.bind(null, async (req) => {
 	const {repositoryId: id} = req;
-	await removeRepo(id);
+	await deps.actions.removeRepo(id);
 	return [{id}];
 }));
 
-router.use('/commits/:hash/', parseCommitHash, commitsRoute);
+router.use('/commits/:hash/',
+	parseCommitHash, (...args) => deps.commitsRoute(...args));
 
-router.use('/tree/:hash', parseCommitHash, filesRoute);
+router.use('/tree/:hash',
+	parseCommitHash, (...args) => deps.filesRoute(...args));
 
-router.use('/blob/:hash', parseCommitHash, blobRoute);
+router.use('/blob/:hash',
+	parseCommitHash, (...args) => deps.blobRoute(...args));
 
-module.exports = router;
+module.exports = ({
+	actions,
+	commitsRoute,
+	filesRoute,
+	blobRoute,
+}) => {
+	deps.actions = actions;
+	deps.commitsRoute = commitsRoute;
+	deps.filesRoute = filesRoute;
+	deps.blobRoute = blobRoute;
+	return router;
+};

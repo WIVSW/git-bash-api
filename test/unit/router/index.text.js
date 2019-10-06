@@ -1,3 +1,4 @@
+const path = require('path');
 const request = require('supertest');
 
 const PATH_TO_REPOS = path.resolve(__dirname, '../../../tmp');

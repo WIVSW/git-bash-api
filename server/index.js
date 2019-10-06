@@ -2,7 +2,27 @@ const {isAbsolute, resolve} = require('path');
 const fs = require('fs');
 const express = require('express');
 const {exit, cwd} = process;
-const apiRoute = require('./routes/api');
+
+const actions = require('./modules/actions');
+const commitsRoute = require('./routes/commits')({
+	actions,
+});
+const filesRoute = require('./routes/files')({
+	actions,
+});
+const blobRoute = require('./routes/blob')({
+	actions,
+});
+const repoRoute = require('./routes/repository')({
+	actions,
+	commitsRoute,
+	filesRoute,
+	blobRoute,
+});
+const apiRoute = require('./routes/api')({
+	actions,
+	repoRoute,
+});
 
 if (!process.env.PATH_TO_REPOS) {
 	const input = process.argv[2];
