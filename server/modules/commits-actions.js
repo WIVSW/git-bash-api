@@ -57,7 +57,6 @@ const getFilesList = async (repoId, hash, path = '') => {
 			)
 			.map(([mode, type, object, name]) => ({mode, type, object, name}));
 	} catch (error) {
-		console.log(error);
 		throw new HashNotExist();
 	}
 };
