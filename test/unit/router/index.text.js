@@ -65,6 +65,7 @@ describe('Router', () => {
 			mock.verify();
 		});
 	});
+
 	it('GET /api/repos/:repositoryId/commits/:commitHash ' +
 		'calls readCommitsList', async () => {
 		const REPO_ID = 'react';
@@ -77,8 +78,20 @@ describe('Router', () => {
 			mock.verify();
 		});
 	});
+
 	it('GET /api/repos/:repositoryId/commits/:commitHash/diff ' +
-		'calls readCommitDiff');
+		'calls readCommitDiff', async () => {
+		const REPO_ID = 'react';
+		const HASH = 'master';
+		const mock = sinon.mock(actions);
+		mock.expects('readCommitDiff').once().withArgs(REPO_ID, HASH);
+
+		await testWrapper(actions, async (agent) => {
+			await getUrl(agent, `/api/repos/${REPO_ID}/commits/${HASH}/diff`);
+			mock.verify();
+		});
+	});
+
 	it('GET /api/repos/:repositoryId/tree/:commitHash/:path calls listDir');
 	it('GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile ' +
 		'calls readBlob');
