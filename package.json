@@ -8,8 +8,10 @@
     "start": "node server/index.js",
     "start:selenium": "$(npm bin)/selenium-standalone start",
     "test": "npm run test:lint && npm run test:unit && npm run test:e2e",
-    "test:unit": "export NODE_ENV=test && mocha --exit --timeout=5000 --recursive test/e2e-server/index.test.js",
-    "test:e2e": "$(npm bin)/hermione test/e2e-client/index.test.js",
+    "test:unit": "export NODE_ENV=test && mocha --exit --recursive test/unit/index.test.js",
+    "test:e2e": "npm run test:e2e:server && npm run test:e2e:client",
+    "test:e2e:client": "$(npm bin)/hermione test/e2e-client/index.test.js",
+    "test:e2e:server": "export NODE_ENV=test && mocha --exit --timeout=5000 --recursive test/e2e-server/index.test.js",
     "test:lint": "npm run lint:server && npm run lint:client",
     "lint:server": "$(npm bin)/eslint server test",
     "lint:client": "client-react/node_modules/.bin/eslint client-react/src"
