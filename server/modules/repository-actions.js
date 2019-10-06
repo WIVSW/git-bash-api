@@ -9,7 +9,9 @@ const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
 const unlink = promisify(fs.unlink);
 
-const {execute, getRepoPath} = require('./utils');
+let execute = null;
+
+const {getRepoPath} = require('./utils');
 const Response = require('../models/responses/response');
 const NotFound = require('../models/responses/not-found');
 const AlreadyExist = require('../models/responses/repository-exist');
@@ -106,8 +108,11 @@ const getReposList = async () => {
 	return repoIds.map((id) => ({id}));
 };
 
-module.exports = {
-	download,
-	remove,
-	getReposList,
+module.exports = (exec) => {
+	execute = exec;
+	return {
+		download,
+		remove,
+		getReposList,
+	};
 };

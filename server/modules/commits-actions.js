@@ -1,8 +1,8 @@
 const HashNotExist = require('../models/responses/hash-not-exist');
-const {execute, getRepoPath} = require('./utils');
 const {join} = require('path');
-const {spawn} = require('child_process');
-const readline = require('readline');
+
+let execute = null;
+let spawnCmd = null;
 
 const CommitProps = {
 	HASH: 'hash',
@@ -145,44 +145,6 @@ const getFilesList = async (repoId, hash, path) => {
 	}
 };
 
-const spawnCmd = async (cmd, args = [], optRepoId = '', optParser) => {
-	const defaultParser = (out, line) => {
-		if (!out) {
-			out = '';
-		}
-
-		return `${out}${line}\n`;
-	};
-	const parser = typeof optParser !== 'undefined' ? optParser : defaultParser;
-	return new Promise((resolve, reject) => {
-		let out;
-		const child = spawn(cmd, args, {
-			cwd: getRepoPath(optRepoId),
-		});
-
-		const r1 = readline.createInterface({
-			input: child.stdout,
-			terminal: false,
-		});
-
-		r1.on('line', function(line) {
-			out = parser(out, line);
-		});
-
-		child.on('error', (error) => {
-			reject(error);
-		});
-
-		child.on('close', (code) => {
-			if (code === 0) {
-				resolve(out);
-			} else {
-				reject(out);
-			}
-		});
-	});
-};
-
 const getCommitDiff = async (repoId, hash) => {
 	try {
 		return await spawnCmd(
@@ -210,9 +172,13 @@ const getBlob = async (repoId, hash, path) => {
 	}
 };
 
-module.exports = {
-	getCommitsList,
-	getFilesList,
-	getCommitDiff,
-	getBlob,
+module.exports = (exec, spawn) => {
+	execute = exec;
+	spawnCmd = spawn;
+	return {
+		getCommitsList,
+		getFilesList,
+		getCommitDiff,
+		getBlob,
+	};
 };
