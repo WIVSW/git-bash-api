@@ -105,7 +105,19 @@ describe('Router', () => {
 		});
 	});
 	it('GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile ' +
-		'calls readBlob');
+		'calls readBlob', async () => {
+		const REPO_ID = 'react';
+		const HASH = 'master';
+		const PATH = './index.js';
+		const mock = sinon.mock(actions);
+		mock.expects('readBlob').once().withArgs(REPO_ID, HASH, PATH);
+
+		await testWrapper(actions, async (agent) => {
+			await getUrl(agent, `/api/repos/${REPO_ID}/blob/${HASH}/${PATH}`);
+			mock.verify();
+		});
+	});
+
 	it('DELETE /api/repos/:repositoryId calls removeRepo');
 	it('POST /api/repos calls downloadRepo');
 });
