@@ -68,6 +68,7 @@ const download = async (repoId, url) => {
 
 		await execute('git', ['clone', url, repoId]);
 	} catch (error) {
+		console.log(error);
 		throw error instanceof Response ? error : new NotFound();
 	}
 };

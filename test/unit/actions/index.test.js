@@ -1,5 +1,6 @@
 const assert = require('assert');
 const sinon = require('sinon');
+const path = require('path');
 
 const {getCommitFormat} = require('../../../server/modules/utils');
 const commitsActions = require('../../../server/modules/commits-actions');
@@ -12,6 +13,9 @@ const deps = {
 };
 
 describe('Action', () => {
+	beforeEach(() => {
+		process.env.PATH_TO_REPOS = path.resolve(__dirname, '../../../tmp');
+	});
 	it('getCommitsList will call git log', async () => {
 		const mock = sinon.mock(deps);
 		const args = [
@@ -62,6 +66,19 @@ describe('Action', () => {
 		mock.expects('spawnCmd').once().withArgs('git', args, 'react');
 		const {getBlob} = commitsActions(deps);
 		await getBlob('react', 'master', './');
+		mock.verify();
+	});
+
+	it('download will call git clone', async () => {
+		const mock = sinon.mock(deps);
+		const args = [
+			'clone',
+			`ssh://github.com/facebook/react/`,
+			'test-folder',
+		];
+		mock.expects('execute').once().withArgs('git', args);
+		const {download} = repositoryActions(deps);
+		await download('test-folder', 'ssh://github.com/facebook/react/');
 		mock.verify();
 	});
 });
