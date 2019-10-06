@@ -92,7 +92,18 @@ describe('Router', () => {
 		});
 	});
 
-	it('GET /api/repos/:repositoryId/tree/:commitHash/:path calls listDir');
+	it('GET /api/repos/:repositoryId/tree/:commitHash/:path ' +
+		'calls listDir', async () => {
+		const REPO_ID = 'react';
+		const HASH = 'master';
+		const mock = sinon.mock(actions);
+		mock.expects('listDir').once().withArgs(REPO_ID, HASH);
+
+		await testWrapper(actions, async (agent) => {
+			await getUrl(agent, `/api/repos/${REPO_ID}/tree/${HASH}`);
+			mock.verify();
+		});
+	});
 	it('GET /api/repos/:repositoryId/blob/:commitHash/:pathToFile ' +
 		'calls readBlob');
 	it('DELETE /api/repos/:repositoryId calls removeRepo');
