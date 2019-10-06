@@ -51,4 +51,17 @@ describe('Action', () => {
 		await getCommitDiff('react', 'master');
 		mock.verify();
 	});
+
+	it('getBlob will call git cat-file', async () => {
+		const mock = sinon.mock(deps);
+		const args = [
+			'cat-file',
+			`master:./`,
+			'-p',
+		];
+		mock.expects('spawnCmd').once().withArgs('git', args, 'react');
+		const {getBlob} = commitsActions(deps);
+		await getBlob('react', 'master', './');
+		mock.verify();
+	});
 });
