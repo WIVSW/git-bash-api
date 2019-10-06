@@ -9,7 +9,9 @@ const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
 const unlink = promisify(fs.unlink);
 
-let execute = null;
+const deps = {
+	execute: null,
+};
 
 const {getRepoPath} = require('./utils');
 const Response = require('../models/responses/response');
@@ -48,6 +50,7 @@ const check = async (action, expected, error) => {
 };
 
 const download = async (repoId, url) => {
+	const {execute} = deps;
 	try {
 		await Promise.all([
 			url.includes('http') ?
@@ -108,8 +111,8 @@ const getReposList = async () => {
 	return repoIds.map((id) => ({id}));
 };
 
-module.exports = (exec) => {
-	execute = exec;
+module.exports = ({execute}) => {
+	deps.execute = execute;
 	return {
 		download,
 		remove,

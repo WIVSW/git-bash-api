@@ -1,17 +1,17 @@
-const {execute, spawnCmd} = require('./utils');
+const {execute, spawnCmd, commitsHistoryParser} = require('./utils');
 
 const {
 	getReposList,
 	remove,
 	download,
-} = require('./repository-actions')(execute);
+} = require('./repository-actions')({execute, spawnCmd});
 
 const {
 	getCommitsList,
 	getFilesList,
 	getCommitDiff,
 	getBlob,
-} = require('./commits-actions')(execute, spawnCmd);
+} = require('./commits-actions')({execute, spawnCmd, commitsHistoryParser});
 
 const Actions = {
 	READ_REPOS_LIST: 'read-repos-list',
