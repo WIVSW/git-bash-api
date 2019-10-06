@@ -4,25 +4,7 @@ const express = require('express');
 const {exit, cwd} = process;
 
 const actions = require('./modules/actions');
-const commitsRoute = require('./routes/commits')({
-	actions,
-});
-const filesRoute = require('./routes/files')({
-	actions,
-});
-const blobRoute = require('./routes/blob')({
-	actions,
-});
-const repoRoute = require('./routes/repository')({
-	actions,
-	commitsRoute,
-	filesRoute,
-	blobRoute,
-});
-const apiRoute = require('./routes/api')({
-	actions,
-	repoRoute,
-});
+const router = require('./router')({actions});
 
 if (!process.env.PATH_TO_REPOS) {
 	const input = process.argv[2];
@@ -50,7 +32,7 @@ app.use('/api', (req, res, next) => {
 	res.header('Access-Control-Allow-Headers',
 		'Origin, X-Requested-With, Content-Type, Accept');
 	next();
-}, apiRoute);
+}, router);
 app.use((req, res) =>
 	res.sendFile(resolve(__dirname, `../client-react/build/index.html`)));
 
