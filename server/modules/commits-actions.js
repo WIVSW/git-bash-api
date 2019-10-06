@@ -29,7 +29,6 @@ const commits = async (repoId, hash, offset, limit) => {
 		const stdout = await spawnCmd('git', args, repoId, commitsHistoryParser);
 		return stdout && stdout.commits || [];
 	} catch (error) {
-		console.log(error);
 		throw new HashNotExist();
 	}
 };
@@ -38,7 +37,7 @@ const getCommitsList = async (repoId, hash, offset = 0, limit = Infinity) => {
 	return await commits(repoId, hash, offset, limit);
 };
 
-const getFilesList = async (repoId, hash, path) => {
+const getFilesList = async (repoId, hash, path = '') => {
 	const {execute} = deps;
 	try {
 		const {stdout} = await execute(
@@ -58,6 +57,7 @@ const getFilesList = async (repoId, hash, path) => {
 			)
 			.map(([mode, type, object, name]) => ({mode, type, object, name}));
 	} catch (error) {
+		console.log(error);
 		throw new HashNotExist();
 	}
 };
