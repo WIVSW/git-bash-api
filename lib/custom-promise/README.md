@@ -1,6 +1,6 @@
 # Custom Promise
 Примеры использования можно посмотреть в
-[файле для тестов](../../test/unit/custom-promise/custom-promise.test.js).
+[файле для тестов](../../test/e2e-server/custom-promise/custom-promise.test.js).
 
 А убедиться в том, что тесты проходят можно с помощью комманды `npm test`.
 
