@@ -11,7 +11,7 @@ const deps = {
 	spawnCmd: () => Promise.resolve(),
 	commitsHistoryParser: () => {},
 	removeRecursive: () => {},
-	readdir: () => {},
+	readdir: () => [],
 };
 
 describe('Action', () => {
@@ -91,5 +91,14 @@ describe('Action', () => {
 		const {remove} = repositoryActions(deps);
 		await remove('react');
 		mock.verify();
+	});
+
+	it('getReposList will readdir', async () => {
+		const mock = Object.assign({}, deps);
+		const spy = sinon.spy(mock, 'readdir');
+		const {getReposList} = repositoryActions(mock);
+		await getReposList();
+		assert.ok(spy.calledWith(process.env.PATH_TO_REPOS),
+			'Expected call utils#readdir');
 	});
 });
