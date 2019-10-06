@@ -1,10 +1,16 @@
-const {execute, spawnCmd, commitsHistoryParser} = require('./utils');
+const {
+	execute,
+	spawnCmd,
+	commitsHistoryParser,
+	removeRecursive,
+	readdir,
+} = require('./utils');
 
 const {
 	getReposList,
 	remove,
 	download,
-} = require('./repository-actions')({execute, spawnCmd});
+} = require('./repository-actions')({execute, removeRecursive, readdir});
 
 const {
 	getCommitsList,

@@ -1,16 +1,14 @@
 const {promisify} = require('util');
-const {resolve} = require('path');
 const fs = require('fs');
 
 const axios = require('axios');
 
-const readdir = promisify(fs.readdir);
-const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
-const unlink = promisify(fs.unlink);
 
 const deps = {
 	execute: null,
+	readdir: null,
+	removeRecursive: null,
 };
 
 const {getRepoPath} = require('./utils');
@@ -68,37 +66,12 @@ const download = async (repoId, url) => {
 
 		await execute('git', ['clone', url, repoId]);
 	} catch (error) {
-		console.log(error);
 		throw error instanceof Response ? error : new NotFound();
 	}
 };
 
-const removeRecursive = async (path) => {
-	// Вообще в обычной ситуации я бы использовал библиотеку
-	// Но мне показалось, что задание направленно на взаимодействие
-	// с базовыми модулями node.js, поэтому реализовал сам
-	let stats;
-	try {
-		stats = await stat(path);
-	} catch (error) {
-		return;
-	}
-
-	if (stats.isDirectory()) {
-		const files = await readdir(path);
-		const pathes = files.map((file) => resolve(path, `./${file}`));
-
-		if (pathes.length) {
-			await Promise.all(pathes.map(removeRecursive));
-		}
-
-		await rmdir(path);
-	} else {
-		await unlink(path);
-	}
-};
-
 const remove = async (repoId) => {
+	const {removeRecursive} = deps;
 	await check(
 		isRepoExist.bind(null, repoId),
 		true,
@@ -108,12 +81,15 @@ const remove = async (repoId) => {
 };
 
 const getReposList = async () => {
+	const {readdir} = deps;
 	const repoIds = await readdir(process.env.PATH_TO_REPOS);
 	return repoIds.map((id) => ({id}));
 };
 
-module.exports = ({execute}) => {
+module.exports = ({execute, readdir, removeRecursive}) => {
 	deps.execute = execute;
+	deps.readdir = readdir;
+	deps.removeRecursive = removeRecursive;
 	return {
 		download,
 		remove,

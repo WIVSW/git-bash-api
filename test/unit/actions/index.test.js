@@ -10,6 +10,8 @@ const deps = {
 	execute: () => Promise.resolve({stdout: ''}),
 	spawnCmd: () => Promise.resolve(),
 	commitsHistoryParser: () => {},
+	removeRecursive: () => {},
+	readdir: () => {},
 };
 
 describe('Action', () => {
@@ -79,6 +81,15 @@ describe('Action', () => {
 		mock.expects('execute').once().withArgs('git', args);
 		const {download} = repositoryActions(deps);
 		await download('test-folder', 'ssh://github.com/facebook/react/');
+		mock.verify();
+	});
+
+	it('remove will call remove recursive', async () => {
+		const mock = sinon.mock(deps);
+		const file = path.resolve(process.env.PATH_TO_REPOS, './react');
+		mock.expects('removeRecursive').once().withArgs(file);
+		const {remove} = repositoryActions(deps);
+		await remove('react');
 		mock.verify();
 	});
 });

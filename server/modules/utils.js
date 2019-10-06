@@ -4,6 +4,12 @@ const exec = promisify(require('child_process').execFile);
 const {spawn} = require('child_process');
 const readline = require('readline');
 
+const fs = require('fs');
+const readdir = promisify(fs.readdir);
+const rmdir = promisify(fs.rmdir);
+const stat = promisify(fs.stat);
+const unlink = promisify(fs.unlink);
+
 const Response = require('../models/responses/response');
 const Success = require('../models/responses/success');
 const Unknown = require('../models/responses/unknown');
@@ -164,6 +170,31 @@ const commitsHistoryParser = (out, line) => {
 	return out;
 };
 
+const removeRecursive = async (path) => {
+	// Вообще в обычной ситуации я бы использовал библиотеку
+	// Но мне показалось, что задание направленно на взаимодействие
+	// с базовыми модулями node.js, поэтому реализовал сам
+	let stats;
+	try {
+		stats = await stat(path);
+	} catch (error) {
+		return;
+	}
+
+	if (stats.isDirectory()) {
+		const files = await readdir(path);
+		const pathes = files.map((file) => resolve(path, `./${file}`));
+
+		if (pathes.length) {
+			await Promise.all(pathes.map(removeRecursive));
+		}
+
+		await rmdir(path);
+	} else {
+		await unlink(path);
+	}
+};
+
 module.exports = {
 	handleRequest,
 	execute,
@@ -171,4 +202,6 @@ module.exports = {
 	spawnCmd,
 	commitsHistoryParser,
 	getCommitFormat,
+	removeRecursive,
+	readdir,
 };
