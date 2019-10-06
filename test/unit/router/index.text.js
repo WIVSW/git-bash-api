@@ -45,6 +45,14 @@ const getUrl = (agent, url) => {
 	}));
 };
 
+const deleteUrl = (agent, url) => {
+	return new Promise(((resolve, reject) => {
+		agent
+			.delete(url)
+			.end((err) => err ? reject(err) : resolve() );
+	}));
+};
+
 const testWrapper = async (actions, test) => {
 	const {server, agent} = await createServer(actions);
 
@@ -118,6 +126,15 @@ describe('Router', () => {
 		});
 	});
 
-	it('DELETE /api/repos/:repositoryId calls removeRepo');
+	it('DELETE /api/repos/:repositoryId calls removeRepo', async () => {
+		const REPO_ID = 'react';
+		const mock = sinon.mock(actions);
+		mock.expects('removeRepo').once().withArgs(REPO_ID);
+
+		await testWrapper(actions, async (agent) => {
+			await deleteUrl(agent, `/api/repos/${REPO_ID}`);
+			mock.verify();
+		});
+	});
 	it('POST /api/repos calls downloadRepo');
 });
