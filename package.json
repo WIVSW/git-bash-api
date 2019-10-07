@@ -28,6 +28,10 @@
   },
   "homepage": "https://github.com/WIVSW/git-bash-api#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.11",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
     "assert": "^2.0.0",
     "chai": "^4.2.0",
     "eslint": "^6.3.0",
@@ -44,7 +48,8 @@
     "node-sass": "^4.12.0",
     "selenium-standalone": "^6.16.0",
     "sinon": "^7.5.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "typescript": "^3.6.3"
   },
   "dependencies": {
     "@bem-react/classname": "^1.5.6",
