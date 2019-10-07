@@ -1,15 +1,17 @@
 const {promisify} = require('util');
-const {resolve} = require('path');
 const fs = require('fs');
 
 const axios = require('axios');
 
-const readdir = promisify(fs.readdir);
-const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
-const unlink = promisify(fs.unlink);
 
-const {execute, getRepoPath} = require('./utils');
+const deps = {
+	execute: null,
+	readdir: null,
+	removeRecursive: null,
+};
+
+const {getRepoPath} = require('./utils');
 const Response = require('../models/responses/response');
 const NotFound = require('../models/responses/not-found');
 const AlreadyExist = require('../models/responses/repository-exist');
@@ -46,6 +48,7 @@ const check = async (action, expected, error) => {
 };
 
 const download = async (repoId, url) => {
+	const {execute} = deps;
 	try {
 		await Promise.all([
 			url.includes('http') ?
@@ -67,32 +70,8 @@ const download = async (repoId, url) => {
 	}
 };
 
-const removeRecursive = async (path) => {
-	// Вообще в обычной ситуации я бы использовал библиотеку
-	// Но мне показалось, что задание направленно на взаимодействие
-	// с базовыми модулями node.js, поэтому реализовал сам
-	let stats;
-	try {
-		stats = await stat(path);
-	} catch (error) {
-		return;
-	}
-
-	if (stats.isDirectory()) {
-		const files = await readdir(path);
-		const pathes = files.map((file) => resolve(path, `./${file}`));
-
-		if (pathes.length) {
-			await Promise.all(pathes.map(removeRecursive));
-		}
-
-		await rmdir(path);
-	} else {
-		await unlink(path);
-	}
-};
-
 const remove = async (repoId) => {
+	const {removeRecursive} = deps;
 	await check(
 		isRepoExist.bind(null, repoId),
 		true,
@@ -102,12 +81,18 @@ const remove = async (repoId) => {
 };
 
 const getReposList = async () => {
+	const {readdir} = deps;
 	const repoIds = await readdir(process.env.PATH_TO_REPOS);
 	return repoIds.map((id) => ({id}));
 };
 
-module.exports = {
-	download,
-	remove,
-	getReposList,
+module.exports = ({execute, readdir, removeRecursive}) => {
+	deps.execute = execute;
+	deps.readdir = readdir;
+	deps.removeRecursive = removeRecursive;
+	return {
+		download,
+		remove,
+		getReposList,
+	};
 };

@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const CustomPromise = require('../../lib/custom-promise/custom-promise');
+const CustomPromise = require('../../../lib/custom-promise/custom-promise');
 
 const resolvePromiseWithValue = (value) => new CustomPromise((resolve) => {
 	setTimeout(() => {

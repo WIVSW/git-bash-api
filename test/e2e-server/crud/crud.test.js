@@ -18,7 +18,7 @@ const REPO_FAKE = {
 
 process.env.PATH_TO_REPOS = PATH_TO_REPOS;
 
-const app = require('../../server');
+const app = require('../../../server');
 const agent = request.agent(app);
 
 const getBodyFromResponse = ({res}) => JSON.parse(res.text).data;

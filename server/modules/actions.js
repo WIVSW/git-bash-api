@@ -1,15 +1,23 @@
 const {
+	execute,
+	spawnCmd,
+	commitsHistoryParser,
+	removeRecursive,
+	readdir,
+} = require('./utils');
+
+const {
 	getReposList,
 	remove,
 	download,
-} = require('./repository-actions');
+} = require('./repository-actions')({execute, removeRecursive, readdir});
 
 const {
 	getCommitsList,
 	getFilesList,
 	getCommitDiff,
 	getBlob,
-} = require('./commits-actions');
+} = require('./commits-actions')({execute, spawnCmd, commitsHistoryParser});
 
 const Actions = {
 	READ_REPOS_LIST: 'read-repos-list',
@@ -32,7 +40,7 @@ Handers[Actions.READ_BLOB] = getBlob;
 
 const memo = new Map();
 
-const execute = async (key, args = []) => {
+const run = async (key, args = []) => {
 	const action = Handers[key];
 	const callId = [key]
 		.concat(args)
@@ -52,31 +60,31 @@ const execute = async (key, args = []) => {
 };
 
 const readReposList = async () => {
-	return await execute(Actions.READ_REPOS_LIST);
+	return await run(Actions.READ_REPOS_LIST);
 };
 
 const removeRepo = async (...args) => {
-	return await execute(Actions.REMOVE_REPO, args);
+	return await run(Actions.REMOVE_REPO, args);
 };
 
 const downloadRepo = async (...args) => {
-	return await execute(Actions.DOWNLOAD_REPO, args);
+	return await run(Actions.DOWNLOAD_REPO, args);
 };
 
 const readCommitsList = async (...args) => {
-	return await execute(Actions.READ_COMMITS_LIST, args);
+	return await run(Actions.READ_COMMITS_LIST, args);
 };
 
 const listDir = async (...args) => {
-	return await execute(Actions.LIST_DIR, args);
+	return await run(Actions.LIST_DIR, args);
 };
 
 const readCommitDiff = async (...args) => {
-	return await execute(Actions.COMMIT_DIFF, args);
+	return await run(Actions.COMMIT_DIFF, args);
 };
 
 const readBlob = async (...args) => {
-	return await execute(Actions.READ_BLOB, args);
+	return await run(Actions.READ_BLOB, args);
 };
 
 module.exports = {

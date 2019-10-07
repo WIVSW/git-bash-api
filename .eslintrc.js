@@ -17,6 +17,7 @@ module.exports = {
   },
   'rules': {
     'no-tabs': 'off',
+    'no-invalid-this': 'off',
     'indent': [ 'error', 'tab' ],
     'new-cap': [ 2, { 'capIsNewExceptions': [
         "express.Router"

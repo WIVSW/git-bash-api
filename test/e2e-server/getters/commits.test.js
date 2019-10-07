@@ -1,6 +1,6 @@
 const assert = require('assert');
 const request = require('supertest');
-const app = require('../../server');
+const app = require('../../../server');
 const agent = request.agent(app);
 
 const getBodyFromResponse = ({res}) => JSON.parse(res.text).data;
