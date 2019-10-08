@@ -3,40 +3,49 @@ import TreeItem from '../model/tree-item';
 import Commit from '../model/commit';
 import Blob from "../model/blob";
 
-/**
- */
+export interface ITreeItem {
+	commit: Commit;
+	treeItem: TreeItem;
+}
+
 class CommitsApi extends Api {
-	/**
-	 * @param {string} repoId
-	 * @param {string=} source (branchName|commitHash)
-	 * @param {string=} path
-	 * @return {Promise<Array<TreeItem>>}
-	 */
-	async getFiles(repoId, source = 'master', path = '') {
-		const fullpath = path ? `${this._uri(path)}/` : '';
-		const datas = await this
+	async getFiles(
+		repoId : string,
+		source : string = 'master',
+		path : string = ''
+	) : Promise<TreeItem[]> {
+		const fullpath : string = path ? `${this._uri(path)}/` : '';
+		const datas : (object|object[]) = await this
 			._request(
 				`/repos/${this._uri(repoId)}/` +
 				`tree/${this._uri(source)}/` +
 				`${fullpath}`
 			);
+
+		if (!Array.isArray(datas)) {
+			throw new Error('Request failed!');
+		}
+
 		return datas.map((data) => new TreeItem(data));
 	}
 
-	/**
-	 * @param {string} repoId
-	 * @param {string} source (branchName|commitHash|filename)
-	 * @param {number=} offset
-	 * @param {number=} limit
-	 * @return {Promise<Commit>}
-	 */
-	async getHistory(repoId, source, offset, limit) {
-		let url = `/repos/${this._uri(repoId)}/commits/${this._uri(source)}`;
+	async getHistory(
+		repoId : string,
+		source : string,
+		offset? : number,
+		limit? : number
+	) : Promise<Commit[]> {
+		let url : string = `/repos/${this._uri(repoId)}/commits/${this._uri(source)}`;
 		if (limit) {
 			offset = offset || 0;
 			url = `${url}/offset/${offset}/limit/${limit}/`;
 		}
-		const datas = await this._request(url);
+		const datas : (object|object[]) = await this._request(url);
+
+		if (!Array.isArray(datas)) {
+			throw new Error('Request failed!');
+		}
+
 		return datas.map((data) => new Commit(data));
 	}
 
@@ -50,9 +59,14 @@ class CommitsApi extends Api {
 	 *     commit: Commit
 	 * }>>}
 	 */
-	async getTrees(repoId, pattern = '', source = 'master', path = '') {
+	async getTrees(
+		repoId : string,
+		pattern : string = '',
+		source : string = 'master',
+		path : string = ''
+	) : Promise<ITreeItem[]> {
 		const infoMap = {};
-		const items = await this.getFiles(repoId, source, path);
+		const items : TreeItem[] = await this.getFiles(repoId, source, path);
 		const matches = items.filter((item) =>
 			item.name.toLowerCase()
 				.includes(pattern.toLowerCase())

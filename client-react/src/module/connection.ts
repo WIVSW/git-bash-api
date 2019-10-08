@@ -1,29 +1,23 @@
-import axios from 'axios';
+import axios, {AxiosInstance, AxiosRequestConfig, Method} from 'axios';
 
-/**
- */
+export type Data = object | object[];
+
 class Connection {
-	/**
-	 */
+	private _fetcher : AxiosInstance;
+
 	constructor() {
-		/**
-		 * @type {AxiosInstance}
-		 * @private
-		 */
 		this._fetcher = axios.create({
 			baseURL: '/api/',
 			timeout: 30 * 1000,
 		});
 	}
 
-	/**
-	 * @param {string} url
-	 * @param {string=} method
-	 * @param {Object=} postData
-	 * @return {Promise<Object>}
-	 */
-	async request(url, method = 'get', postData) {
-		const options = {
+	async request(
+		url : string,
+		method : Method = 'get',
+		postData? : object
+	) : Promise<Data> {
+		const options : AxiosRequestConfig = {
 			method,
 			url,
 		};

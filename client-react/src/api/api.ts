@@ -1,34 +1,22 @@
-/**
- */
+import Connection, {Data} from '../module/connection';
+import {Method} from 'axios';
+
 class Api {
-	/**
-	 * @param {Connection} connection
-	 */
-	constructor(connection) {
-		/**
-		 * @type {Connection}
-		 * @private
-		 */
-		this._connection = connection;
+	private _connection : Connection;
+
+	constructor(connection : Connection) {
+		this._connection  = connection;
 	}
 
-	/**
-	 * @param {string} url
-	 * @param {string=} method
-	 * @param {Object=} postData
-	 * @return {Promise<Object>}
-	 * @protected
-	 */
-	async _request(url, method, postData) {
+	protected async _request(
+		url : string,
+		method?: Method,
+		postData? : object
+	) : Promise<Data> {
 		return await this._connection.request(url, method, postData);
 	}
 
-	/**
-	 * @param {string} string
-	 * @return {string}
-	 * @private
-	 */
-	_uri(string) {
+	protected _uri(string : string) : string {
 		return encodeURIComponent(string);
 	}
 }

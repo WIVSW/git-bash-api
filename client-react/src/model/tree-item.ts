@@ -1,53 +1,49 @@
-/**
- */
+export enum Types {
+	TREE = 'tree',
+	BLOB = 'blob',
+}
+
+export interface ITreeItem {
+	readonly mode : string;
+	readonly name : string;
+	readonly type : Types;
+	readonly object : string;
+}
+
 class TreeItem {
-	/**
-	 * @param {Object} data
-	 */
+	readonly mode : string;
+	readonly name! : string;
+	readonly type : Types;
+	readonly object : string;
+
 	constructor(data) {
-		/**
-		 * @type {string}
-		 */
-		this.mode = data.type;
-
-		/**
-		 * @type {string}
-		 */
+		this.mode = data.type || null;
 		this.name = data.name;
-
-		/**
-		 * @type {TreeItem.Types}
-		 */
 		this.type = data.type;
-
-		/**
-		 * @type {string}
-		 */
 		this.object = data.object;
 	}
 
-	/**
-	 * @return {boolean}
-	 */
-	get isFile() {
-		return this.type === TreeItem.Types.BLOB;
+	static isValid(raw : unknown) : boolean {
+		if (!(Boolean(raw) && raw !== null && typeof raw === 'object')) {
+			return false;
+		}
+
+		return typeof raw.mode === 'string' &&
+			typeof raw.name === 'string' &&
+			typeof raw.object === 'string' &&
+			(
+				typeof raw.type === Types.BLOB ||
+				typeof raw.type === Types.TREE
+			);
 	}
 
-	/**
-	 * @return {boolean}
-	 */
-	get isDir() {
-		return this.type === TreeItem.Types.TREE;
+	get isFile() : boolean {
+		return this.type === Types.BLOB;
 	}
-};
 
-
-/**
- * @enum {string}
- */
-TreeItem.Types = {
-	TREE: 'tree',
-	BLOB: 'blob',
+	get isDir() : boolean {
+		return this.type === Types.TREE;
+	}
 };
 
 
