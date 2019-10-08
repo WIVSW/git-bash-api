@@ -1,12 +1,26 @@
-import Hash from './hash';
+import Hash, {IHash} from './hash';
 
-/**
- */
+export interface IMessage {
+	subject: string;
+	body: string;
+}
+
+export interface ICommit {
+	author: string;
+	timestamp: number;
+	message: IMessage;
+	hash?: IHash;
+	parent?: IHash;
+}
+
 class Commit {
-	/**
-	 * @param {Object} data
-	 */
-	constructor(data) {
+	readonly author : string;
+	readonly date : Date;
+	readonly subject? : string;
+	readonly body? : string;
+	readonly hash? : Hash;
+	readonly parent? : Hash;
+	constructor(data : ICommit) {
 		/**
 		 * @type {string}
 		 */
@@ -35,7 +49,7 @@ class Commit {
 		/**
 		 * @type {?Hash}
 		 */
-		this.parent = (data.parent && new Hash(data.hash)) || null;
+		this.parent = (data.parent && new Hash(data.parent)) || null;
 	}
 }
 

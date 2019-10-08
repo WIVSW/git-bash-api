@@ -2,6 +2,11 @@ import axios, {AxiosInstance, AxiosRequestConfig, Method} from 'axios';
 
 export type Data = object | object[];
 
+export interface IResponse<T> {
+	data: T;
+	message: string;
+}
+
 class Connection {
 	private _fetcher : AxiosInstance;
 
@@ -12,11 +17,11 @@ class Connection {
 		});
 	}
 
-	async request(
+	async request<T>(
 		url : string,
 		method : Method = 'get',
 		postData? : object
-	) : Promise<Data> {
+	) : Promise<IResponse<T>> {
 		const options : AxiosRequestConfig = {
 			method,
 			url,
@@ -38,7 +43,7 @@ class Connection {
 			throw new Error(`Request Failed!`);
 		}
 
-		return data.data;
+		return data;
 	}
 }
 

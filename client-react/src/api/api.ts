@@ -1,4 +1,4 @@
-import Connection, {Data} from '../module/connection';
+import Connection from '../module/connection';
 import {Method} from 'axios';
 
 class Api {
@@ -8,12 +8,14 @@ class Api {
 		this._connection  = connection;
 	}
 
-	protected async _request(
+	protected async _request<T>(
 		url : string,
 		method?: Method,
 		postData? : object
-	) : Promise<Data> {
-		return await this._connection.request(url, method, postData);
+	) : Promise<T> {
+		const {data : T} = await this._connection.request(url, method, postData);
+
+		return data;
 	}
 
 	protected _uri(string : string) : string {

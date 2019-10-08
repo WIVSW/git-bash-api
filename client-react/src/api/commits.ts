@@ -1,9 +1,9 @@
 import Api from './api';
-import TreeItem from '../model/tree-item';
+import TreeItem, {ITreeItem} from '../model/tree-item';
 import Commit from '../model/commit';
 import Blob from "../model/blob";
 
-export interface ITreeItem {
+export interface ITree {
 	commit: Commit;
 	treeItem: TreeItem;
 }
@@ -15,18 +15,14 @@ class CommitsApi extends Api {
 		path : string = ''
 	) : Promise<TreeItem[]> {
 		const fullpath : string = path ? `${this._uri(path)}/` : '';
-		const datas : (object|object[]) = await this
-			._request(
+		const datas : ITreeItem[] = await this
+			._request<ITreeItem[]>(
 				`/repos/${this._uri(repoId)}/` +
 				`tree/${this._uri(source)}/` +
 				`${fullpath}`
 			);
 
-		if (!Array.isArray(datas)) {
-			throw new Error('Request failed!');
-		}
-
-		return datas.map((data) => new TreeItem(data));
+		return datas.map((data : ITreeItem) => new TreeItem(data));
 	}
 
 	async getHistory(
@@ -40,7 +36,7 @@ class CommitsApi extends Api {
 			offset = offset || 0;
 			url = `${url}/offset/${offset}/limit/${limit}/`;
 		}
-		const datas : (object|object[]) = await this._request(url);
+		const datas : ITreeItem[] = await this._request<ICO[]>(url);
 
 		if (!Array.isArray(datas)) {
 			throw new Error('Request failed!');

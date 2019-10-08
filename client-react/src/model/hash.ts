@@ -1,18 +1,18 @@
+export interface IHash {
+	short: string;
+	full: string;
+}
+
 /**
  */
 class Hash {
+	readonly short : string;
+	readonly full : string;
 	/**
 	 * @param {Object} data
 	 */
-	constructor(data) {
-		/**
-		 * @type {Array<string>}
-		 */
+	constructor(data: IHash) {
 		this.short = data.short;
-
-		/**
-		 * @type {Array<string>}
-		 */
 		this.full = data.full;
 	}
 }
