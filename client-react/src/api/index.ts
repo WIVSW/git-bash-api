@@ -16,6 +16,6 @@ class ApiContainer {
 	}
 }
 
-const api = new ApiContainer();
+const api : ApiContainer = new ApiContainer();
 
 export default api;

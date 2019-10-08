@@ -1,33 +1,31 @@
+import api from '../../api';
+import {IAction} from '../actions';
+import Repo from "../../model/repo";
+import {ITree} from '../../api/commits'
+import TreeChunk from "../../model/tree-chunk";
 
-import api from "../../api";
-
-/**
- * @enum {string}
- */
-export const ReposActions = {
-	LOAD: 'REPOS_LOAD',
-	SELECT: 'REPOS_SELECT',
-	LOAD_FILES: 'REPOS_LOAD_FILES'
+export enum ReposActions {
+	LOAD = 'REPOS_LOAD',
+	SELECT = 'REPOS_SELECT',
 };
 
-export const load = () => ({
-	type: ReposActions.LOAD,
-	payload: async () => await api.repos.getRepos()
-});
+export interface IReposPayload {
+	items: Repo[];
+	selected: string;
+};
 
-export const loadFiles = (repoId, hash = 'master', path = '') => ({
-	type: ReposActions.LOAD_FILES,
-	payload: async () => {
-		const trees = await api.commits.getTrees(repoId, '', hash, path);
-		return {
-			repoId,
-			path,
-			trees,
-		};
+export const load = () : IAction<ReposActions, () => Promise<IReposPayload>> => ({
+	type: ReposActions.LOAD,
+	payload: async () : Promise<IReposPayload> => {
+		const items = await api.repos.getRepos();
+		return { items, selected: items[0].id };
 	}
 });
 
-export const selectRepo = (repoId) => ({
+export const selectRepo = (repoId : string) : IAction<ReposActions, IReposPayload> => ({
 	type: ReposActions.SELECT,
-	payload: repoId
+	payload: {
+		items: [],
+		selected: repoId
+	}
 });

@@ -1,21 +1,16 @@
-
 import api from "../../api";
+import {IAction} from "../actions";
+import Blob from "../../model/blob";
 
-/**
- * @enum {string}
- */
-export const FilesActions = {
-	LOAD_BLOB: 'FILES_LOAD_BLOB',
+export enum FilesActions {
+	LOAD_BLOB = 'FILES_LOAD_BLOB',
 };
 
-/**
- *
- * @param {string} repoId
- * @param {string=} hash
- * @param {string} path
- * @returns {{payload: (function(): Blob), type: string}}
- */
-export const loadBlob = (repoId, hash = 'master', path = '') => ({
+export const loadBlob = (
+	repoId : string,
+	hash : string = 'master',
+	path : string = ''
+) : IAction<FilesActions, () => Promise<Blob>> => ({
 	type: FilesActions.LOAD_BLOB,
-	payload: async () => await api.commits.getBlob(repoId, hash, path)
+	payload: async () : Promise<Blob> => await api.commits.getBlob(repoId, hash, path)
 });

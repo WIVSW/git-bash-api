@@ -1,4 +1,4 @@
-const JavaScriptReservedWords = [
+const JavaScriptReservedWords : string[] = [
 	'abstract',
 	'else',
 	'instanceof',
@@ -61,4 +61,4 @@ const JavaScriptReservedWords = [
 	'with',
 ];
 
-export const isReservedWord = (word = '') => JavaScriptReservedWords.includes(word);
+export const isReservedWord = (word : string = '') : boolean => JavaScriptReservedWords.includes(word);

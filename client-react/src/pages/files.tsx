@@ -2,7 +2,7 @@ import React from 'react'
 import Page from './page';
 import Table from "../blocks/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
-import {loadFiles} from "../redux/repos/actions";
+import {loadFiles} from "../redux/trees/actions";
 import TreeItem from "../model/tree-item";
 import {Redirect} from 'react-router-dom';
 

@@ -1,5 +1,12 @@
 import { combineReducers } from 'redux';
-import repos from './repos/reducer';
-import files from './files/reducer';
+import trees, {ITreesState} from './trees/reducer';
+import repos, {IReposState} from './repos/reducer';
+import files, {IBlobState} from './files/reducer';
 
-export default combineReducers({ repos, files });
+export interface IRootState {
+	repos: IReposState;
+	files: IBlobState;
+	trees: ITreesState;
+}
+
+export default combineReducers<IRootState>({ repos, files, trees });
