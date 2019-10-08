@@ -1,7 +1,5 @@
 import axios, {AxiosInstance, AxiosRequestConfig, Method} from 'axios';
 
-export type Data = object | object[];
-
 export interface IResponse<T> {
 	data: T;
 	message: string;

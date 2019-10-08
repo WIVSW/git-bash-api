@@ -32,5 +32,4 @@ class TreeItem {
 	}
 };
 
-
 export default TreeItem;

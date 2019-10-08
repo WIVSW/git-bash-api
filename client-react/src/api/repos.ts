@@ -1,15 +1,10 @@
 import Api from './api';
-import Repo from '../model/repo';
+import Repo, {IRepo} from '../model/repo';
 
-/**
- */
 class ReposApi extends Api {
-	/**
-	 * @return {Promise<Array<Repo>>}
-	 */
 	async getRepos() {
-		const datas = await this._request('/repos/');
-		return datas.map((data) => new Repo(data));
+		const datas = await this._request<IRepo[]>('/repos/');
+		return datas.map((data : IRepo) => new Repo(data));
 	}
 }
 

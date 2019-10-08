@@ -1,41 +1,30 @@
-/**
- */
-class Blob {
-	/**
-	 * @param {Object} data
-	 */
-	constructor(data) {
-		/**
-		 * @param {string}
-		 */
-		this.id = data.id || '';
+export interface IRawBlob {
+	id: string;
+	blob: string;
+	url: string;
+}
 
-		/**
-		 * @type {Array<string>}
-		 */
+class Blob {
+	readonly id : string;
+	readonly rows : string[];
+	readonly url : string;
+	readonly filename : string;
+
+	constructor(data : IRawBlob) {
+		this.id = data.id || '';
 		this.rows = typeof data.blob === 'string' ?
 			data.blob.split('\n') : [];
-
-		/**
-		 * @type {string}
-		 */
 		this.url = data.url || '';
-
-		/**
-		 * @type {string}
-		 */
 		this.filename = this.url
 			.split('/')
 			.slice(-1)[0] || '';
 	}
 
-	/**
-	 * @param {string} repoId
-	 * @param {string=} hash
-	 * @param {string=} path
-	 * @returns {string}
-	 */
-	static createId(repoId, hash = 'master', path = '') {
+	static createId(
+		repoId : string,
+		hash : string = 'master',
+		path : string = ''
+	) : string {
 		return `${repoId}#${hash}#${path}`;
 	}
 }

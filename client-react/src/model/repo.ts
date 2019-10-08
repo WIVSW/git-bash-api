@@ -1,13 +1,11 @@
-/**
- */
+export interface IRepo {
+	id: string;
+}
+
 class Repo {
-	/**
-	 * @param {Object} data
-	 */
-	constructor(data) {
-		/**
-		 * @type {string}
-		 */
+	readonly id : string;
+
+	constructor(data : IRepo) {
 		this.id = data.id;
 	}
 }

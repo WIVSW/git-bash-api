@@ -13,8 +13,7 @@ class Api {
 		method?: Method,
 		postData? : object
 	) : Promise<T> {
-		const {data : T} = await this._connection.request(url, method, postData);
-
+		const {data} = await this._connection.request(url, method, postData);
 		return data;
 	}
 

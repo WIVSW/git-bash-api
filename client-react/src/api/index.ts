@@ -5,19 +5,13 @@ import ReposApi from './repos';
 /**
  */
 class ApiContainer {
-	/**
-	 */
+	readonly commits : CommitsApi;
+	readonly repos : ReposApi;
+
 	constructor() {
-		const connection = new Connection();
+		const connection : Connection = new Connection();
 
-		/**
-		 * @type {CommitsApi}
-		 */
 		this.commits = new CommitsApi(connection);
-
-		/**
-		 * @type {ReposApi}
-		 */
 		this.repos = new ReposApi(connection);
 	}
 }
