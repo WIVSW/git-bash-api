@@ -15,7 +15,6 @@ const Layout = ({
 	mods = {},
 	match,
 	history,
-	content,
 }) => {
 	return (
 		<div className={cnLayout(null, [className])}>

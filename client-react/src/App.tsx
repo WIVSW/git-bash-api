@@ -1,15 +1,18 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import {BrowserRouter, Switch, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Redirect, Route, RouteComponentProps} from 'react-router-dom';
 
 import {load, selectRepo} from './redux/repos/actions'
 import Header from './blocks/Header/Header';
 import Footer from './blocks/Footer/Footer';
 import Layout from "./blocks/Layout/Layout";
+import {IRootState} from "./redux/reducer";
 
 
-const Wrapper = (props) => {
-    const items = useSelector((state) => state.repos.items);
+type WrapperParams = { id: string };
+
+const Wrapper = (props : RouteComponentProps<WrapperParams>) => {
+    const items = useSelector((state : IRootState) => state.repos.items);
     const dispatch = useDispatch();
     const id = props.match.params.id || null;
     if (!(
@@ -23,9 +26,9 @@ const Wrapper = (props) => {
 
     return (
         <React.Fragment>
-            <Header {...props} />
+            <Header />
             <Layout {...props} />
-            <Footer {...props} />
+            <Footer />
         </React.Fragment>
     );
 };
@@ -33,7 +36,7 @@ const Wrapper = (props) => {
 const NotFound = () => <div>Not Found</div>;
 
 function App() {
-  const repos = useSelector((state) => state.repos.items);
+  const repos = useSelector((state : IRootState) => state.repos.items);
   const dispatch = useDispatch();
 
   if (!repos.length) {

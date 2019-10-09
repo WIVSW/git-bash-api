@@ -1,15 +1,17 @@
 import React from 'react';
 import Breadcrumbs from "../blocks/Breadcrumbs/Breadcrumbs";
 import Tabs from "../blocks/Tabs/Tabs";
+import {RouteComponentProps} from "react-router";
+import {ICrumb} from "../blocks/Breadcrumbs/Breadcrumbs";
 
-const parseCrumbs = (params = {}, fullUrl) => {
-	const path = params.path || '';
-	const map = {
+const parseCrumbs = (params : PageParams, fullUrl : string) : ICrumb[] => {
+	const path : string = params.path || '';
+	const map : { [key: string] : string | null } = {
 		repository: params.id,
 		tree: params.hash,
 	};
 
-	const parts = path
+	const parts : string[] = path
 		.split('/')
 		.filter(Boolean);
 
@@ -17,12 +19,12 @@ const parseCrumbs = (params = {}, fullUrl) => {
 		.slice(0, -1)
 		.forEach((part) => map[part] = null);
 
-	const crumbs = [];
+	const crumbs : ICrumb[] = [];
 	Object
 		.keys(map)
-		.reduce((url, key) => {
-			let link = `${url}/${key}`;
-			let value = map[key];
+		.reduce((url : string, key : string ) => {
+			let link : string = `${url}/${key}`;
+			let value : (string | null) = map[key];
 			if (value) {
 				link += `/${value}`
 			} else {
@@ -35,7 +37,7 @@ const parseCrumbs = (params = {}, fullUrl) => {
 			return link;
 		}, '');
 
-	const last = parts.slice(-1)[0];
+	const last : string = parts.slice(-1)[0];
 	if (last) {
 		crumbs.push({
 			text: last,
@@ -46,13 +48,19 @@ const parseCrumbs = (params = {}, fullUrl) => {
 	return crumbs;
 };
 
+type PageParams = {
+	id: string,
+	path?: string,
+	hash: string,
+}
+
 const Page = ({
 	history,
 	match,
 	tabs,
 	children
-}) => {
-	const crumbs = match.path ? parseCrumbs(match.params, match.url) : [];
+}) : RouteComponentProps<PageParams> => {
+	const crumbs : ICrumb[] = match.path ? parseCrumbs(match.params, match.url) : [];
 	return (
 		<React.Fragment>
 			<Breadcrumbs crumbs={crumbs}/>

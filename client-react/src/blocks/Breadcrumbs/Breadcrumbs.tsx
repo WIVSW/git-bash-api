@@ -9,10 +9,20 @@ import {cnText} from "../Text/Text";
 
 const cnBreadcrumbs = cn('Breadcrumbs');
 
+export interface ICrumb {
+	text: string;
+	url: string;
+}
+
+type BreadcrumbsProps = {
+	className: string;
+	crumbs: ICrumb[];
+};
+
 const Breadcrumbs = ({
     className = '',
-	crumbs = []
-}) => {
+	crumbs = [],
+} : BreadcrumbsProps) => {
 	return (
 		<div className={cnBreadcrumbs(null, [
 			className,
@@ -25,7 +35,7 @@ const Breadcrumbs = ({
 		])}>
 			{
 				crumbs
-					.map((crumb, i, arr) => {
+					.map((crumb: ICrumb, i, arr) => {
 						const isLast = (arr.length - 1) === i;
 						return (
 							<React.Fragment key={`${crumb.text}_FRAGMENT`}>
