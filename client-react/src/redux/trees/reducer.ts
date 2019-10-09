@@ -5,8 +5,6 @@ import {IAction} from "../actions";
 import {IResponse} from "../../module/connection";
 import TreeChunk from "../../model/tree-chunk";
 
-const {isArray} = Array;
-
 export interface ITreesState {
 	trees: { [key: string]: { [key: string]: ITree[] } };
 	filesLoading: boolean;

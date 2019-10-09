@@ -15,18 +15,53 @@ import IconPlus from "../IconPlus/IconPlus";
 
 const cnTable = cn('Table');
 
+export interface ICell {
+	text: string;
+	size: string;
+	order: number;
+	weight?: string;
+	mobileLink?: boolean;
+	mobileWidthFull?: boolean;
+	type?: string;
+};
+
+export interface IRow {
+	value: string;
+	url?: string;
+	iconType?: string;
+};
+
+type TableProps = {
+	className?: string;
+	mods?: Record<string, string>;
+	cells: ICell[],
+	rows: { [key: string]: IRow }[],
+	children?: React.ReactElement[] | React.ReactElement;
+};
+
+const IconTypes : { [key: string]: string } = {
+	'tree': folder,
+	'blob': file
+};
+
 const Table = ({
     className = '',
     mods = {},
 	cells = [],
 	rows = [],
 	children,
-}) => {
+} : TableProps) => {
 	return (
 		<div className={cnTable(mods, [className])}>
 			<div className={cnTable('Row', null, [cnTable('Head')])}>
-				{cells.map(({text, size}, i) => {
-					const cellName = `${text.slice(0, 1).toUpperCase()}${text.slice(1)}`;
+				{cells.map((
+					{text, size} :
+					{
+						text: string;
+						size: string;
+					},
+				i) => {
+					const cellName : string = `${text.slice(0, 1).toUpperCase()}${text.slice(1)}`;
 					return (
 						<div key={i} className={cnTable(
 							'Cell',
@@ -34,7 +69,7 @@ const Table = ({
 							[cnBlock({'d-space-h': 'xs'})]
 						)}>
 							<Text mods={{size: 'l'}}>
-								{cellName}
+								<>{cellName}</>
 							</Text>
 						</div>
 					);
@@ -61,29 +96,39 @@ const Table = ({
 							mobileWidthFull,
 							type
 						}, j) => {
-							const data = row[text];
+							const data : IRow = row[text];
 
 							if (!data) {
 								return null;
 							}
 
 							const {value, url, iconType} = data;
+							const icon : (string|null) = iconType ? IconTypes[iconType] : null;
 
-							const ValueWrapper = ({children}) => iconType ?
+							const ValueWrapper = (
+								{children} :
+								{children?: React.ReactElement[] | React.ReactElement}
+							) => icon ?
 								<IconPlus
 									width={12}
 									height={9}
-									src={Table.IconTypes[iconType]}
+									src={icon}
 								>{children}</IconPlus> :
 								<React.Fragment>{children}</React.Fragment>;
 
-							const Value = ({className = '', children}) => url ?
+							const Value = (
+								{className = '', children} :
+								{
+									className: string,
+									children?: React.ReactElement[] | React.ReactElement
+								}
+							) => url ?
 								<Link to={url} className={className}>{children}</Link> :
 								<Text className={className}>{children}</Text>;
 
 							return (
 								<React.Fragment key={j}>
-									{mobileLink ? <Link
+									{mobileLink && url ? <Link
 										to={url}
 										className={
 											cnTable('CellIcon', null, [
@@ -101,7 +146,7 @@ const Table = ({
 									<div className={cnTable(
 										'Cell',
 										{
-											'm-width': mobileWidthFull ? 'full' : null,
+											'm-width': mobileWidthFull ? 'full' : void 0,
 											order,
 										},
 										[cnBlock({
@@ -112,11 +157,11 @@ const Table = ({
 									)}>
 										<ValueWrapper>
 											<Value className={cnText({
-													size: 'l',
-													weight: weight ? weight : null,
-													type: type ? type : null,
+												size: 'l',
+												weight: weight ? weight : void 0,
+												type: type ? type : void 0,
 											})}>
-												{value}
+												{<>{value}</>}
 											</Value>
 										</ValueWrapper>
 									</div>
@@ -129,12 +174,6 @@ const Table = ({
 			{children}
 		</div>
 	);
-};
-
-
-Table.IconTypes = {
-	'tree': folder,
-	'blob': file
 };
 
 export default Table;

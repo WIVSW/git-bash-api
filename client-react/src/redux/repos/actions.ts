@@ -1,8 +1,6 @@
 import api from '../../api';
 import {IAction} from '../actions';
 import Repo from "../../model/repo";
-import {ITree} from '../../api/commits'
-import TreeChunk from "../../model/tree-chunk";
 
 export enum ReposActions {
 	LOAD = 'REPOS_LOAD',

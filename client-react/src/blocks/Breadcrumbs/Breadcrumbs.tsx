@@ -15,7 +15,7 @@ export interface ICrumb {
 }
 
 type BreadcrumbsProps = {
-	className: string;
+	className?: string;
 	crumbs: ICrumb[];
 };
 

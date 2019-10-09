@@ -5,6 +5,15 @@ import './IconPlus.scss';
 
 export const cnIconPlus = cn('IconPlus');
 
+type IconPlusProps = {
+	className?: string;
+	mods?: Record<string, string>;
+	width: number;
+	height: number;
+	src: string;
+	children?: React.ReactElement[] | React.ReactElement;
+};
+
 const IconPlus = ({
 	className = '',
 	mods = {},
@@ -12,7 +21,7 @@ const IconPlus = ({
 	height = 10,
 	src = '',
 	children,
-}) => {
+} : IconPlusProps) => {
 	return (
 		<div className={cnIconPlus(mods, [className])}>
 			<span className={cnIconPlus('Icon')}>

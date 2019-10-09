@@ -1,12 +1,18 @@
 import React from 'react'
-import Page from './page';
-import Table from "../blocks/Table/Table";
+import Page, {PageParams} from './page';
+import Table, {ICell, IRow} from "../blocks/Table/Table";
 import {useDispatch, useSelector} from "react-redux";
 import {loadFiles} from "../redux/trees/actions";
-import TreeItem from "../model/tree-item";
-import {Redirect} from 'react-router-dom';
+import {Redirect, RouteComponentProps} from 'react-router-dom';
+import {IRootState} from "../redux/reducer";
+import {ITree} from "../api/commits";
+import {Types} from "../model/tree-item";
 
-const createFilesTabs = (matchUrl, repoId, hash = 'master') => {
+const createFilesTabs = (
+	matchUrl : string,
+	repoId : string,
+	hash = 'master'
+) => {
 	const treeUrl = `/repository/${repoId}/tree`;
 	const branchesUrl = `/repository/${repoId}/branches`;
 	return [
@@ -23,19 +29,19 @@ const createFilesTabs = (matchUrl, repoId, hash = 'master') => {
 	];
 };
 
-const formatDate = (date) => {
+const formatDate = (date : Date) : string => {
 	const month = FilesPage.Monthes[date.getMonth()];
 	return `${month} ${date.getDay() + 1}, ${date.getFullYear()}`;
 };
 
 const createRow = (
-	name,
-	link,
-	iconType = '',
-	hash = '',
-	subject = '',
-	author = '',
-	date = ''
+	name : string,
+	link : string,
+	iconType : string = '',
+	hash : string = '',
+	subject : string = '',
+	author : string = '',
+	date : string = ''
 ) => ({
 	name: {
 		value: name,
@@ -58,7 +64,13 @@ const createRow = (
 	},
 });
 
-const parseTrees = (trees = [], url, id, hash, path = '') => {
+const parseTrees = (
+	trees : ITree[] = [],
+	url : string,
+	id : string,
+	hash : string,
+	path : string = ''
+) : { [key: string]: IRow }[] => {
 	const dirs = trees.filter((file) => file.treeItem.isDir);
 	const blobs = trees.filter((file) => file.treeItem.isFile);
 	const urlPart = url.split('/').filter(Boolean);
@@ -66,7 +78,7 @@ const parseTrees = (trees = [], url, id, hash, path = '') => {
 	const prepended = pathPart.length ? [createRow(
 		'..',
 		`/${urlPart.slice(0, -1).join('/')}`,
-		TreeItem.Types.TREE
+		Types.TREE
 		)] : [];
 
 	const rows = dirs
@@ -86,7 +98,7 @@ const parseTrees = (trees = [], url, id, hash, path = '') => {
 	return prepended.concat(rows);
 };
 
-const TABLE_CELLS = [
+const TABLE_CELLS : ICell[] = [
 	{
 		text: 'name',
 		size: 'm',
@@ -120,22 +132,22 @@ const TABLE_CELLS = [
 	},
 ];
 
-const FilesPage = (props) => {
+const FilesPage = (props : RouteComponentProps<PageParams>) => {
 	const {id, hash, path = ''} = props.match.params;
 	const {url} = props.match;
 	const tabs = createFilesTabs(url, id, hash);
 
 	const dispatch = useDispatch();
-	const files = useSelector(({repos}) => (repos.trees[id] && repos.trees[id][path]) || []);
-	const isLoading = useSelector(({repos}) => repos.filesLoading);
-	const error = useSelector(({repos}) => repos.loadingError);
+	const files = useSelector(({trees} : IRootState) => (trees.trees[id] && trees.trees[id][path]) || []);
+	const isLoading = useSelector(({trees} : IRootState) => trees.filesLoading);
+	const error = useSelector(({trees} : IRootState) => trees.loadingError);
 
 	if (error) {
 		return <Redirect to={'/404/'}/>
 	}
 
 	if (!error && !isLoading && !files.length) {
-		dispatch(loadFiles(id, hash, path, url));
+		dispatch(loadFiles(id, hash, path));
 	}
 
 	const rows = (files.length && parseTrees(files, url, id, hash, path)) || [];
@@ -143,7 +155,7 @@ const FilesPage = (props) => {
 	return (
 		<Page {...props} tabs={tabs}>
 			<Table cells={TABLE_CELLS} rows={rows}>
-				{isLoading ? <div>Loading...</div> : null}
+				{isLoading ? <div>Loading...</div> : void 0}
 			</Table>
 		</Page>
 	);

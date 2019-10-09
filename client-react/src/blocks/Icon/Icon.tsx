@@ -5,6 +5,15 @@ import './Icon.scss';
 
 export const cnIcon = cn('Icon');
 
+type IconProps = {
+	className: string;
+	src: string;
+	width: number;
+	height: number;
+	center: boolean;
+	alt?: string;
+}
+
 const Icon = ({
 	className = '',
 	src = '',
@@ -13,13 +22,10 @@ const Icon = ({
 	center = false,
 	alt = '',
 }) => {
-	const mods = {};
-
-	if (center) {
-		mods['v-align'] = 'center'
-	}
 	return (
-		<div className={cnIcon(mods, [className])}>
+		<div className={cnIcon({
+			'v-align': center ? 'center' : void 0,
+		}, [className])}>
 			<img src={src} width={width} height={height} alt={alt}/>
 		</div>
 	);

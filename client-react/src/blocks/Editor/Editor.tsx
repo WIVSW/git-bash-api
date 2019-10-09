@@ -15,13 +15,24 @@ import {isReservedWord} from "../../module/code-parser";
 export const cnEditor = cn('Editor');
 export const cnEditorHeadCol = (mods = {}) => cnEditor('HeadCol', mods);
 
+export interface ILine {
+	numbers: number[];
+	value: string;
+}
+
+type EditorProps = {
+	className?: string;
+	mods?: Record<string, string>;
+	filename?: string;
+	lines: ILine[];
+};
 
 const Editor = ({
 	className = '',
 	mods = {},
 	filename = '',
 	lines = [],
-}) => {
+} : EditorProps) => {
 	return (
 		<div className={cnEditor(mods, [className])}>
 			<div className={cnEditor('Head', {
@@ -47,7 +58,7 @@ const Editor = ({
 								})
 							])}>
 								<Text mods={{weight: 'bold'}}>
-									{filename}
+									{<>{filename}</>}
 								</Text>
 							</div>
 						</div>

@@ -8,14 +8,23 @@ import {cnBlock} from "../Block/Block";
 
 export const cnSelect = cn('Select');
 
+type SelectProps = {
+	className: string;
+	mods: Record<string, (string|boolean)>;
+	titleMix?: string;
+	iconClassName?: string,
+	arrowVisible?: boolean,
+	children?: React.ReactElement[] | React.ReactElement;
+};
+
 const Select = ({
     className = '',
     mods = {},
-	titleMix = {},
+	titleMix = '',
 	iconClassName = '',
 	arrowVisible = false,
 	children
-}) => {
+} : SelectProps) => {
 	return (
 		<div className={cnSelect(mods, [className, cnBlock()])}>
 			<div className={cnSelect('Title', [titleMix])}>

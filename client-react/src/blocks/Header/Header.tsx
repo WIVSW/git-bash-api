@@ -12,15 +12,17 @@ import {cnEdge} from "../Edge/Edge";
 import logo from '../../img/logo.svg';
 
 import './Header.scss';
+import {IRootState} from "../../redux/reducer";
+import {ILink} from "../List/List";
 
 const cnHeader = cn('Header');
 
 
 const Header = () => {
-	const repos = useSelector((state) => state.repos.items);
-	const selected = useSelector((state) => state.repos.selected);
+	const repos = useSelector((state : IRootState) => state.repos.items);
+	const selected = useSelector((state : IRootState) => state.repos.selected);
 	const repoName = selected || '';
-	const items = repos.map((repo) => ({
+	const items : ILink[]= repos.map((repo) => ({
 		id: repo.id,
 		text: repo.id,
 		url: `/repository/${repo.id}`
@@ -60,8 +62,8 @@ const Header = () => {
 						iconClassName={cnHeader('Icon')}
 						items={items}
 					>
-						<Text mods={{size: 'm', 'letter-space': 'xl', weight: 'bold', }}>Repository </Text>
-						<Text mods={{size: 'm', 'letter-space': 'xl', }}>{repoName}</Text>
+						<Text mods={{size: 'm', 'letter-space': 'xl', weight: 'bold', }}><>Repository </></Text>
+						<Text mods={{size: 'm', 'letter-space': 'xl', }}><>{repoName}</></Text>
 					</Dropdown>
 				</div>
 			</Grid>

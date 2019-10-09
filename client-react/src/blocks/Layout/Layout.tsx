@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@bem-react/classname';
 
-import {Switch, Route, Redirect} from "react-router-dom";
+import {Switch, Route, Redirect, RouteComponentProps} from "react-router-dom";
 
 import './Layout.scss';
 import FilesPage from "../../pages/files";
@@ -10,12 +10,15 @@ import BlobPage from "../../pages/blob";
 const cnLayout = cn('Layout');
 
 const DEFAULT_BRANCH = 'master';
+
+type LayoutProps = RouteComponentProps<{}> & {
+	className?: string;
+};
+
 const Layout = ({
     className = '',
-	mods = {},
 	match,
-	history,
-}) => {
+} : LayoutProps) => {
 	return (
 		<div className={cnLayout(null, [className])}>
 			<Switch>

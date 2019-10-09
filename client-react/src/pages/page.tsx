@@ -1,6 +1,6 @@
 import React from 'react';
 import Breadcrumbs from "../blocks/Breadcrumbs/Breadcrumbs";
-import Tabs from "../blocks/Tabs/Tabs";
+import Tabs, {ITab} from "../blocks/Tabs/Tabs";
 import {RouteComponentProps} from "react-router";
 import {ICrumb} from "../blocks/Breadcrumbs/Breadcrumbs";
 
@@ -48,18 +48,23 @@ const parseCrumbs = (params : PageParams, fullUrl : string) : ICrumb[] => {
 	return crumbs;
 };
 
-type PageParams = {
+export type PageParams = {
 	id: string,
 	path?: string,
 	hash: string,
 }
+
+type PageProps = RouteComponentProps<PageParams> & {
+	tabs: ITab[];
+	children?: React.ReactElement[] | React.ReactElement;
+};
 
 const Page = ({
 	history,
 	match,
 	tabs,
 	children
-}) : RouteComponentProps<PageParams> => {
+} : PageProps) => {
 	const crumbs : ICrumb[] = match.path ? parseCrumbs(match.params, match.url) : [];
 	return (
 		<React.Fragment>
