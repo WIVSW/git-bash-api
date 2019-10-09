@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const parseCommitHash = require('../middleware/parse-commit-hash');
-const {handleRequest} = require('../modules/utils');
+import parseCommitHash from '../middleware/parse-commit-hash';
+import { handleRequest } from '../modules/utils';
 
 
 const deps = {

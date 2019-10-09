@@ -1,7 +1,7 @@
-const {promisify} = require('util');
-const fs = require('fs');
+import { promisify } from 'util';
+import fs from 'fs';
 
-const axios = require('axios');
+import axios from 'axios';
 
 const stat = promisify(fs.stat);
 
@@ -11,11 +11,11 @@ const deps = {
 	removeRecursive: null,
 };
 
-const {getRepoPath} = require('./utils');
-const Response = require('../models/responses/response');
-const NotFound = require('../models/responses/not-found');
-const AlreadyExist = require('../models/responses/repository-exist');
-const NotExist = require('../models/responses/repository-not-exist');
+import { getRepoPath } from './utils';
+import Response from '../models/responses/response';
+import NotFound from '../models/responses/not-found';
+import AlreadyExist from '../models/responses/repository-exist';
+import NotExist from '../models/responses/repository-not-exist';
 
 const isRemoteRepoExist = async (url) => {
 	try {

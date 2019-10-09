@@ -1,6 +1,6 @@
-const HashNotExist = require('../models/responses/hash-not-exist');
-const {join} = require('path');
-const {getCommitFormat} = require('./utils');
+import HashNotExist from '../models/responses/hash-not-exist';
+import { join } from 'path';
+import { getCommitFormat } from './utils';
 
 const deps = {
 	execute: null,

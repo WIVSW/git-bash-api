@@ -1,18 +1,18 @@
-const {promisify} = require('util');
-const {resolve} = require('path');
+import { promisify } from 'util';
+import path from 'path';
 const exec = promisify(require('child_process').execFile);
-const {spawn} = require('child_process');
-const readline = require('readline');
+import { spawn } from 'child_process';
+import readline from 'readline';
 
-const fs = require('fs');
+import fs from 'fs';
 const readdir = promisify(fs.readdir);
 const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
 const unlink = promisify(fs.unlink);
 
-const Response = require('../models/responses/response');
-const Success = require('../models/responses/success');
-const Unknown = require('../models/responses/unknown');
+import Response from '../models/responses/response';
+import Success from '../models/responses/success';
+import Unknown from '../models/responses/unknown';
 
 const handleRequest = async (action, req, res, ...rest) => {
 	let response;
@@ -68,7 +68,7 @@ const spawnCmd = async (cmd, args = [], optRepoId = '', optParser) => {
 };
 
 const getRepoPath = (repoId) =>
-	resolve(process.env.PATH_TO_REPOS, `./${repoId}`);
+	path.resolve(process.env.PATH_TO_REPOS, `./${repoId}`);
 
 const execute = async (cmd, args = [], optRepoId = '') => {
 	return await exec(
@@ -183,7 +183,7 @@ const removeRecursive = async (path) => {
 
 	if (stats.isDirectory()) {
 		const files = await readdir(path);
-		const pathes = files.map((file) => resolve(path, `./${file}`));
+		const pathes = files.map((file) => path.resolve(path, `./${file}`));
 
 		if (pathes.length) {
 			await Promise.all(pathes.map(removeRecursive));

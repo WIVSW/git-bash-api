@@ -1,3 +1,5 @@
+import {NextFunction, Request, Response} from "express";
+
 const {isAbsolute, resolve} = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -27,13 +29,13 @@ const PORT = process.env.PORT || 4554;
 
 app.use(express.json());
 app.use(express.static(resolve(__dirname, '../client-react/build')));
-app.use('/api', (req, res, next) => {
+app.use('/api', (req : Request, res : Response, next : NextFunction) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers',
 		'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 }, router);
-app.use((req, res) =>
+app.use((req : Request, res : Response) =>
 	res.sendFile(resolve(__dirname, `../client-react/build/index.html`)));
 
 app.listen(PORT, () => {

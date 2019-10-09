@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {handleRequest} = require('../modules/utils');
+import { handleRequest } from '../modules/utils';
 
 const deps = {
 	actions: null,
@@ -9,7 +9,7 @@ const deps = {
 
 router.get('*', handleRequest.bind(null, async (req) => {
 	const path = req.params[0].slice(1);
-	return await deps.actions.readBlob(req.repositoryId, req.hash, path);
+	return await deps.actions.listDir(req.repositoryId, req.hash, path);
 }));
 
 module.exports = ({actions}) => {

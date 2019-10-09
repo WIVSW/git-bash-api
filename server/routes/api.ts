@@ -1,6 +1,6 @@
-const express = require('express');
-const parseRepoId = require('../middleware/parse-repository-id');
-const {handleRequest} = require('../modules/utils');
+import express from 'express';
+import parseRepoId from '../middleware/parse-repository-id';
+import { handleRequest } from '../modules/utils';
 
 const deps = {
 	actions: null,

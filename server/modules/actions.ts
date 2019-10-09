@@ -29,7 +29,7 @@ const Actions = {
 	READ_BLOB: 'read-blob',
 };
 
-const Handers = {};
+const Handers : { [key: string]: <T>() => Promise<T> } = {};
 Handers[Actions.READ_REPOS_LIST] = getReposList;
 Handers[Actions.REMOVE_REPO] = remove;
 Handers[Actions.DOWNLOAD_REPO] = download;
