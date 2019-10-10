@@ -1,12 +1,12 @@
-const Response = require('./response');
+import Response, {Data} from "./response";
 
-/**
- */
+export interface FailInput {
+	code: number;
+	message: string;
+}
+
 class Fail extends Response {
-	/**
-	 * @param {Fail.Input} data
-	 */
-	constructor(data) {
+	constructor(data : FailInput) {
 		super({
 			code: data.code,
 			message: data.message,
@@ -15,13 +15,4 @@ class Fail extends Response {
 	}
 };
 
-
-/**
- * @typedef {{
- *     code: number,
- *     message: string
- * }}
- */
-Fail.Input;
-
-module.exports = Fail;
+export default Fail;

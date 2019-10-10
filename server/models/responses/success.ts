@@ -1,12 +1,7 @@
-const Response = require('./response');
+import Response, {Data} from "./response";
 
-/**
- */
 class Success extends Response {
-	/**
-	 * @param {Response.Data=} data
-	 */
-	constructor(data) {
+	constructor(data : Data) {
 		super({
 			code: 200,
 			message: 'OK',
@@ -15,4 +10,4 @@ class Success extends Response {
 	}
 };
 
-module.exports = Success;
+export default Success;

@@ -1,10 +1,6 @@
-const Fail = require('./fail');
+import Fail from "./fail";
 
-/**
- */
 class Unknown extends Fail {
-	/**
-	 */
 	constructor() {
 		super({
 			code: 500,
@@ -13,4 +9,4 @@ class Unknown extends Fail {
 	}
 };
 
-module.exports = Unknown;
+export default Unknown;

@@ -1,13 +1,9 @@
-const BadRequest = require('./bad-request');
+import BadRequest from "./bad-request";
 
-/**
- */
 class RepositoryAlreadyExist extends BadRequest {
-	/**
-	 */
 	constructor() {
 		super('The repository is already exist');
 	}
 };
 
-module.exports = RepositoryAlreadyExist;
+export default RepositoryAlreadyExist;

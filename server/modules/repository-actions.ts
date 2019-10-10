@@ -17,7 +17,7 @@ import NotFound from '../models/responses/not-found';
 import AlreadyExist from '../models/responses/repository-exist';
 import NotExist from '../models/responses/repository-not-exist';
 
-const isRemoteRepoExist = async (url) => {
+const isRemoteRepoExist = async (url : string) : Promise<boolean> => {
 	try {
 		const {status} = await axios.get(url);
 		return status === 200;

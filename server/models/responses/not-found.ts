@@ -1,12 +1,7 @@
-const Fail = require('./fail');
+import Fail from "./fail";
 
-/**
- */
 class NotFound extends Fail {
-	/**
-	 * @param {string=} optMessage
-	 */
-	constructor(optMessage) {
+	constructor(optMessage? : string) {
 		super({
 			code: 404,
 			message: optMessage || 'Not found',
@@ -14,4 +9,4 @@ class NotFound extends Fail {
 	}
 };
 
-module.exports = NotFound;
+export default NotFound;

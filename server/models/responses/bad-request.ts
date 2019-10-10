@@ -1,12 +1,7 @@
-const Fail = require('./fail');
+import Fail from "./fail";
 
-/**
- */
 class BadRequest extends Fail {
-	/**
-	 * @param {string=} optMessage
-	 */
-	constructor(optMessage) {
+	constructor(optMessage : string) {
 		super({
 			code: 400,
 			message: optMessage || 'Bad Request',
@@ -14,4 +9,4 @@ class BadRequest extends Fail {
 	}
 };
 
-module.exports = BadRequest;
+export default BadRequest;
