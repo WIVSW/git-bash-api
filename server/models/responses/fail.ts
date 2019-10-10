@@ -1,12 +1,12 @@
 import Response, {Data} from "./response";
 
-export interface FailInput {
+export interface IFailInput {
 	code: number;
 	message: string;
 }
 
 class Fail extends Response {
-	constructor(data : FailInput) {
+	constructor(data : IFailInput) {
 		super({
 			code: data.code,
 			message: data.message,

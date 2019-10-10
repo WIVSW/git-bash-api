@@ -1,57 +1,51 @@
-const {
+import {
 	execute,
-	spawnCmd,
-	commitsHistoryParser,
+	spawnHistory,
+	spawnDefault,
 	removeRecursive,
 	readdir,
-} = require('./utils');
+	CommitProps,
+	ICommit,
+} from './utils';
+import repositoryActions, {IRepo} from './repository-actions';
+import commitsActions, {IFile} from './commits-actions';
 
 const {
 	getReposList,
 	remove,
 	download,
-} = require('./repository-actions')({execute, removeRecursive, readdir});
+} = repositoryActions({execute, readdir, removeRecursive});
 
 const {
 	getCommitsList,
 	getFilesList,
 	getCommitDiff,
 	getBlob,
-} = require('./commits-actions')({execute, spawnCmd, commitsHistoryParser});
+} = commitsActions({execute, spawnHistory, spawnDefault});
 
-const Actions = {
-	READ_REPOS_LIST: 'read-repos-list',
-	REMOVE_REPO: 'remove-repo',
-	DOWNLOAD_REPO: 'download-repo',
-	READ_COMMITS_LIST: 'read-commits-list',
-	LIST_DIR: 'list-dir',
-	COMMIT_DIFF: 'commit-diff',
-	READ_BLOB: 'read-blob',
+enum Actions {
+	READ_REPOS_LIST = 'read-repos-list',
+	REMOVE_REPO = 'remove-repo',
+	DOWNLOAD_REPO = 'download-repo',
+	READ_COMMITS_LIST = 'read-commits-list',
+	LIST_DIR = 'list-dir',
+	COMMIT_DIFF = 'commit-diff',
+	READ_BLOB = 'read-blob',
 };
 
-const Handers : { [key: string]: <T>() => Promise<T> } = {};
-Handers[Actions.READ_REPOS_LIST] = getReposList;
-Handers[Actions.REMOVE_REPO] = remove;
-Handers[Actions.DOWNLOAD_REPO] = download;
-Handers[Actions.READ_COMMITS_LIST] = getCommitsList;
-Handers[Actions.LIST_DIR] = getFilesList;
-Handers[Actions.COMMIT_DIFF] = getCommitDiff;
-Handers[Actions.READ_BLOB] = getBlob;
+type Result = IRepo[] | void | ICommit[] | IFile[] | string;
 
 const memo = new Map();
 
-const run = async (key, args = []) => {
-	const action = Handers[key];
-	const callId = [key]
-		.concat(args)
-		.map(String)
-		.join('#');
-
+const run = async <R>(
+	action : () => Promise<R>,
+	callId : string
+) : Promise<R> => {
 	if (memo.has(callId)) {
 		return await memo.get(callId);
 	}
 
-	const promise = action(...args);
+	const promise = action();
 
 	memo.set(callId, promise);
 
@@ -59,40 +53,69 @@ const run = async (key, args = []) => {
 		.finally(() => memo.delete(callId));
 };
 
-const readReposList = async () => {
-	return await run(Actions.READ_REPOS_LIST);
+const callId = (ids : (string|number)[]) : string => ids.map(String).join('#');
+
+export const readReposList = async () : Promise<IRepo[]> => {
+	return await run<IRepo[]>(
+		getReposList.bind(null),
+		Actions.READ_REPOS_LIST
+	);
 };
 
-const removeRepo = async (...args) => {
-	return await run(Actions.REMOVE_REPO, args);
+export const removeRepo = async (repoId : string) : Promise<void> => {
+	return await run<void>(
+		remove.bind(null, repoId),
+		callId([Actions.REMOVE_REPO, repoId])
+	);
 };
 
-const downloadRepo = async (...args) => {
-	return await run(Actions.DOWNLOAD_REPO, args);
+export const downloadRepo = async (repoId : string, url : string) : Promise<void> => {
+	return await run<void>(
+		download.bind(null, repoId, url),
+		callId([Actions.DOWNLOAD_REPO, repoId, url])
+	);
 };
 
-const readCommitsList = async (...args) => {
-	return await run(Actions.READ_COMMITS_LIST, args);
+export const readCommitsList = async (
+	repoId : string,
+	hash: string,
+	offset: number = 0,
+	limit: number = Infinity
+) : Promise<ICommit[]> => {
+	return await run<ICommit[]>(
+		getCommitsList.bind(null, repoId, hash, offset, limit),
+		callId([Actions.READ_COMMITS_LIST, repoId, hash, offset, limit])
+	);
 };
 
-const listDir = async (...args) => {
-	return await run(Actions.LIST_DIR, args);
+export const listDir = async (
+	repoId: string,
+    hash: string,
+	path: string = ''
+) : Promise<IFile[]> => {
+	return await run<IFile[]>(
+		getFilesList.bind(null, repoId, hash, path),
+		callId([Actions.LIST_DIR, repoId, hash, path])
+	);
 };
 
-const readCommitDiff = async (...args) => {
-	return await run(Actions.COMMIT_DIFF, args);
+export const readCommitDiff = async (
+	repoId: string,
+	hash: string,
+) : Promise<string> => {
+	return await run<string>(
+		getCommitDiff.bind(null, repoId, hash),
+		callId([Actions.COMMIT_DIFF, repoId, hash])
+	);
 };
 
-const readBlob = async (...args) => {
-	return await run(Actions.READ_BLOB, args);
-};
-
-module.exports = {
-	readReposList,
-	removeRepo,
-	downloadRepo,
-	readCommitsList,
-	listDir,
-	readCommitDiff,
-	readBlob,
+export const readBlob = async (
+	repoId: string,
+	hash: string,
+	path: string = ''
+) : Promise<string> => {
+	return await run<string>(
+		getBlob.bind(null, repoId, hash, path),
+		callId([Actions.READ_BLOB, repoId, hash, path])
+	);
 };
