@@ -1,0 +1,13 @@
+@import "../../const";
+
+.Logo {
+	padding: 19px 0;
+
+	@media (min-width: $BREAKPOINT) {
+		padding: 18px 0;
+	}
+
+	&-Image {
+		margin: -3px 0;
+	}
+}

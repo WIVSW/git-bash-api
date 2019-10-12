@@ -1,0 +1,55 @@
+@import "../../const";
+
+$TEXT_COLOR: #7F8285;
+
+.Breadcrumbs {
+	color: $TEXT_COLOR;
+	padding: 11px 0 12px;
+	display: flex;
+
+	&_type {
+		&_block {
+			display: block;
+			line-height: 22px;
+			@media (min-width: $BREAKPOINT) {
+				line-height: normal;
+			}
+		}
+	}
+
+	&-Item {
+		color: $TEXT_COLOR;
+		text-decoration: none;
+
+		&_selected {
+			color: #000;
+			font-weight: bold;
+			letter-spacing: -0.5px;
+		}
+	}
+
+	&-Separator {
+		padding: 0 11px 0 12px;
+
+		// TODO: Ужасный костыль для соответвия макету
+		display: inline-block;
+		font-size: 17px;
+		position: relative;
+		top: 2px;
+		left: -1px;
+		margin: -2px 0;
+		transform: rotate(3deg);
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		padding: 12px 0 14px;
+	}
+
+	&_responsive_space {
+		&_history {
+			@media (min-width: $BREAKPOINT) {
+				padding: 8px 0 14px;
+			}
+		}
+	}
+}

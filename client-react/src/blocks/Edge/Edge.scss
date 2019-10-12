@@ -1,0 +1,35 @@
+@import "../../const";
+
+$BORDER_COLOR: #F0F2F3;
+$BORDER_WIDTH: 1px;
+$TRANSPARENT_COLOR: rgba(0, 0, 0, 0);
+
+.Edge {
+	border: $BORDER_WIDTH solid $BORDER_COLOR;
+
+	&_top {
+		border-top-width: $BORDER_WIDTH + 1px;
+	}
+
+	&_bottom {
+		border-bottom-width: $BORDER_WIDTH + 1px;
+	}
+
+	@media (min-width: $BREAKPOINT) {
+		border-color: $TRANSPARENT_COLOR;
+
+		&_top {
+			border-top-color: $BORDER_COLOR;
+			border-top-width: $BORDER_WIDTH;
+		}
+
+		&_bottom {
+			border-bottom-color: $BORDER_COLOR;
+			border-bottom-width: $BORDER_WIDTH;
+		}
+	}
+
+	&_layout {
+		border-bottom: $BORDER_WIDTH solid #e5e5e5;
+	}
+}

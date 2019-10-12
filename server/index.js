@@ -21,19 +21,21 @@ if (!fs.existsSync(process.env.PATH_TO_REPOS)) {
 }
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4554;
 
 app.use(express.json());
-app.use(express.static(resolve(__dirname, '../client/build')));
+app.use(express.static(resolve(__dirname, '../client-react/build')));
 app.use('/api', (req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers',
 		'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 }, apiRoute);
+app.use((req, res) =>
+	res.sendFile(resolve(__dirname, `../client-react/build/index.html`)));
 
 app.listen(PORT, () => {
-	console.log(`Express server listening on port ${PORT}`);
+	console.log(`App is running on http://localhost:${PORT}/`);
 });
 
 module.exports = app;

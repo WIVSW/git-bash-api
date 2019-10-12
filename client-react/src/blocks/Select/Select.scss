@@ -1,0 +1,27 @@
+$COLOR_RED: #FF4F49;
+
+.Select {
+	height: 100%;
+	position: relative;
+	border: 0 solid rgba(0, 0, 0, 0);
+	display: inline-block;
+
+	&_active {
+		border-top-width: 3px;
+		border-bottom-width: 3px;
+		border-bottom-color: $COLOR_RED;
+		margin: -1px 0;
+	}
+
+	&-Title {
+		height: 100%;
+	}
+
+	&-Icon {
+		display: inline;
+		position: absolute;
+		top: 50%;
+		right: -17px;
+		transform: translate(0, -50%);
+	}
+}
