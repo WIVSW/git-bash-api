@@ -20,6 +20,7 @@ declare global {
 		export interface Request {
 			repositoryId: string;
 			hash: string;
+			pathToFile: string;
 			params: IParams;
 			body: IBody;
 		}
