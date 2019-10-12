@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "prebuild": "rm -rf tmp/ && mkdir tmp && cd tmp/ && git clone https://github.com/facebook/react/ && git clone https://github.com/WIVSW/foreign-api.git && cd ../ && rm -rf node_modules && npm i && $(npm bin)/selenium-standalone install && cd client-react && rm -rf node_modules && npm i && npm run build && cd .. && npm run start ./tmp",
-    "start": "node server/index.js",
+    "start": "ts-node server/index.ts",
     "start:selenium": "$(npm bin)/selenium-standalone start",
     "test": "npm run test:lint && npm run test:unit && npm run test:e2e",
     "test:unit": "export NODE_ENV=test && mocha --exit --recursive test/unit/index.test.js",
@@ -28,6 +28,16 @@
   },
   "homepage": "https://github.com/WIVSW/git-bash-api#readme",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/express": "^4.17.1",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.11",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
+    "@types/react-redux": "^7.1.4",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/redux-promise-middleware": "0.0.11",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
     "assert": "^2.0.0",
     "chai": "^4.2.0",
     "eslint": "^6.3.0",
@@ -44,7 +54,9 @@
     "node-sass": "^4.12.0",
     "selenium-standalone": "^6.16.0",
     "sinon": "^7.5.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
   },
   "dependencies": {
     "@bem-react/classname": "^1.5.6",
