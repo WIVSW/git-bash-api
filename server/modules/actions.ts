@@ -119,3 +119,25 @@ export const readBlob = async (
 		callId([Actions.READ_BLOB, repoId, hash, path])
 	);
 };
+
+export interface IActionsContainer {
+	readReposList: () => Promise<IRepo[]>,
+	removeRepo: (repoId : string) => Promise<void>,
+	downloadRepo: (repoId : string, url : string) => Promise<void>,
+	readCommitsList: (repoId : string, hash: string, offset?: number, limit?: number) => Promise<ICommit[]>,
+	listDir: (repoId: string, hash: string, path: string) => Promise<IFile[]>,
+	readCommitDiff: (repoId: string, hash: string) => Promise<string>,
+	readBlob: (repoId: string, hash: string, path: string) => Promise<string>
+}
+
+const container : IActionsContainer = {
+	readReposList,
+	removeRepo,
+	downloadRepo,
+	readCommitsList,
+	listDir,
+	readCommitDiff,
+	readBlob
+};
+
+export default container;

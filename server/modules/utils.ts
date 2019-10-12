@@ -10,19 +10,28 @@ const rmdir = promisify(fs.rmdir);
 const stat = promisify(fs.stat);
 const unlink = promisify(fs.unlink);
 
-import Response, {Data} from '../models/responses/response';
+import Response from '../models/responses/response';
 import Success from '../models/responses/success';
 import Unknown from '../models/responses/unknown';
-import {Request, Response as ExpressResponse} from "express";
+import {
+	Response as ExpressResponse,
+	NextFunction,
+} from 'express-serve-static-core';
+import {Request} from 'express';
+import {RequestAction} from "../middleware/parse-commit-hash";
+import {RHanler} from '../../externs/express/index';
 
-export const handleRequest = async (
-	action : (req : Request, res : ExpressResponse) => Promise<Data>,
-	req : Request,
-	res : ExpressResponse
-) : Promise<void> => {
+export interface IRequest extends Request {
+	repositoryId: string;
+	hash: string;
+}
+
+export const handleRequest = <P>(
+	action : RequestAction<Express.Request, P>,
+) : RHanler => async (req: Express.Request, res: ExpressResponse, next: NextFunction) : Promise<void> => {
 	let response;
 	try {
-		const data = await action(req, res);
+		const data : P = await action(req, res, next);
 		response = new Success(data);
 	} catch (error) {
 		response = error instanceof Response ? error : new Unknown();

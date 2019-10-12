@@ -1,11 +1,11 @@
-import Response, {Data} from "./response";
+import Response from "./response";
 
 export interface IFailInput {
 	code: number;
 	message: string;
 }
 
-class Fail extends Response {
+class Fail extends Response<null> {
 	constructor(data : IFailInput) {
 		super({
 			code: data.code,

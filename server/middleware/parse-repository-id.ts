@@ -1,10 +1,10 @@
-import {NextFunction, Request, Response} from "express";
+import {Request, Response, NextFunction, ParamsDictionary} from 'express-serve-static-core';
 
-interface Req extends Request {
+export interface IRepoReq extends Request<ParamsDictionary> {
 	repositoryId: string;
 }
 
-export default (req : Req, res : Response, next: NextFunction) => {
+export default (req : IRepoReq, res : Response, next: NextFunction) => {
 	req.repositoryId = req.params.repositoryId;
 
 	next();

@@ -5,8 +5,9 @@ const fs = require('fs');
 const express = require('express');
 const {exit, cwd} = process;
 
-const actions = require('./modules/actions');
-const router = require('./router')({actions});
+import actions from "./modules/actions";
+import Router from './router';
+const router = Router({actions});
 
 if (!process.env.PATH_TO_REPOS) {
 	const input = process.argv[2];

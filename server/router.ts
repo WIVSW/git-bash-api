@@ -1,20 +1,29 @@
-module.exports = ({actions}) => {
-	const commitsRoute = require('./routes/commits')({
+import {IActionsContainer} from "./modules/actions";
+
+import CommitsConstructor from './routes/commits';
+import FilesConstructor from './routes/files';
+import BlobConstructor from './routes/blob';
+import RepoConstructor from './routes/repository';
+import ApiConstructor from './routes/api';
+
+
+export default ({actions} : { actions: IActionsContainer }) => {
+	const commitsRoute = CommitsConstructor({
 		actions,
 	});
-	const filesRoute = require('./routes/files')({
+	const filesRoute = FilesConstructor({
 		actions,
 	});
-	const blobRoute = require('./routes/blob')({
+	const blobRoute = BlobConstructor({
 		actions,
 	});
-	const repoRoute = require('./routes/repository')({
+	const repoRoute = RepoConstructor({
 		actions,
 		commitsRoute,
 		filesRoute,
 		blobRoute,
 	});
-	const apiRoute = require('./routes/api')({
+	const apiRoute = ApiConstructor({
 		actions,
 		repoRoute,
 	});

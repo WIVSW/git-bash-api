@@ -1,6 +1,6 @@
-import Response, {Data} from "./response";
+import Response from "./response";
 
-class Success extends Response {
+class Success<Data> extends Response<Data> {
 	constructor(data : Data) {
 		super({
 			code: 200,
