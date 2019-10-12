@@ -21,12 +21,16 @@ declare global {
 			repositoryId: string;
 			hash: string;
 			params: IParams;
+			body: IBody;
 		}
 
 		export function Router(options?: RouterOptions): Express.Router;
 		export interface Router extends Express.IRouter {}
 		export interface IRouter extends RHanler {
 			get: Express.IRouterMatcher<this>;
+			use: Express.IRouterMatcher<this>;
+			post: Express.IRouterMatcher<this>;
+			delete: Express.IRouterMatcher<this>;
 		}
 
 		export interface IRouterMatcher<T> {
@@ -42,4 +46,8 @@ declare global {
 export interface RHanler<P extends Params = ParamsDictionary> extends RequestHandler<P> {
 	// tslint:disable-next-line callable-types (This is extended from and can't extend from a type alias in ts<2.2
 	(req: Express.Request, res: ExpressResponse, next: NextFunction): any;
+}
+
+export interface IBody {
+	url: string;
 }
